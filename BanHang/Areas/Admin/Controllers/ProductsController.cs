@@ -25,6 +25,7 @@ namespace BanHang.Areas.Admin.Controllers
             items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;
             ViewBag.Page = page;
+            ViewBag.ProductCategory = new SelectList(dbConect.ProductCategories.ToList(), "Id", "Tiltle");
             return View(items);
         }
         public ActionResult Add()
