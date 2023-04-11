@@ -46,7 +46,7 @@ namespace BanHang.Models.EF
         [StringLength(250)]
         public string SeoKeywords { get; set; }
         public virtual Category Categories { get; set; }
-        public virtual ProductCategories ProductCategories { get; set; }
+       public virtual ProductCategories ProductCategories { get; set; }
         public virtual ICollection<ProductImage> ProductImage { get; set; }
         public virtual ICollection<OrderDetail> OrderDetail { get; set; }
     }
