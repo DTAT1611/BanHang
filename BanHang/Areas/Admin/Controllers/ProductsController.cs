@@ -128,5 +128,27 @@ namespace BanHang.Areas.Admin.Controllers
             }
             return Json(new { success = true });
         }
+        public ActionResult Edit(int id)
+        {
+            ViewBag.ProductCategory = new SelectList(dbConect.ProductCategories.ToList(), "Id", "Tiltle");
+            var item = dbConect.Products.Find(id);
+            return View(item);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Product model)
+
+        {
+            if (ModelState.IsValid)
+            {
+                model.ModifierDate = DateTime.Now;
+                model.Alias = BanHang.Models.Common.Filter.FilterChar(model.Title);
+                dbConect.Products.Attach(model);
+                dbConect.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                dbConect.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
     }
 }
