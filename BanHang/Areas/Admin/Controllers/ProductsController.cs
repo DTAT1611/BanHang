@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using BanHang.Areas.Admin.ViewModels;
 
 namespace BanHang.Areas.Admin.Controllers
 {
@@ -15,7 +16,26 @@ namespace BanHang.Areas.Admin.Controllers
         // GET: Admin/Products
         public ActionResult Index(int? page)
         {
-            IEnumerable<Product> items = dbConect.Products.OrderByDescending(x => x.Id);
+            IEnumerable<Product> Products = dbConect.Products.OrderByDescending(x => x.Id);
+            var PreferItemsList = new List<ProductIndexViewModel>();
+            var temp1 = dbConect.ProductImages.ToList();
+            var temp2 = dbConect.ProductCategories.ToList();
+            foreach (Product product in Products)
+            {        
+                var item = new ProductIndexViewModel()
+                {
+                    Id = product.Id,
+                    Title = product.Title,
+                    Price = product.Price,
+                    Quantity = product.Quantity,
+                    CreatedDate = product.CreatedDate,
+                    ProductDefaultImage = temp1.FirstOrDefault(x=>x.ProductId == product.Id && x.IsDefault).Image,
+                    ProductCategoryTiltle = temp2.FirstOrDefault(x=>x.Id == product.ProductCategoryId).Tiltle,
+                    IsActive= product.IsActive,
+                };
+                PreferItemsList.Add(item);
+            }
+            IEnumerable<ProductIndexViewModel> items = PreferItemsList;
             var pageSize = 10;
             if (page == null)
             {
@@ -25,8 +45,7 @@ namespace BanHang.Areas.Admin.Controllers
             items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;
             ViewBag.Page = page;
-            ViewBag.ProductCategory = new SelectList(dbConect.ProductCategories.ToList(), "Id", "Tiltle");
-            return View(items);
+            return View(items);     
         }
         public ActionResult Add()
         {
