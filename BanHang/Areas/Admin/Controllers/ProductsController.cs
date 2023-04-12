@@ -97,6 +97,37 @@ namespace BanHang.Areas.Admin.Controllers
             ViewBag.ProductCategory = new SelectList(dbConect.ProductCategories.ToList(), "Id", "Tiltle");
             return View(model);
         }
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var item = dbConect.Products.Find(id);
+            if (item != null)
+            {
+                dbConect.Products.Remove(item);
+                dbConect.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+        [HttpPost]
+        public ActionResult DeleteAll(string ids)
+        {
+            if (!string.IsNullOrEmpty(ids))
+            {
+                var items = ids.Split(',');
+                if (items != null && items.Any())
+                {
+                    foreach (var item in items)
+                    {
+                        var obj = dbConect.Products.Find(Convert.ToInt32(item));
+                        dbConect.Products.Remove(obj);
+                        dbConect.SaveChanges();
+                    }
+                }
+                return Json(new { success = true });
+            }
+            return Json(new { success = true });
+        }
         public ActionResult Edit(int id)
         {
             ViewBag.ProductCategory = new SelectList(dbConect.ProductCategories.ToList(), "Id", "Tiltle");
