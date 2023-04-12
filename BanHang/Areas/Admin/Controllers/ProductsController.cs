@@ -17,7 +17,7 @@ namespace BanHang.Areas.Admin.Controllers
         public ActionResult Index(int? page)
         {
             IEnumerable<Product> Products = dbConect.Products.OrderByDescending(x => x.Id);
-            IEnumerable<ProductIndexViewModel> items = new List<ProductIndexViewModel>();
+            var PreferItemsList = new List<ProductIndexViewModel>();
             var temp1 = dbConect.ProductImages.ToList();
             var temp2 = dbConect.ProductCategories.ToList();
             foreach (Product product in Products)
@@ -33,14 +33,15 @@ namespace BanHang.Areas.Admin.Controllers
                     ProductCategoryTiltle = temp2.FirstOrDefault(x=>x.Id == product.ProductCategoryId).Tiltle,
                     IsActive= product.IsActive,
                 };
+                PreferItemsList.Add(item);
             }
+            IEnumerable<ProductIndexViewModel> items = PreferItemsList;
             var pageSize = 10;
             if (page == null)
             {
                 page = 1;
             }
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
-            
             items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;
             ViewBag.Page = page;
