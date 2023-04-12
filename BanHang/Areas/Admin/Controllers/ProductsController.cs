@@ -137,7 +137,6 @@ namespace BanHang.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Product model)
-
         {
             if (ModelState.IsValid)
             {
