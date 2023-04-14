@@ -19,6 +19,7 @@ namespace BanHang.Areas.Admin.Controllers
         }
         public ActionResult Add()
         {
+            ViewBag.Category = new SelectList(dbConect.Categories.ToList(), "Id", "Tiltle");
             return View();
         }
         [HttpPost]
@@ -35,10 +36,12 @@ namespace BanHang.Areas.Admin.Controllers
                 dbConect.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.Category = new SelectList(dbConect.Categories.ToList(), "Id", "Tiltle");
             return View(model);
         }
         public ActionResult Edit(int id)
         {
+            ViewBag.Category = new SelectList(dbConect.Categories.ToList(), "Id", "Tiltle");
             var item = dbConect.Posts.Find(id);
             return View(item);
         }
