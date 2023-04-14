@@ -42,7 +42,7 @@ namespace BanHang.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 model.CreatedDate = DateTime.Now;
-                 model.CategoryID = 1;
+                model.CategoryID = 1;
                 model.ModifierDate = DateTime.Now;
                 model.Alias = BanHang.Models.Common.Filter.FilterChar(model.Title);
                 dbConect.News.Add(model);
