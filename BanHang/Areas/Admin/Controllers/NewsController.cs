@@ -3,10 +3,8 @@ using BanHang.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PagedList;
-
 namespace BanHang.Areas.Admin.Controllers
 {
     public class NewsController : Controller
@@ -33,6 +31,7 @@ namespace BanHang.Areas.Admin.Controllers
         }
         public ActionResult Add()
         {
+            ViewBag.Category = new SelectList(dbConect.Categories.ToList(), "Id", "Tiltle");
             return View();
         }
         [HttpPost]
@@ -42,17 +41,19 @@ namespace BanHang.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 model.CreatedDate = DateTime.Now;
-                model.CategoryID = 1;
                 model.ModifierDate = DateTime.Now;
                 model.Alias = BanHang.Models.Common.Filter.FilterChar(model.Title);
                 dbConect.News.Add(model);
                 dbConect.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.Category = new SelectList(dbConect.Categories.ToList(), "Id", "Tiltle");
             return View(model);
         }
+
         public ActionResult Edit(int id)
         {
+            ViewBag.Category = new SelectList(dbConect.Categories.ToList(), "Id", "Tiltle");
             var item = dbConect.News.Find(id);
             return View(item);
         }
@@ -69,6 +70,7 @@ namespace BanHang.Areas.Admin.Controllers
                 dbConect.SaveChanges();
                 return RedirectToAction("Index");
             }
+           
             return View(model);
         }
         [HttpPost]
