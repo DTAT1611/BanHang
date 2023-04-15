@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace BanHang.Areas.Admin.Controllers
 {
@@ -13,6 +14,7 @@ namespace BanHang.Areas.Admin.Controllers
         private ApplicationDbContext dbConect = new ApplicationDbContext();
         public ActionResult Index(int id)
         {
+            ViewBag.ProductId = id;
             var items = dbConect.ProductImages.Where(x=>x.ProductId == id).ToList();
             return View(items);
         }
@@ -20,6 +22,7 @@ namespace BanHang.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult AddImage(int productId, string url)
         {
+            
             dbConect.ProductImages.Add(new ProductImage
             {
                 ProductId = productId,

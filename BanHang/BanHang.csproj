@@ -179,6 +179,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductCategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductImageController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\ViewModels\ProductIndexViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -198,9 +200,9 @@
     <Compile Include="Migrations\202304101927310_CreatedData.designer.cs">
       <DependentUpon>202304101927310_CreatedData.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202304110703243_Update.cs" />
-    <Compile Include="Migrations\202304110703243_Update.designer.cs">
-      <DependentUpon>202304110703243_Update.cs</DependentUpon>
+    <Compile Include="Migrations\202304151507590_Update.cs" />
+    <Compile Include="Migrations\202304151507590_Update.designer.cs">
+      <DependentUpon>202304151507590_Update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202304150358302_test2.cs" />
     <Compile Include="Migrations\202304150358302_test2.designer.cs">
@@ -4136,6 +4138,12 @@
     <Content Include="Content\assets\plugins\themify-icons\fonts\themify.woff" />
     <Content Include="Areas\Admin\Views\ProductImage\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutEmpty.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutLogin.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -4206,8 +4214,8 @@
     <EmbeddedResource Include="Migrations\202304101927310_CreatedData.resx">
       <DependentUpon>202304101927310_CreatedData.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202304110703243_Update.resx">
-      <DependentUpon>202304110703243_Update.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202304151507590_Update.resx">
+      <DependentUpon>202304151507590_Update.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304150358302_test2.resx">
       <DependentUpon>202304150358302_test2.cs</DependentUpon>
