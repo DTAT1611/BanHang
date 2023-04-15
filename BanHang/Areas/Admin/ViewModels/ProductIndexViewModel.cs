@@ -20,5 +20,10 @@ namespace BanHang.Areas.Admin.ViewModels
         public string ProductCategoryTiltle { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsActive { get; set; }
+        public bool IsHome { get; set; }
+        public bool IsSale { get; set; }
+        public bool IsFeature { get; set;}
+
+
     }
 }
