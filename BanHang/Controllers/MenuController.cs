@@ -20,5 +20,10 @@ namespace BanHang.Controllers
             var items=dbConect.Categories.OrderBy(x=>x.Position).ToList();
             return PartialView("_MenuTop",items);
         }
+        public ActionResult MenuProductCategory()
+        {
+            var items=dbConect.ProductCategories.ToList();
+            return PartialView("_MenuProductCategory", items);
+        }
     }
 }
