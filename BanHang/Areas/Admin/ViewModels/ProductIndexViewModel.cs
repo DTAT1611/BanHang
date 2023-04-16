@@ -16,8 +16,10 @@ namespace BanHang.Areas.Admin.ViewModels
         public string Title { get; set; }
         public string ProductDefaultImage { get; set; }
         public decimal Price { get; set; }
+        public decimal PriceSale { get; set; }
         public int Quantity { get; set; }
         public string ProductCategoryTiltle { get; set; }
+        public string ProductCategoryAlias { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsActive { get; set; }
         public bool IsHome { get; set; }
