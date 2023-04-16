@@ -32,7 +32,7 @@ namespace BanHang.Areas.Admin.Controllers
             {
                 model.CreatedDate = DateTime.Now;
                 model.ModifierDate = DateTime.Now;
-                model.Alias = BanHang.Models.Common.Filter.FilterChar(model.Tiltle);
+                model.Alias = BanHang.Models.Common.Filter.FilterChar(model.Tiltle);    
                 dbConect.ProductCategories.Add(model);
                 dbConect.SaveChanges();
                 return RedirectToAction("Index");
