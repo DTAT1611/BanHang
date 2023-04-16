@@ -149,5 +149,33 @@ namespace BanHang.Areas.Admin.Controllers
             }
             return View(model);
         }
+        [HttpPost]
+        public ActionResult IsActive(int id)
+        {
+            var item = dbConect.Products.Find(id);
+            if (item != null)
+            {
+                item.IsActive = !item.IsActive;
+                dbConect.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                dbConect.SaveChanges();
+                return Json(new { success = true, isAcive = item.IsActive });
+            }
+
+            return Json(new { success = false });
+        }
+        [HttpPost]
+        public ActionResult IsHome(int id)
+        {
+            var item = dbConect.Products.Find(id);
+            if (item != null)
+            {
+                item.IsHome = !item.IsHome;
+                dbConect.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                dbConect.SaveChanges();
+                return Json(new { success = true, IsHome = item.IsHome });
+            }
+
+            return Json(new { success = false });
+        }
     }
 }
