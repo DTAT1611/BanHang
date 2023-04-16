@@ -37,7 +37,7 @@ namespace BanHang.Areas.Admin.Controllers
                 dbConect.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(model);
         }
         public ActionResult Edit(int id)
         {
