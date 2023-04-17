@@ -14,8 +14,9 @@ namespace BanHang.Controllers
         {
             return View();
         }
-        public ActionResult Partial_ItemsByCateId()
+        public ActionResult Partial_ItemsByCateId(int? id)
         {
+            ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Find(id).Alias;
             var items = dbConect.Products.Where(x => x.IsHome && x.IsActive).Take(12).ToList();
             return PartialView(items);
         }

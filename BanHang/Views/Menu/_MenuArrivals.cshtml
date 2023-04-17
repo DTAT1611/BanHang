@@ -17,7 +17,7 @@
                     <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center active is-checked" data-filter="*">all</li>
                     @foreach (var item in Model)
                     {
-                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".@item.Alias">@item.Tiltle</li>
+                        <li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".@item.Alias", data-id="@item.Id">@item.Tiltle</li>
                     }
 
                     @*<li class="grid_sorting_button button d-flex flex-column justify-content-center align-items-center" data-filter=".women">women's</li>
@@ -30,7 +30,7 @@
     <div class="row">
         <div class="col">
             <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
-                @Html.Action("Partial_ItemsByCateId", "Products")
+                @Html.Action("Partial_ItemsByCateId", "Products", new { id = item.Id })
             </div>
         </div>
     </div>
