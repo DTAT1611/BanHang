@@ -53,9 +53,10 @@
                                 <td>@item.UserName</td>
                                 <td>@item.FullName</td>
                                 <td>@item.Email</td>
+                                <td>@item.Roles</td>
                                 <td>
                                     <a href="/admin/account/edit/@item.UserName" class="btn btn-sm btn-primary">sửa</a>
-                                    <a href="#" data-user="@item.UserName"class="btn btn-sm btn-primary">xóa</a>
+                                    <a href="#" data-user="@item.UserName" class="btn btn-sm btn-danger">xóa</a>
                                 </td>
                             </tr>
                         }

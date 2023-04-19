@@ -41,17 +41,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(Model !=null &&Model.Any())
+                    @if (Model != null && Model.Any())
                     {
                         var i = 1;
-                        foreach(var item in Model)
-                {
-                    <tr>
-                        <td>@i</td>
-                        <td>@item.Name</td>
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.Name</td>
 
-                    </tr>
-                }
+                            </tr>
+                            i++;
+                        }
                     }
                 </tbody>
             </table>
