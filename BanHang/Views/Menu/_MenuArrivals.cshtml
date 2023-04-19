@@ -30,7 +30,11 @@
     <div class="row">
         <div class="col">
             <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
-                @Html.Action("Partial_ItemsByCateId", "Products")
+                @foreach (var item in Model)
+                {
+                    @Html.Action("Partial_ItemsByCateId", "Products", new { id = @item.Id })
+                }
+
             </div>
         </div>
     </div>
