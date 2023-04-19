@@ -21,8 +21,7 @@ namespace BanHang.Controllers
             //ViewBag.ProductCategoryAlias = new SelectList(dbConect.ProductCategories.ToList(), "Id", "Alias");
             //ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Id;
             //var ProductCategory = dbConect.ProductCategories.Find(id);
-            var items = dbConect.Products.Where(x => x.IsHome && x.IsActive).Take(12).ToList();
-            var products = dbConect.Products.Where(p => p.ProductCategories.Id == id).ToList();
+            var items = dbConect.Products.Where(x => x.IsHome && x.IsActive && x.ProductCategoryId == id).Take(12).ToList();
             return PartialView(items);
         }
     }
