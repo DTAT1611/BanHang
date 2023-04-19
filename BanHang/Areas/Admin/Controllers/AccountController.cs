@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace BanHang.Areas.Admin.Controllers
 {
+
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -57,18 +58,8 @@ namespace BanHang.Areas.Admin.Controllers
 
             return View(dbConect.Users.ToList());
         }
-        [AllowAnonymous]
-        public ActionResult Create()
-        {
-            ViewBag.Role = new SelectList(dbConect.Roles.ToList(),"Id","Name");
-            return View();
-        }
-        [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
+        
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -83,13 +74,11 @@ namespace BanHang.Areas.Admin.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-        private ActionResult RedirectToLocal(string returnUrl)
+        [AllowAnonymous]
+        public ActionResult Login(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-            return RedirectToAction("Index", "Home");
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
         }
         //
         // POST: /Account/Login
@@ -120,6 +109,12 @@ namespace BanHang.Areas.Admin.Controllers
                     return View(model);
             }
         }
+        [AllowAnonymous]
+        public ActionResult Create()
+        {
+            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
+            return View();
+        }
         //
         // POST: /Account/Register
         [HttpPost]
@@ -129,10 +124,11 @@ namespace BanHang.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email,FullName=model.FullName,Phone=model.Phone };
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FullName = model.FullName, Phone = model.Phone};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    UserManager.AddToRole(user.Id,model.Role);
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -146,10 +142,18 @@ namespace BanHang.Areas.Admin.Controllers
 
                 AddErrors(result);
             }
-            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Id", "Name");
+            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Home");
         }
         private void AddErrors(IdentityResult result)
         {

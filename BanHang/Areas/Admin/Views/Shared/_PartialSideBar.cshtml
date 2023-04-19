@@ -84,10 +84,10 @@
                 </a>
             </li>
             <!--<li class="nav-item">
-        <a href="/admin/post" class="nav-link">
-            <i class="nav-icon fas fa-th"></i>
-            <p>
-                Quảng Cáo-->
+    <a href="/admin/post" class="nav-link">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Quảng Cáo-->
             @*<span class="right badge badge-danger">New</span>*@
             <!--</p>
         </a>
@@ -116,10 +116,28 @@
                 </ul>
             </li>
             <li class="nav-item">
+                <a href="~/admin/account" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Quản lý tài khoản
+                        @*<span class="right badge badge-danger">New</span>*@
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="/news" class="nav-link">
                     <i class="nav-icon fas fa-th"></i>
                     <p>
                         Shipper
+                        @*<span class="right badge badge-danger">New</span>*@
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">
+                    <i class="nav-icon fas fa-th"></i>
+                    <p>
+                        Đăng xuất
                         @*<span class="right badge badge-danger">New</span>*@
                     </p>
                 </a>
@@ -129,3 +147,11 @@
     <!-- /.sidebar-menu -->
 </div>
 <!-- /.sidebar -->
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+
+        @Html.AntiForgeryToken()
+    }
+}

@@ -50,7 +50,7 @@ namespace BanHang.Models
     {
         [Required]
         [Display(Name = "UserName")]
-        [EmailAddress]
+        
         public string UserName { get; set; }
 
         [Required]
@@ -91,6 +91,12 @@ namespace BanHang.Models
     }
     public class RegisterViewModel
     {
+        [Required]
+        public string UserName { get; set; }
+        [Required]
+        public string FullName { get; set; }
+        public string Phone { get; set; }
+       
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
