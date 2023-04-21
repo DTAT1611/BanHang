@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BanHang.Models.EF.ProductImage>
 @{
     ViewBag.Title = "Ảnh sản phẩm";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutEmpty.cshtml";
 }
 
 <style>
@@ -35,10 +35,10 @@
             <h3 class="card-title">Ảnh sản phẩm</h3>
 
             <div class="card-tools">
-                <button type="button" class="btn btn-danger" title="Collapse">
+                @*<button type="button" class="btn btn-danger" title="Collapse">
                     Xóa hết
-                </button>
-
+                </button>*@
+                
                 <input type="button" value="Tải ảnh" class="btn btn-success" onclick="BrowseServer('txtImage');" />
             </div>
         </div>
@@ -102,10 +102,10 @@
     $(document).ready(function () {
         $('body').on('click', '.btnDelete', function () {
             var id = $(this).data('id');
-            var conf = confirm('ban có muốn xóa ảnh này không?');
+            var conf = confirm('bạn có muốn xóa ảnh này không?');
             if (conf === true) {
                 $.ajax({
-                    url: '/admin/ProductImage/delete',
+                    url: '/admin/ProductImage/Delete',
                     type: 'POST',
                     data: { id: id },
                     success: function (rs) {

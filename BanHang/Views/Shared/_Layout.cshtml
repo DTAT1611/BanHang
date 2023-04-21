@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+
 <head>
     <title>Chợ Online</title>
     <meta charset="utf-8">
@@ -63,15 +63,50 @@
                                         </ul>
                                     </li>
                                     <li class="account">
-                                        <a href="#">
-                                            My Account
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                        <ul class="account_selection">
-                                            <li><a href="@Url.Action("Login","Account")"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
-                                            <li><a href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
-                                        </ul>
+
+                                        @if (!Request.IsAuthenticated)
+                                        {
+                                            <a href="#">
+                                                My Account
+                                                <i class="fa fa-angle-down"></i>
+                                            </a>
+                                            <ul class="account_selection">
+                                                <li><a href="@Url.Action("Login","Account")"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
+                                                <li><a href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
+                                            </ul>
+                                        }
+                                        else
+                                        {
+                                            if (User.IsInRole("Admin"))
+                                            {
+                                                <a href="#">
+                                                    @User.Identity.Name
+                                                    <i class="fa fa-angle-down"></i>
+
+                                                </a>
+                                                <ul class="account_selection">
+                                                    <li class="Role">
+                                                        <a href="~/Admin/Home/Index">Quản Lý Trang</a>
+                                                    </li>
+                                                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link"><i class="fa fa-user-plus" aria-hidden="true"></i>Log Off</a></li>
+                                                </ul>
+                                            }
+                                            else
+                                            { 
+                                                <a href="#">
+                                                    @User.Identity.Name
+                                                    <i class="fa fa-angle-down"></i>
+
+                                                </a>
+                                                <ul class="account_selection">
+                                                   
+                                                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log Off</a></li>
+                                                </ul>
+                                                }
+
+                                        }
                                     </li>
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -89,7 +124,7 @@
                                 <a href="/">Chợ<span>Online</span></a>
                             </div>
                             <nav class="navbar">
-                               @Html.Action("MenuTop","Menu")
+                                @Html.Action("MenuTop", "Menu")
                                 <ul class="navbar_user">
                                     <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                                     <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
@@ -162,9 +197,9 @@
 
         @RenderBody()
 
-       
 
-      
+
+
 
         <!-- Newsletter -->
 
@@ -238,4 +273,14 @@
     @*@Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
 </body>
-</html>
+
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+
+        @Html.AntiForgeryToken()
+    }
+}
+
