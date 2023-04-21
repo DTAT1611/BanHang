@@ -24,5 +24,14 @@ namespace BanHang.Controllers
             var items = dbConect.Products.Where(x => x.IsHome && x.IsActive && x.ProductCategoryId == id).Take(12).ToList();
             return PartialView(items);
         }
+        public ActionResult Partial_ProductSales(int id)
+        {
+            ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Find(id).Alias;
+            //ViewBag.ProductCategoryAlias = new SelectList(dbConect.ProductCategories.ToList(), "Id", "Alias");
+            //ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Id;
+            //var ProductCategory = dbConect.ProductCategories.Find(id);
+            var items = dbConect.Products.Where(x => x.IsHome && x.IsActive && x.ProductCategoryId == id).Take(12).ToList();
+            return PartialView(items);
+        }
     }
 }

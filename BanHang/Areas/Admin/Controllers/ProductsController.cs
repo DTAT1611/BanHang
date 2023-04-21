@@ -177,5 +177,19 @@ namespace BanHang.Areas.Admin.Controllers
 
             return Json(new { success = false });
         }
+        [HttpPost]
+        public ActionResult IsSale(int id)
+        {
+            var item = dbConect.Products.Find(id);
+            if (item != null)
+            {
+                item.IsSale = !item.IsSale;
+                dbConect.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                dbConect.SaveChanges();
+                return Json(new { success = true, IsSale = item.IsSale });
+            }
+
+            return Json(new { success = false });
+        }
     }
 }

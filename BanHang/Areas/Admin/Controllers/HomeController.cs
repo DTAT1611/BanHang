@@ -5,9 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 namespace BanHang.Areas.Admin.Controllers
-{
-    
-  
+{ 
     public class HomeController : Controller
     {
        
