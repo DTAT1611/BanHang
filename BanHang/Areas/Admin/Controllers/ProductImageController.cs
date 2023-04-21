@@ -63,14 +63,14 @@ namespace BanHang.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult ChangeDefaultState(int Id)
         {
-            var PrevDefaultState = dbConect.ProductImages.First(x => x.IsDefault);
             var item = dbConect.ProductImages.Find(Id);
+            var PrevDefaultState = dbConect.ProductImages.First(x => x.IsDefault && x.ProductId == item.ProductId);
             PrevDefaultState.IsDefault = false;
             item.IsDefault = true;
             dbConect.ProductImages.AddOrUpdate(item);
             dbConect.ProductImages.AddOrUpdate(PrevDefaultState);
             dbConect.SaveChanges();
-            return Json(new { Success = true });
+            return Json(new { success = true });
         }
     }
 }
