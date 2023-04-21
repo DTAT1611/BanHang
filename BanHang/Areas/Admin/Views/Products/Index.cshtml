@@ -100,7 +100,7 @@
                                 <td>@item.Title</td>
                                 <td>@item.ProductCategoryTiltle</td>
                                 <td>@item.Quantity</td>
-                                <td>@item.Price</td>
+                                <td>@BanHang.Common.Common.FormatNumber(item.Price, 0)</td>
                                 <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
                                 <td class="text-center">
                                     <a href='#' data-id="@item.Id" class="btnHome">@Html.Raw(strCheckHome)</a>

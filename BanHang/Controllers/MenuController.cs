@@ -30,5 +30,10 @@ namespace BanHang.Controllers
             var items = dbConect.ProductCategories.ToList();
             return PartialView("_MenuArrivals", items);
         }
+        public ActionResult BestSeller()
+        {
+            var items = dbConect.ProductCategories.ToList();
+            return PartialView("_BestSeller", items);
+        }
     }
 }
