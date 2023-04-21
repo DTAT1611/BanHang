@@ -32,6 +32,9 @@ namespace BanHang.Areas.Admin.Controllers
                     ProductDefaultImage = temp1.FirstOrDefault(x=>x.ProductId == product.Id && x.IsDefault).Image,
                     ProductCategoryTiltle = temp2.FirstOrDefault(x=>x.Id == product.ProductCategoryId).Tiltle,
                     IsActive= product.IsActive,
+                    IsFeature = product.IsFeature,
+                    IsHome = product.IsHome,
+                    IsSale = product.IsSale,
                 };
                 PreferItemsList.Add(item);
             }
