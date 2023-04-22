@@ -54,7 +54,7 @@
                                 <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete"><i class="fa fa-trash"></i></a>
                                 @if (item.IsDefault)
                                 {
-                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-success btnDefault"><i class="fa fa-check"></i></a>
+                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-success btnDefault disabled"><i class="fa fa-check"></i></a>
                                 }
                                 else
                                 {
@@ -111,6 +111,31 @@
                     success: function (rs) {
                         if (rs.success) {
                             $('#trow_' + id).remove();
+                        }
+                        else {
+                            alert("Không thể xóa ảnh !")
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        });
+    });
+    $(document).ready(function () {
+        $('body').on('click', '.btnDefault', function () {
+            var id = $(this).data('id');
+            var conf = confirm('bạn có muốn thay đổi ảnh đại diện thành ảnh này không ?');
+            if (conf === true) {
+                $.ajax({
+                    url: '/admin/ProductImage/ChangeDefaultState',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (rs) {
+                        if (rs.success) {
+                            window.location.reload();
+                        }
+                        else {
+                            alert("Không thể thay đổi ảnh đại diện !")
                         }
                     }
                 });
