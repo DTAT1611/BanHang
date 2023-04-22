@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace BanHang.Areas.Admin.Controllers
 {
-
+    // [Authorize(Roles ="Admin")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
