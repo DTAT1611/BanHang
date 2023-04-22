@@ -1,14 +1,18 @@
 ﻿using BanHang.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace BanHang.Areas.Admin.Controllers
 {
@@ -58,8 +62,8 @@ namespace BanHang.Areas.Admin.Controllers
 
             return View(dbConect.Users.ToList());
         }
-        
-        
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -74,49 +78,14 @@ namespace BanHang.Areas.Admin.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
-        [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
-        {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
-        //
-        // POST: /Account/Login
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
-            }
-        }
         [AllowAnonymous]
         public ActionResult Create()
         {
             ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
             return View();
         }
-        //
-        // POST: /Account/Register
+        
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -124,11 +93,11 @@ namespace BanHang.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FullName = model.FullName, Phone = model.Phone};
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FullName = model.FullName, Phone = model.Phone };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id,model.Role);
+                    UserManager.AddToRole(user.Id, model.Role);
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -147,13 +116,32 @@ namespace BanHang.Areas.Admin.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-        private ActionResult RedirectToLocal(string returnUrl)
+        public ActionResult Edit(int id)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            ViewBag.Category = new SelectList(dbConect.Roles.ToList(), "id", "Name");
+            var item = dbConect.Users.Find(id);
+            return View(item);
+
+
+            
+
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Users model)
+        {
+            if (ModelState.IsValid)
             {
-                return Redirect(returnUrl);
+               
+                dbConect.Users.Attach(model);
+                dbConect.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                dbConect.SaveChanges();
+                return RedirectToAction("Index");
+               
             }
-            return RedirectToAction("Index", "Home");
+            return View(model);
+
         }
         private void AddErrors(IdentityResult result)
         {

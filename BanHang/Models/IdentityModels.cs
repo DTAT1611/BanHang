@@ -42,5 +42,7 @@ namespace BanHang.Models
         {
             return new ApplicationDbContext();
         }
+
+       
     }
 }
