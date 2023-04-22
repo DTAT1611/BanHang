@@ -129,7 +129,7 @@ namespace BanHang.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CreateAccountViewModel model)
+        public ActionResult Edit(Users model)
         {
             if (ModelState.IsValid)
             {
