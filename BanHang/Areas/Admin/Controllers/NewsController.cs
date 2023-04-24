@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using PagedList;
 namespace BanHang.Areas.Admin.Controllers
 {
+    // [Authorize(Roles = "Admin")]
     public class NewsController : Controller
     {
         private ApplicationDbContext dbConect = new ApplicationDbContext();

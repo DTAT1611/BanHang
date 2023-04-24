@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace BanHang.Areas.Admin.Controllers
 {
+   // [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
        private ApplicationDbContext dbConect = new ApplicationDbContext();

@@ -10,6 +10,7 @@ using BanHang.Areas.Admin.ViewModels;
 
 namespace BanHang.Areas.Admin.Controllers
 {
+    //  [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
         private ApplicationDbContext dbConect = new ApplicationDbContext();
@@ -32,6 +33,9 @@ namespace BanHang.Areas.Admin.Controllers
                     ProductDefaultImage = temp1.FirstOrDefault(x=>x.ProductId == product.Id && x.IsDefault).Image,
                     ProductCategoryTiltle = temp2.FirstOrDefault(x=>x.Id == product.ProductCategoryId).Tiltle,
                     IsActive= product.IsActive,
+                    IsFeature = product.IsFeature,
+                    IsHome = product.IsHome,
+                    IsSale = product.IsSale,
                 };
                 PreferItemsList.Add(item);
             }
