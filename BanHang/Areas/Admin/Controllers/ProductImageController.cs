@@ -10,6 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace BanHang.Areas.Admin.Controllers
 {
+    //   [Authorize(Roles = "Admin")]
     public class ProductImageController : Controller
     {
         private ApplicationDbContext dbConect = new ApplicationDbContext();
@@ -37,12 +38,12 @@ namespace BanHang.Areas.Admin.Controllers
         public ActionResult Delete(int id)
         {
             var item = dbConect.ProductImages.Find(id);
-            var L_I_Counter = dbConect.ProductImages.Count();
+            var L_I_Counter = dbConect.ProductImages.Count(x=>x.ProductId==item.ProductId);
             if(L_I_Counter > 1 )
             {
                 if(item.IsDefault)
                 {
-                    dbConect.ProductImages.First(x => x.Id != id).IsDefault = true; ;
+                    dbConect.ProductImages.First(x => x.Id != id&&x.ProductId==item.ProductId).IsDefault = true;
                     dbConect.ProductImages.Remove(item);
                     dbConect.SaveChanges();
                     return Json(new { success = true });
@@ -63,14 +64,14 @@ namespace BanHang.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult ChangeDefaultState(int Id)
         {
-            var PrevDefaultState = dbConect.ProductImages.First(x => x.IsDefault);
             var item = dbConect.ProductImages.Find(Id);
+            var PrevDefaultState = dbConect.ProductImages.First(x => x.IsDefault && x.ProductId == item.ProductId);
             PrevDefaultState.IsDefault = false;
             item.IsDefault = true;
             dbConect.ProductImages.AddOrUpdate(item);
             dbConect.ProductImages.AddOrUpdate(PrevDefaultState);
             dbConect.SaveChanges();
-            return Json(new { Success = true });
+            return Json(new { success = true });
         }
     }
 }

@@ -17,7 +17,7 @@ using System.Web.UI.WebControls;
 
 namespace BanHang.Areas.Admin.Controllers
 {
-
+    // [Authorize(Roles ="Admin")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
