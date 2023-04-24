@@ -10,6 +10,7 @@ namespace BanHang.Controllers
     {
         public ActionResult Index()
         {
+
             return View();
         }
 
