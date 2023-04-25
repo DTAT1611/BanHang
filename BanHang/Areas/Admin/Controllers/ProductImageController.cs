@@ -37,12 +37,12 @@ namespace BanHang.Areas.Admin.Controllers
         public ActionResult Delete(int id)
         {
             var item = dbConect.ProductImages.Find(id);
-            var L_I_Counter = dbConect.ProductImages.Count();
+            var L_I_Counter = dbConect.ProductImages.Count(x => x.ProductId == item.ProductId);
             if(L_I_Counter > 1 )
             {
                 if(item.IsDefault)
                 {
-                    dbConect.ProductImages.First(x => x.Id != id).IsDefault = true; ;
+                    dbConect.ProductImages.First(x => x.Id != id && x.ProductId == item.ProductId).IsDefault = true;
                     dbConect.ProductImages.Remove(item);
                     dbConect.SaveChanges();
                     return Json(new { success = true });
