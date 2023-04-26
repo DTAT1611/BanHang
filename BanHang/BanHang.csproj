@@ -210,6 +210,10 @@
     <Compile Include="Migrations\202304150358302_test2.designer.cs">
       <DependentUpon>202304150358302_test2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304260735494_FixedDB.cs" />
+    <Compile Include="Migrations\202304260735494_FixedDB.designer.cs">
+      <DependentUpon>202304260735494_FixedDB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -4295,6 +4299,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304150358302_test2.resx">
       <DependentUpon>202304150358302_test2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304260735494_FixedDB.resx">
+      <DependentUpon>202304260735494_FixedDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
