@@ -49,5 +49,6 @@ namespace BanHang.Controllers
             var items = dbConect.ProductCategories.ToList();
             return PartialView("ProductsIndex", items);
         }
+
     }
 }

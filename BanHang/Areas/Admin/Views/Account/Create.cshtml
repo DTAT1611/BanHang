@@ -1,5 +1,5 @@
 ﻿
-@model BanHang.Models.CreateAccountViewModel  
+@model BanHang.Models.ApplicationUser  
 @{
     ViewBag.Title = "Thêm mới tài khoản";
 }
@@ -31,7 +31,7 @@
         </div>
         <div class="card-body">
 
-            @using (Html.BeginForm("Create", "Account", FormMethod.Post))
+            @using (Html.BeginForm("Create", "Account", FormMethod.Post,new { }))
             {
                 @Html.ValidationSummary(false)
                 @Html.AntiForgeryToken()
@@ -57,12 +57,9 @@
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    @Html.PasswordFor(x => x.Password, new { @class = "form-control" })
+                    @Html.PasswordFor(x => x.PasswordHash, new { @class = "form-control" })
                 </div>
-                <div class="form-group">
-                    <label>Password2</label>
-                    @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control" })
-                </div>
+                
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">thêm</button>
                 </div>
