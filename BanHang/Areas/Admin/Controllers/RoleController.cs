@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BanHang.Areas.Admin.Controllers
 {
+    //  [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         private ApplicationDbContext dbConect = new ApplicationDbContext();

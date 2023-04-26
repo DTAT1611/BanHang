@@ -25,6 +25,7 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">danh sách tài khoản</h3>
+            
 
             <div class="card-tools">
                 <a href="/admin/account/create" class="btn btn-success">Thêm mới</a>
@@ -36,10 +37,13 @@
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>id</th>
                         <th>Tài Khoản</th>
                         <th>Họ Tên</th>
                         <th>Email</th>
-                        
+                        <th>Quyền</th>
+
+
                         <th></th>
                     </tr>
                 </thead>
@@ -51,17 +55,21 @@
                         {
                             <tr>
                                 <td>@i</td>
+                                <td>@item.Id</td>
                                 <td>@item.UserName</td>
                                 <td>@item.FullName</td>
                                 <td>@item.Email</td>
-                                <td>@item.Roles</td>
+                                <td>@item.Role</td>
+
                                 <td>
-                                    <a href="/admin/account/edit/@item.UserName" class="btn btn-sm btn-primary">sửa</a>
-                                    <a href="#" data-user="@item.UserName" class="btn btn-sm btn-danger">xóa</a>
+                                    <a href="/admin/account/edit/@item.Id" class="btn btn-sm btn-primary">sửa</a>
+                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
                                 </td>
                             </tr>
+                            i++;
                         }
                     }
+
                 </tbody>
             </table>
 
@@ -75,7 +83,6 @@
     <!-- /.card -->
 
 </section>
-
 @section scripts{
     <script>
         $(document).ready(function () {

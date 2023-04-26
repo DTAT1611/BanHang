@@ -11,11 +11,9 @@ namespace BanHang.Controllers
     public class ProductsController : Controller
     {
         private ApplicationDbContext dbConect = new ApplicationDbContext();
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
-            ViewBag.ProductCategoryAlias =dbConect.ProductCategories.Find(id).Alias;
-            var items=dbConect.Products.Where(x=> x.IsActive && x.ProductCategoryId==id).ToList();
-            return View(items);
+            return View();
         }
         public ActionResult Partial_ItemsByCateId(int id)
         {

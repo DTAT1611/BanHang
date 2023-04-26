@@ -35,19 +35,5 @@ namespace BanHang.Controllers
             var items = dbConect.ProductCategories.ToList();
             return PartialView("_BestSeller", items);
         }
-        public ActionResult MenuLeft(int? id)
-        {
-            if (id != null)
-            {
-                ViewBag.CateId = id;
-            }
-            var items = dbConect.ProductCategories.ToList();
-            return PartialView("_MenuLeft", items);
-        }
-        public ActionResult ProductsIndex()
-        {
-            var items = dbConect.ProductCategories.ToList();
-            return PartialView("ProductsIndex", items);
-        }
     }
 }
