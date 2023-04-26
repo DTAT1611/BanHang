@@ -1,0 +1,17 @@
+﻿@model IEnumerable<BanHang.Models.EF.ProductCategories>
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+}
+@*<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/categories_responsive.css">*@
+<div class="container product_section_container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            @Html.Action("Index", "Products", new { id = @item.Id })
+        }
+    </div>
+</div>
+    @*@section scripts{
+        <script src="~/Content/assets/js/categories_custom.js"></script>
+    }*@
