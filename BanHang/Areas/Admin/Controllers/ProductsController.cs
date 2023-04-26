@@ -10,7 +10,6 @@ using BanHang.Areas.Admin.ViewModels;
 
 namespace BanHang.Areas.Admin.Controllers
 {
-    //  [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
         private ApplicationDbContext dbConect = new ApplicationDbContext();
