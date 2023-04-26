@@ -49,12 +49,8 @@
                             <tr>
                                 <td>@i</td>
                                 <td>@item.Name</td>
-                                <td>
 
-                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
-                                </td>
                             </tr>
-
                             i++;
                         }
                     }
@@ -72,29 +68,3 @@
 
 </section>
 <!-- /.content -->
-@section scripts{
-    <script>
-        $(document).ready(function () {
-
-            $('body').on('click', '.btnDelete', function () {
-                var id = $(this).data("id");
-                var conf = confirm('Bạn muốn xóa hay không?');
-                if (conf == true) {
-                    $.ajax({
-                        url: '/admin/role/delete',
-                        type: 'POST',
-                        data: { id: id },
-                        success: function (rs) {
-                            if (rs.success) {
-                                window.location.reload();
-
-                            }
-                        }
-                    });
-                }
-            });
-
-
-        });
-    </script>
-}

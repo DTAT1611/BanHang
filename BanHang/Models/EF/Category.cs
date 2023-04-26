@@ -33,7 +33,6 @@ namespace BanHang.Models.EF
             [StringLength(150)]
             public string SeoKeywords { get; set; }
             public bool IsActive { get; set; }
-
             public ICollection<New> News { get; set; }
             public ICollection<Post> Posts { get; set; }
 

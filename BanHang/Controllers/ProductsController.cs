@@ -13,11 +13,10 @@ namespace BanHang.Controllers
         private ApplicationDbContext dbConect = new ApplicationDbContext();
         public ActionResult Index(int id)
         {
-            ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Find(id).Alias;
-            var items = dbConect.Products.Where(x => x.IsActive && x.ProductCategoryId == id).ToList();
+            ViewBag.ProductCategoryAlias =dbConect.ProductCategories.Find(id).Alias;
+            var items=dbConect.Products.Where(x=> x.IsActive && x.ProductCategoryId==id).ToList();
             return View(items);
         }
-
         public ActionResult Partial_ItemsByCateId(int id)
         {
             ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Find(id).Alias;
