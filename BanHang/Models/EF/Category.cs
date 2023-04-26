@@ -22,6 +22,7 @@ namespace BanHang.Models.EF
             [Required(ErrorMessage = "Không để trống")]
             public string Tiltle { get; set; }
             public string Alias { get; set; }
+            public string Link { get; set; }
             [StringLength(250, ErrorMessage = "Không được vượt quá 250 ký tự")]
             public string Discription { get; set; }
             public int Position { get; set; }

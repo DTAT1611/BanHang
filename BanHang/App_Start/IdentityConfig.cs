@@ -117,8 +117,6 @@ namespace BanHang
             }
             return manager;
         }
-
-        
     }
 
     // Configure the application sign-in manager which is used in this application.

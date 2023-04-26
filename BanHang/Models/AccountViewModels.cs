@@ -113,7 +113,7 @@ namespace BanHang.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
-    public class Edit
+    public class Users
     {
         [Required]
         public string UserName { get; set; }

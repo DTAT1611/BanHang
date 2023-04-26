@@ -1,5 +1,4 @@
 ﻿using BanHang.Models;
-using DocumentFormat.OpenXml.ExtendedProperties;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -17,7 +16,7 @@ using System.Web.UI.WebControls;
 
 namespace BanHang.Areas.Admin.Controllers
 {
-    // [Authorize(Roles ="Admin")]
+
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -90,12 +89,12 @@ namespace BanHang.Areas.Admin.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(ApplicationUser model)
+        public async Task<ActionResult> Create(CreateAccountViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FullName = model.FullName, Phone = model.Phone, Role=model.Role };
-                var result = await UserManager.CreateAsync(user, model.PasswordHash);
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FullName = model.FullName, Phone = model.Phone };
+                var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     UserManager.AddToRole(user.Id, model.Role);
@@ -117,13 +116,11 @@ namespace BanHang.Areas.Admin.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int id)
         {
-            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
+            ViewBag.Category = new SelectList(dbConect.Roles.ToList(), "id", "Name");
             var item = dbConect.Users.Find(id);
             return View(item);
-            
-
         }
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -161,39 +158,23 @@ namespace BanHang.Areas.Admin.Controllers
                     return View(model);
             }
         }
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ApplicationUser model)
+        public ActionResult Edit(Users model)
         {
             if (ModelState.IsValid)
-            {   
-
-                var oldUser = UserManager.FindById(model.Id);
-                var oldRoleId = oldUser.Roles.SingleOrDefault().RoleId;
-                var oldRoleName = dbConect.Roles.SingleOrDefault(r => r.Id == oldRoleId).Name;
-                if (oldRoleName != model.Role)
-                {
-                    UserManager.RemoveFromRoles(model.Id,oldRoleName);
-                    UserManager.AddToRole(model.Id, model.Role);
-                }
-
+            {
+               
                 dbConect.Users.Attach(model);
-                
-
-                dbConect.Entry(model).State = EntityState.Modified;
-                
+                dbConect.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 dbConect.SaveChanges();
-                
                 return RedirectToAction("Index");
                
             }
-           
-            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
             return View(model);
 
         }
+
         [HttpPost]
         public ActionResult Delete(string id)
         {
@@ -207,7 +188,7 @@ namespace BanHang.Areas.Admin.Controllers
             return Json(new { success = false });
         }
         
-        private void AddErrors(IdentityResult result)
+      private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {
