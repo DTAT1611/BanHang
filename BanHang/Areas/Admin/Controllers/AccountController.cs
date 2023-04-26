@@ -194,37 +194,19 @@ namespace BanHang.Areas.Admin.Controllers
             return View(model);
 
         }
-        //[HttpPost]
-        //public ActionResult Delete(string id)
-        //{
-        //    var item = dbConect.Users.Find(id);
-        //    if (item != null)
-        //    {
-        //        dbConect.Users.Remove(item);
-        //        dbConect.SaveChanges();
-        //        return Json(new { success = true });
-        //    }
-        //    return Json(new { success = false });
-        //}
-        //[HttpPost]
-        //public ActionResult DeleteAll(string ids)
-        //{
-        //    if (!string.IsNullOrEmpty(ids))
-        //    {
-        //        var items = ids.Split(',');
-        //        if (items != null && items.Any())
-        //        {
-        //            foreach (var item in items)
-        //            {
-        //                var obj = dbConect.Users.Find(Convert.ToInt32(item));
-        //                dbConect.Users.Remove(obj);
-        //                dbConect.SaveChanges();
-        //            }
-        //        }
-        //        return Json(new { success = true });
-        //    }
-        //    return Json(new { success = true });
-        //}
+        [HttpPost]
+        public ActionResult Delete(string id)
+        {
+            var item = dbConect.Users.Find(id);
+            if (item != null)
+            {
+                dbConect.Users.Remove(item);
+                dbConect.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+        
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
