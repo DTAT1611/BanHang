@@ -4205,7 +4205,6 @@
     <Content Include="Areas\Admin\Views\Role\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Account\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Content\assets\dist\css\adminlte.css.map" />
     <Content Include="Content\assets\dist\css\adminlte.min.css.map" />
