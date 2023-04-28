@@ -12,13 +12,13 @@ namespace BanHang
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
             routes.MapRoute(
-                 name: "Products",
-                 url: "san-pham",
-                 defaults: new { controller = "Menu", action = "ProductsIndex", id = UrlParameter.Optional },
-                 namespaces: new[] { "BanHang.Controllers" }
-         );
+                name: "Products",
+             url: "san-pham",
+             defaults: new { controller = "Products", action = "Index", id = UrlParameter.Optional },
+             namespaces: new[] { "BanHang.Controllers" }
+                );
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

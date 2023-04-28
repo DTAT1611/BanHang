@@ -1,18 +1,22 @@
 ﻿using BanHang.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace BanHang.Areas.Admin.Controllers
 {
-
+    // [Authorize(Roles ="Admin")]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -58,8 +62,8 @@ namespace BanHang.Areas.Admin.Controllers
 
             return View(dbConect.Users.ToList());
         }
-        
-        
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -74,12 +78,59 @@ namespace BanHang.Areas.Admin.Controllers
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
+
+        [AllowAnonymous]
+        public ActionResult Create()
+        {
+            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
+            return View();
+        }
+        
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(ApplicationUser model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FullName = model.FullName, Phone = model.Phone, Role=model.Role };
+                var result = await UserManager.CreateAsync(user, model.PasswordHash);
+                if (result.Succeeded)
+                {
+                    UserManager.AddToRole(user.Id, model.Role);
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                AddErrors(result);
+            }
+            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+        public ActionResult Edit(string id)
+        {
+            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
+            var item = dbConect.Users.Find(id);
+            return View(item);
+            
+
+        }
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
+
         //
         // POST: /Account/Login
         [HttpPost]
@@ -109,43 +160,58 @@ namespace BanHang.Areas.Admin.Controllers
                     return View(model);
             }
         }
-        [AllowAnonymous]
-        public ActionResult Create()
-        {
-            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
-            return View();
-        }
-        //
-        // POST: /Account/Register
+
+
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CreateAccountViewModel model)
+        public ActionResult Edit(ApplicationUser model)
         {
             if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FullName = model.FullName, Phone = model.Phone};
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+            {   
+
+                var oldUser = UserManager.FindById(model.Id);
+                var oldRoleId = oldUser.Roles.SingleOrDefault().RoleId;
+                var oldRoleName = dbConect.Roles.SingleOrDefault(r => r.Id == oldRoleId).Name;
+                if (oldRoleName != model.Role)
                 {
-                    UserManager.AddToRole(user.Id,model.Role);
-                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
+                    UserManager.RemoveFromRoles(model.Id,oldRoleName);
+                    UserManager.AddToRole(model.Id, model.Role);
                 }
 
-                AddErrors(result);
-            }
-            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
+                dbConect.Users.Attach(model);
+                
 
-            // If we got this far, something failed, redisplay form
+                dbConect.Entry(model).State = EntityState.Modified;
+                
+                dbConect.SaveChanges();
+                
+                return RedirectToAction("Index");
+               
+            }
+           
+            ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
             return View(model);
+
+        }
+        [HttpPost]
+        public ActionResult Delete(string id)
+        {
+            var item = dbConect.Users.Find(id);
+            if (item != null)
+            {
+                dbConect.Users.Remove(item);
+                dbConect.SaveChanges();
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
+        }
+        
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
         }
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -154,13 +220,6 @@ namespace BanHang.Areas.Admin.Controllers
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Index", "Home");
-        }
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError("", error);
-            }
         }
     }
 }

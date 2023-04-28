@@ -12,6 +12,7 @@ namespace BanHang.Models
     {
         public string FullName { get; set; }
         public string Phone { get; set; }
+        public string Role { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -42,5 +43,7 @@ namespace BanHang.Models
         {
             return new ApplicationDbContext();
         }
+
+        
     }
 }
