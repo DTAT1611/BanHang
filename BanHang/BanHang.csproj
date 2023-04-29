@@ -218,6 +218,10 @@
     <Compile Include="Migrations\202304261402054_AccountFixed.designer.cs">
       <DependentUpon>202304261402054_AccountFixed.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202304280112495_test11.cs" />
+    <Compile Include="Migrations\202304280112495_test11.designer.cs">
+      <DependentUpon>202304280112495_test11.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -4276,6 +4280,7 @@
     <Content Include="Views\Products\Partial_ProductSales.cshtml" />
     <Content Include="Views\Menu\_BestSeller.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Account\ThongBaoXacNhanEmail.cshtml" />
     <Content Include="Views\Menu\_MenuLeft.cshtml" />
     <Content Include="Views\Menu\ProductsIndex.cshtml" />
   </ItemGroup>
@@ -4312,6 +4317,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304261402054_AccountFixed.resx">
       <DependentUpon>202304261402054_AccountFixed.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202304280112495_test11.resx">
+      <DependentUpon>202304280112495_test11.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

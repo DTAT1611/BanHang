@@ -79,6 +79,12 @@ namespace BanHang.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    var mdUser = UserManager.FindByName(model.UserName);
+                    if (!mdUser.EmailConfirmed)
+                    {
+                        AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                        return View("ThongBaoXacNhanEmail");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -157,14 +163,14 @@ namespace BanHang.Controllers
                 if (result.Succeeded)
                 {
                     //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    await UserManager.AddToRoleAsync(user.Id, "CUS");
+                    await UserManager.AddToRoleAsync(user.Id, model.Role);
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     //Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return View("ThongBaoXacNhanEmail");
                 }
                 AddErrors(result);
             }
