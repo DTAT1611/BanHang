@@ -1,4 +1,4 @@
-/* JS Document */
+﻿/* JS Document */
 
 /******************************
 
@@ -387,22 +387,22 @@ jQuery(document).ready(function($)
 
 	*/
 
-    function initPriceSlider()
-    {
-		$( "#slider-range" ).slider(
-		{
-			range: true,
-			min: 0,
-			max: 1000,
-			values: [ 0, 580 ],
-			slide: function( event, ui )
+	function initPriceSlider() {
+		$("#slider-range").slider(
 			{
-				$( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-			}
-		});
-			
-		$( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) );
-    }
+				range: true,
+				min: 0,
+				max: 1000000,
+				values: [0, 500000],
+				slide: function (event, ui) {
+					$("#amount").val("đ" + ui.values[0] + " - đ" + ui.values[1]);
+					$('#FromAmount').val(ui.values[0]);
+					$('#ToAmount').val(ui.values[1]);
+				}
+			});
+
+		$("#amount").val("đ" + $("#slider-range").slider("values", 0) + " - đ" + $("#slider-range").slider("values", 1));
+	}
 
     /* 
 

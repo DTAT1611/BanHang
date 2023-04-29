@@ -15,7 +15,7 @@ namespace BanHang
             routes.MapRoute(
                 name: "Products",
              url: "san-pham",
-             defaults: new { controller = "Products", action = "Index", id = UrlParameter.Optional },
+             defaults: new { controller = "Products", action = "Index", alias = UrlParameter.Optional },
              namespaces: new[] { "BanHang.Controllers" }
                 );
 

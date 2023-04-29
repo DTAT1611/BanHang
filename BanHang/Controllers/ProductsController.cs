@@ -14,11 +14,21 @@ namespace BanHang.Controllers
         public ActionResult Index(int? id)
         {
             var items = dbConect.Products.Where(x => x.IsActive && x.IsHome).ToList();
+            if (id > 0)
+            {
+                items = items.Where(x => x.ProductCategoryId == id).ToList();
+            }
             if (id != null)
             {
                 ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Find(id).Alias;
                 items = dbConect.Products.Where(x => x.IsActive && x.IsHome && x.ProductCategoryId == id).ToList();
             }
+            var cate = dbConect.ProductCategories.Find(id);
+            if (cate != null)
+            {
+                ViewBag.CateName = cate.Tiltle;
+            }
+
             return View(items);
         }
         public ActionResult Partial_ItemsByCateId(int id)
