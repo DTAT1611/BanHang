@@ -117,32 +117,32 @@
 
             <!-- Main Navigation -->
             <div class="main_nav_container">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12 text-right">
-                                <div class="logo_container">
-                                    <a href="/">Chợ<span style="color: forestgreen;">Online</span></a>
-                                </div>
-                                <nav class="navbar">
-                                    @Html.Action("MenuTop", "Menu")
-                                    <ul class="navbar_user">
-                                        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                                        <li class="checkout">
-                                            <a href="#">
-                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                                <span id="checkout_items" class="checkout_items">2</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <div class="hamburger_container">
-                                        <i class="fa fa-bars" aria-hidden="true"></i>
-                                    </div>
-                                </nav>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 text-right">
+                            <div class="logo_container">
+                                <a href="/">Chợ<span style="color: forestgreen;">Online</span></a>
                             </div>
+                            <nav class="navbar">
+                                @Html.Action("MenuTop", "Menu")
+                                <ul class="navbar_user">
+                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                    <li class="checkout">
+                                        <a href="#">
+                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                            <span id="checkout_items" class="checkout_items">2</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="hamburger_container">
+                                    <i class="fa fa-bars" aria-hidden="true"></i>
+                                </div>
+                            </nav>
                         </div>
                     </div>
                 </div>
+            </div>
 
         </header>
 
@@ -201,8 +201,20 @@
 
 
 
+        <!--Start of Tawk.to Script-->
+        <script type="text/javascript">
+            var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+            (function () {
+                var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/644d14fa31ebfa0fe7fb1553/1gv6hjtk5';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        </script>
+        <!--End of Tawk.to Script-->
         <!-- Newsletter -->
-
         <div class="newsletter">
             <div class="container">
                 <div class="row">
