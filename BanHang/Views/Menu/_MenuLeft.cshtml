@@ -7,11 +7,11 @@
         {
             if (ViewBag.CateId == item.Id)
             {
-                <li class="active"><a href="/danh-muc-san-pham/@item.Alias-@(item.Id)"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>@item.Tiltle</a></li>
+                <li class="active"><a href="@Url.Action("Index", "Products", new {id=item.Id})"><span><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>@item.Tiltle</a></li>
             }
             else
             {
-                <li><a href="/danh-muc-san-pham/@item.Alias-@(item.Id)">@item.Tiltle</a></li>
+                <li><a href="@Url.Action("Index", "Products", new {id=item.Id})", data-id="@item.Id">@item.Tiltle</a></li>
             }
         }
         @*<li><a href="#">Men</a></li>

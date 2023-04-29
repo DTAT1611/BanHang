@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress />
     <IISExpressSSLPort>44325</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -49,9 +49,6 @@
     <Reference Include="CKFinder, Version=2.4.0.2631, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Content\ckfinder\bin\Release\CKFinder.dll</HintPath>
-    </Reference>
-    <Reference Include="DocumentFormat.OpenXml, Version=2.20.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.2.20.0\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -127,7 +124,6 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EntityFramework">
@@ -214,13 +210,13 @@
     <Compile Include="Migrations\202304150358302_test2.designer.cs">
       <DependentUpon>202304150358302_test2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202304221136096_test3.cs" />
-    <Compile Include="Migrations\202304221136096_test3.designer.cs">
-      <DependentUpon>202304221136096_test3.cs</DependentUpon>
+    <Compile Include="Migrations\202304260735494_FixedDB.cs" />
+    <Compile Include="Migrations\202304260735494_FixedDB.designer.cs">
+      <DependentUpon>202304260735494_FixedDB.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202304231549493_test4.cs" />
-    <Compile Include="Migrations\202304231549493_test4.designer.cs">
-      <DependentUpon>202304231549493_test4.cs</DependentUpon>
+    <Compile Include="Migrations\202304261402054_AccountFixed.cs" />
+    <Compile Include="Migrations\202304261402054_AccountFixed.designer.cs">
+      <DependentUpon>202304261402054_AccountFixed.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202304280112495_test11.cs" />
     <Compile Include="Migrations\202304280112495_test11.designer.cs">
@@ -4232,7 +4228,6 @@
     <Content Include="Content\assets\dist\js\adminlte.js.map" />
     <Content Include="Content\assets\dist\js\adminlte.min.js.map" />
     <Content Include="Areas\Admin\Views\Account\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Account\Login.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -4284,10 +4279,10 @@
     <Content Include="Views\Products\Partial_ItemsByCateId.cshtml" />
     <Content Include="Views\Products\Partial_ProductSales.cshtml" />
     <Content Include="Views\Menu\_BestSeller.cshtml" />
-    <Content Include="Views\Menu\ProductsIndex.cshtml" />
-    <Content Include="Views\Menu\_MenuLeft.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Account\ThongBaoXacNhanEmail.cshtml" />
+    <Content Include="Views\Menu\_MenuLeft.cshtml" />
+    <Content Include="Views\Menu\ProductsIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4317,11 +4312,11 @@
     <EmbeddedResource Include="Migrations\202304150358302_test2.resx">
       <DependentUpon>202304150358302_test2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202304221136096_test3.resx">
-      <DependentUpon>202304221136096_test3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202304260735494_FixedDB.resx">
+      <DependentUpon>202304260735494_FixedDB.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202304231549493_test4.resx">
-      <DependentUpon>202304231549493_test4.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202304261402054_AccountFixed.resx">
+      <DependentUpon>202304261402054_AccountFixed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304280112495_test11.resx">
       <DependentUpon>202304280112495_test11.cs</DependentUpon>

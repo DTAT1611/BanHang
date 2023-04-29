@@ -1,5 +1,4 @@
 ﻿using BanHang.Models;
-using DocumentFormat.OpenXml.ExtendedProperties;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
