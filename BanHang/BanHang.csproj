@@ -195,6 +195,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -4290,6 +4291,9 @@
     <Content Include="Views\AddToCart\AddToCart.cshtml" />
     <Content Include="Views\AddToCart\AddToCartPartial.cshtml" />
     <Content Include="Views\AddToCart\EditAddToCart.cshtml" />
+    <Content Include="Views\News\Partial_News_Home.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
+    <Content Include="Views\News\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
