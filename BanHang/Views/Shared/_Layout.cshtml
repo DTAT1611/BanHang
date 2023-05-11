@@ -12,8 +12,11 @@
     <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
     <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/OwlCarousel2-2.2.1/animate.css">
     <link rel="stylesheet" type="text/css" href="~/Content/assets/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+    
+    
     <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/responsive.css">
+    @*@RenderSection("css", required: false)*@
+    <script src="~/Scripts/jsShopping.js"></script>
     @*@Styles.Render("~/Content/css")*@
     @Scripts.Render("~/bundles/modernizr")
 
@@ -89,6 +92,7 @@
                                                     <li class="Role">
                                                         <a href="~/Admin/Home/Index">Quản Lý Trang</a>
                                                     </li>
+                                                    @Html.Action("AddToCartPartial", "AddToCart")
                                                     <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link"><i class="fa fa-user-plus" aria-hidden="true"></i>Log Off</a></li>
                                                 </ul>
                                             }
@@ -100,7 +104,7 @@
 
                                                 </a>
                                                 <ul class="account_selection">
-
+                                                    @Html.Action("AddToCartPartial", "AddToCart")
                                                     <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log Off</a></li>
                                                 </ul>
                                             }
@@ -115,8 +119,8 @@
                 </div>
             </div>
 
-            <!-- Main Navigation -->
-            <div class="main_nav_container">
+            <!--<!-- Main Navigation -->-->
+            <!--@*<div class="main_nav_container">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12 text-right">
@@ -142,7 +146,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@-->
 
         </header>
 

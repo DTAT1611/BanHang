@@ -31,6 +31,14 @@ namespace BanHang.Controllers
 
             return View(items);
         }
+        public ActionResult Details(int id, FormCollection f)
+        {
+            Product p = dbConect.Products.SingleOrDefault(n => n.Id == id);
+            
+            
+            ViewBag.DanhMuc = dbConect.ProductCategories.Single(n => n.Id == p.Id).Tiltle;
+            return View(dbConect.Products.Find(id));
+        }
         public ActionResult Partial_ItemsByCateId(int id)
         {
             ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Find(id).Alias;
