@@ -1,0 +1,48 @@
+﻿@using BanHang.Models
+@model List<BanHang.Models.EF.AddToCart>
+@{
+    ViewBag.Title = "EditAddToCart";
+}
+
+
+<table>
+    <tr>
+        <td>Mã  </td>
+
+        <td>Tên  </td>
+
+
+
+        <td>Đơn giá </td>
+
+        <td>Số lượng </td>
+
+        <td>Thành Tiền </td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.iId</td>
+
+            <td>@item.stitle</td>
+
+
+
+            <td>@item.dprice VND</td>
+            @using (Html.BeginForm("UpdateAddToCart", "AddToCart", new { @ip = item.iId, @strURL = Request.Url.ToString() }))
+            {
+                <td>@Html.TextBox("txtsoluong", item.isoluong)</td>
+
+
+                <td>@item.ThanhTien VND</td>
+                <td><input type="submit" value="Cập nhật" /></td>
+
+                <td>@Html.ActionLink("Delete", "DeleteAddToCart", new { ip = item.iId })</td>
+            }
+
+
+
+
+        </tr>
+    }
+</table>

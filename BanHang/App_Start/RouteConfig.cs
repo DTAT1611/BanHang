@@ -18,6 +18,12 @@ namespace BanHang
              defaults: new { controller = "Products", action = "Index", alias = UrlParameter.Optional },
              namespaces: new[] { "BanHang.Controllers" }
                 );
+            routes.MapRoute(
+                name: "detailProducts",
+             url: "chi-tiet/{alias}-p{id}",
+             defaults: new { controller = "Products", action = "Details", alias = UrlParameter.Optional },
+             namespaces: new[] { "BanHang.Controllers" }
+                );
 
             routes.MapRoute(
                 name: "Default",
