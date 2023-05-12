@@ -140,6 +140,9 @@ namespace BanHang.Models
     public class ResetPasswordViewModel
     {
         [Required]
+        [Display(Name = "Tài khoản")]
+        public string UserName { get; set; }
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
