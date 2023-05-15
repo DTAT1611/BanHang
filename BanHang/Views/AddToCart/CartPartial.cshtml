@@ -1,0 +1,29 @@
+﻿@model IEnumerable<BanHang.Models.EF.AddToCart>
+@using BanHang.Common
+
+@if(Model!=null&&Model.Any())
+{
+    <h3><span>@Model.Count()</span> Giỏ Hàng</h3>
+    
+
+    decimal tongtien= 0;
+<div style="border:1px solid #000000">
+    <table class="table">
+        @foreach (var item in Model)
+        {
+            tongtien += item.ThanhTien;
+            <tr>
+                <td>@item.stitle</td>
+                <td>@Common.FormatNumber(item.ThanhTien, 0)</td>
+            </tr>
+
+        }
+        <tr>
+            <td>
+                tổng tiền
+            </td>
+            <td>@Common.FormatNumber(tongtien, 0)</td>
+        </tr>
+    </table>
+</div>
+}

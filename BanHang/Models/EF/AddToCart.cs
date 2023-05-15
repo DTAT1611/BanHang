@@ -9,14 +9,15 @@ namespace BanHang.Models.EF
     public class AddToCart
 
     {
+        public List<AddToCart> item { get; set; }
         private ApplicationDbContext dbConect = new ApplicationDbContext();
         public int iId { get; set; }
         public string stitle { get; set; }
         
         public int isoluong { get; set; }
-        public double dprice { get; set; }
+        public decimal dprice { get; set; }
         
-        public double ThanhTien
+        public decimal ThanhTien
         {
             get { return dprice * isoluong; }
         }
@@ -26,11 +27,16 @@ namespace BanHang.Models.EF
             Product p = dbConect.Products.Single(n => n.Id == iId);
             stitle = p.Title;
             isoluong = int.Parse(f["txtsoluong"].ToString());
-            dprice = double.Parse(p.Price.ToString());
+            dprice = decimal.Parse(p.Price.ToString());
            
             
                         
 
         }
+        public AddToCart()
+        {
+            item = new List<AddToCart>();
+        }
+        
     }
 }

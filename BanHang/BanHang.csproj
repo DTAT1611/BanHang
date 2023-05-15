@@ -212,17 +212,21 @@
     <Compile Include="Migrations\202304150358302_test2.designer.cs">
       <DependentUpon>202304150358302_test2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202304260735494_FixedDB.cs" />
-    <Compile Include="Migrations\202304260735494_FixedDB.designer.cs">
-      <DependentUpon>202304260735494_FixedDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202304261402054_AccountFixed.cs" />
-    <Compile Include="Migrations\202304261402054_AccountFixed.designer.cs">
-      <DependentUpon>202304261402054_AccountFixed.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202304280112495_test11.cs" />
     <Compile Include="Migrations\202304280112495_test11.designer.cs">
       <DependentUpon>202304280112495_test11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305140650430_UpdatePayment.cs" />
+    <Compile Include="Migrations\202305140650430_UpdatePayment.designer.cs">
+      <DependentUpon>202305140650430_UpdatePayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305141224091_decimal.cs" />
+    <Compile Include="Migrations\202305141224091_decimal.designer.cs">
+      <DependentUpon>202305141224091_decimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305150541024_updateEmailOrder.cs" />
+    <Compile Include="Migrations\202305150541024_updateEmailOrder.designer.cs">
+      <DependentUpon>202305150541024_updateEmailOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -242,6 +246,7 @@
     <Compile Include="Models\EF\SystemSetting.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -4043,6 +4048,8 @@
     <Content Include="Content\client\plugins\uplot\uPlot.iife.min.js" />
     <Content Include="Content\client\plugins\uplot\uPlot.min.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\template\send1.html" />
+    <Content Include="Content\template\send2.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -4294,6 +4301,10 @@
     <Content Include="Views\News\Partial_News_Home.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\News\Detail.cshtml" />
+    <Content Include="Views\AddToCart\CheckOut.cshtml" />
+    <Content Include="Views\AddToCart\CartPartial.cshtml" />
+    <Content Include="Views\AddToCart\CheckOutPartial.cshtml" />
+    <Content Include="Views\AddToCart\CheckOutSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4323,14 +4334,17 @@
     <EmbeddedResource Include="Migrations\202304150358302_test2.resx">
       <DependentUpon>202304150358302_test2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202304260735494_FixedDB.resx">
-      <DependentUpon>202304260735494_FixedDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202304261402054_AccountFixed.resx">
-      <DependentUpon>202304261402054_AccountFixed.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202304280112495_test11.resx">
       <DependentUpon>202304280112495_test11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305140650430_UpdatePayment.resx">
+      <DependentUpon>202305140650430_UpdatePayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305141224091_decimal.resx">
+      <DependentUpon>202305141224091_decimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305150541024_updateEmailOrder.resx">
+      <DependentUpon>202305150541024_updateEmailOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
