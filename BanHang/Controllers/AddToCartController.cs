@@ -3,6 +3,7 @@ using BanHang.Models.EF;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -33,7 +34,130 @@ namespace BanHang.Controllers
                 return RedirectToAction("Index", "Home");
             }
             List<AddToCart> LGH = TakeAddToCart();
+            if(LGH.Count==0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View(LGH);
+        }
+        public ActionResult CheckOut()
+        {
+
+            List<AddToCart> LGH = TakeAddToCart();
+            if (LGH.Count == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View();
+
+        }
+        public ActionResult CheckOutSuccess()
+        {
+
+            
+            return View();
+
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CheckOut(OrderViewModel o)
+        {
+
+             
+            var code = new { Success = false, Code = -1 };
+            if(ModelState.IsValid)
+            {
+                decimal sum = 0;
+
+                List<AddToCart> LGH = TakeAddToCart();
+                Order order = new Order();
+                order.CustomerName = o.CustomerName;
+                order.Address = o.Address;
+                order.Phone = o.Phone;
+                foreach (var i in LGH) {
+                    if (i != null) { 
+                    Product p = dbConect.Products.Find(i.iId);
+                    int s = 0;
+                    s = p.Quantity - i.isoluong;
+                    p.Quantity= s ;
+                    
+                    
+                    order.OrderDetails.Add(new OrderDetail {
+                        ProductId = i.iId,
+                        Quantity = i.isoluong,
+                        Price = i.dprice
+                          
+                    }) ;
+                    
+                    sum = sum + (i.dprice * i.isoluong);
+                    }
+                }
+                
+                order.TotalAmount = sum;
+                order.TypePayment = o.TypePayment;
+                order.CreatedDate = DateTime.Now;
+                order.ModifierDate = DateTime.Now;
+                order.CreatedBy = o.Phone;
+                Random rd = new Random();
+                order.Code = "Đơn Hàng" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);//todo:add more random
+                dbConect.Orders.Add(order);
+                
+                dbConect.SaveChanges();
+                var strSanPham = "";
+                var tongtien = decimal.Zero;
+                foreach (var item in LGH)
+                {
+                    strSanPham += "<tr>";
+                    strSanPham += "<td>" + item.stitle + "</td>";
+                    strSanPham += "<td>" + item.isoluong + "</td>";
+                    strSanPham += "<td>" + BanHang.Common.Common.FormatNumber(item.ThanhTien, 0) + "<td>";
+                    strSanPham += "</tr>";
+                    tongtien += item.dprice * item.isoluong;
+
+                }
+
+                string contentcus = System.IO.File.ReadAllText(Server.MapPath("~/Content/template/send2.html"));
+                contentcus = contentcus.Replace("{{MaDon}}", order.Code);
+                contentcus = contentcus.Replace("{{SanPham}}", strSanPham);
+                contentcus = contentcus.Replace("{{NgayDat}}", DateTime.Now.ToString("dd/MM/yyyy"));
+                contentcus = contentcus.Replace("{{TenKhachHang}}", order.CustomerName);
+                contentcus = contentcus.Replace("{{Phone}}", order.Phone);
+                contentcus = contentcus.Replace("{{Email}}", o.Email);
+                contentcus = contentcus.Replace("{{DiaChiNhanHang}}", order.Address);
+                contentcus = contentcus.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
+                BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng #" + order.Code, contentcus.ToString(), o.Email);
+                string contentad = System.IO.File.ReadAllText(Server.MapPath("~/Content/template/send1.html"));
+                contentad = contentad.Replace("{{MaDon}}", order.Code);
+                contentad = contentad.Replace("{{SanPham}}", strSanPham);
+                contentad = contentad.Replace("{{NgayDat}}", DateTime.Now.ToString("dd/MM/yyyy"));
+                contentad = contentad.Replace("{{TenKhachHang}}", order.CustomerName);
+                contentad = contentad.Replace("{{Phone}}", order.Phone);
+                contentad = contentad.Replace("{{Email}}", o.Email);
+                contentad = contentad.Replace("{{DiaChiNhanHang}}", order.Address);
+                contentad = contentad.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
+                BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng mới #" + order.Code, contentad.ToString(), ConfigurationManager.AppSettings["Email"]);
+                LGH.Clear();
+                return RedirectToAction("CheckOutSuccess");
+                
+            }
+
+
+            return Json(code);
+
+        }
+        public ActionResult CheckOutPartial()
+        {
+            return PartialView();
+        }
+        public ActionResult CartPartial()
+        {
+            if (Session["AddToCart"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            List<AddToCart> LGH = TakeAddToCart();
+            return View(LGH);
+           
         }
         private int TongSoLuong()
         {
@@ -45,9 +169,9 @@ namespace BanHang.Controllers
             }
             return iTongSoLuong;
         }
-        private double TongTien()
+        private decimal TongTien()
         {
-            double dTongTien = 0;
+            decimal dTongTien=0;
             List<AddToCart> LGH = Session["AddToCart"] as List<AddToCart>;
             if (LGH != null)
             {
@@ -82,7 +206,13 @@ namespace BanHang.Controllers
             else if(gh!=null)
             {
                 sl = int.Parse(f["txtsoluong"].ToString());
-                gh.isoluong = gh.isoluong + sl;
+                if (sl > 0 && sl <= p.Quantity-gh.isoluong)
+                {
+                    
+                    gh.isoluong = gh.isoluong + sl;
+                }
+
+                
                 return Redirect(strURL);
             }
             return Redirect(strURL);
@@ -150,6 +280,7 @@ namespace BanHang.Controllers
             if (gh != null)
             {
                 LGH.RemoveAll(n => n.iId == gh.iId);
+                return RedirectToAction("Index", "Home");
 
             }
             if (LGH.Count == 0)
