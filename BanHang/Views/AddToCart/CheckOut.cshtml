@@ -1,0 +1,76 @@
+﻿ 
+@{
+    ViewBag.Title = "CheckOut";
+}
+<style>
+    .error{
+        color:red;  
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_responsive.css">
+<div>
+    <div class="container single_product_container">
+        <div class="row">
+            <div style=" left:50px; top:70px" class="col-lg-12">
+                <h2>Thanh Toán</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="show_success"></div>
+            <div class="col-md-9">
+                @Html.Action("CheckOutPartial", "AddToCart")
+            </div>
+            <div class="col-md-4" style=" left:850px; top:-250px">
+                @Html.Action("CartPartial", "AddToCart")
+            </div>
+
+        </div>
+        
+        
+
+    </div>
+
+</div>
+
+
+
+
+@section scripts{
+    <script src="~/Content/assets/js/single_custom.js"></script>
+    <script>
+        function OnFailure(rs) {
+            if (rs.Success) {
+                $('#show_success').html("thất bại ")
+            }
+        }
+        $(document).ready(function () {
+            $('#myForm').validate({
+                rules: {
+                    'CustomerName': {
+                        required: true
+                    },
+                    'Phone': {
+                        required: true
+                    },
+                    'Address': {
+                        required: true  
+                    },
+                    'Email': {
+                        required: true,
+                        email: true
+                    }
+
+                },
+                messages: {
+                    'CustomerName': 'không được để trống',
+                    'Phone': 'không được để trống',
+                    'Address': 'không được để trống',
+                    'Email': 'vui lòng nhập đúng email'
+                }
+            });
+        });
+    </script>
+}

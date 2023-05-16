@@ -73,11 +73,13 @@
                         @using (Html.BeginForm("addAddToCart", "AddToCart", new { @intid = Model.Id, @strURL = Request.Url.ToString() }))
                         {
 
-                            <div>
-                                @Html.TextBox("txtsoluong", Model.Quantity = 1)
-                            </div>
+                            
+                                
+                                @Html.TextBox("txtsoluong", Model.Quantity=1 )
+                                
+                            
 
-                            <input type="submit" value="Mua" id="btnGioHang" class="btn btn-primary" />
+                            <input type="submit" value="Vào giỏ hàng" id="btnGioHang" class="btn btn-primary" />
 
 
                         }
