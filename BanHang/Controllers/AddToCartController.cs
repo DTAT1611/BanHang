@@ -74,6 +74,7 @@ namespace BanHang.Controllers
                 order.CustomerName = o.CustomerName;
                 order.Address = o.Address;
                 order.Phone = o.Phone;
+                order.Email = o.Email;
                 foreach (var i in LGH) {
                     if (i != null) { 
                     Product p = dbConect.Products.Find(i.iId);
