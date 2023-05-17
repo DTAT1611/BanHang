@@ -1,0 +1,72 @@
+﻿
+@model List<BanHang.Models.EF.AddToCart>
+@{
+    ViewBag.Title = "Add To Cart";
+
+}
+
+@*<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_responsive.css">*@
+<h2 style="position: relative; left: 80px">Giỏ Hàng</h2>
+
+
+<table style="border: 1px solid black; width: 50%;position: relative; left: 80px ">
+
+    <tr style="border: 1px solid black; text-align: center">
+
+        <td style="border: 1px solid black; text-align: center">ID    </td>
+
+        <td style="border: 1px solid black; text-align: center">Tên    </td>
+
+        <td style="border: 1px solid black; text-align: center">Đơn giá    </td>
+
+        <td style="border: 1px solid black; text-align: center">Số lượng   </td>
+
+
+        <td style="border: 1px solid black; text-align: center">Thành Tiền    </td>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr style="border: 1px solid black">
+            <td style="border: 1px solid black; text-align: center">@item.iId</td>
+
+            <td style="border: 1px solid black; text-align: center">@item.stitle</td>
+
+
+
+            <td style="border: 1px solid black; text-align: center">@item.dprice VND</td>
+
+            <td style="border: 1px solid black; text-align: center">@item.isoluong</td>
+
+
+            <td style="border: 1px solid black; text-align: center">@item.ThanhTien VND</td>
+
+        </tr>
+
+
+
+
+    }
+
+    
+</table>
+<table style="position: relative; left: 80px ">
+    <tr>
+        <td style="text-align: right " colspan="6">
+            @Html.ActionLink("Edit Gio Hang", "EditAddToCart")
+        </td>
+        <td colspan="6" >
+            <a href="@Url.Action("CheckOut","AddToCart")"><input type="submit" value="Đặt hàng" /></a>
+
+        </td>
+    </tr>
+    
+</table>
+
+    @section scripts{
+        <script src="~/Content/assets/js/single_custom.js"></script>
+
+    }

@@ -1,0 +1,99 @@
+﻿@model BanHang.Models.EF.Product
+@{
+    ViewBag.Title = "Details";
+}
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_responsive.css">
+@if (Model != null)
+{
+    <div class="container single_product_container">
+        <div class="row">
+            <div class="col">
+
+                <!-- Breadcrumbs -->
+
+                <div class="breadcrumbs d-flex flex-row align-items-center">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categories.html"><i class="fa fa-angle-right" aria-hidden="true"></i>Men's</a></li>
+                        <li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Single Product</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-7">
+                @if (Model.ProductImage != null && Model.ProductImage.Any())
+                {
+                    <div class="single_product_pics">
+                        <div class="row">
+                            <div class="col-lg-3 thumbnails_col order-lg-1 order-2">
+                                <div class="single_product_thumbnails">
+                                    <ul>
+                                        @foreach (var item in Model.ProductImage)
+                                        {
+                                            <li><img src="@item.Image" alt="" data-image="@item.Image"></li>
+                                        }
+
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 image_col order-lg-2 order-1">
+                                <div class="single_product_image">
+                                    <div class="single_product_image_background" style="background-image:url(@Model.ProductImage.FirstOrDefault(x=>x.IsDefault).Image"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-lg-5">
+                <div class="product_details">
+                    <div class="product_details_title">
+                        <h2>Tên Sản Phẩm: @Model.Title</h2>
+                        <h3>CODE-SP: @Model.ProductCode</h3>
+
+                    </div>
+                    <div>Danh Mục: @ViewBag.DanhMuc</div>
+
+                    <div>Giá: @Model.Price</div>
+                    <div>Mổ tả:@Model.Detail</div>
+                    <div>số lượng:@Model.Quantity</div>
+                    <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+
+
+
+
+                        @using (Html.BeginForm("addAddToCart", "AddToCart", new { @intid = Model.Id, @strURL = Request.Url.ToString() }))
+                        {
+
+                            
+                                
+                                @Html.TextBox("txtsoluong", Model.Quantity=1 )
+                                
+                            
+
+                            <input type="submit" value="Vào giỏ hàng" id="btnGioHang" class="btn btn-primary" />
+
+
+                        }
+
+                        <div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+}
+@section scripts{
+    <script src="~/Content/assets/js/single_custom.js"></script>
+    
+}
