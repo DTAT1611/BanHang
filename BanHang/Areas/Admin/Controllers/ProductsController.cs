@@ -179,6 +179,7 @@ namespace BanHang.Areas.Admin.Controllers
                 dbConect.SaveChanges();
                 return Json(new { success = true, IsHome = item.IsHome });
             }
+            
 
             return Json(new { success = false });
         }

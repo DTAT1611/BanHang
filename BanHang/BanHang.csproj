@@ -244,6 +244,7 @@
     <Compile Include="Models\EF\ProductCategories.cs" />
     <Compile Include="Models\EF\ProductImage.cs" />
     <Compile Include="Models\EF\SystemSetting.cs" />
+    <Compile Include="Models\EF\VnPayLibrary.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
@@ -4305,6 +4306,7 @@
     <Content Include="Views\AddToCart\CartPartial.cshtml" />
     <Content Include="Views\AddToCart\CheckOutPartial.cshtml" />
     <Content Include="Views\AddToCart\CheckOutSuccess.cshtml" />
+    <Content Include="Views\AddToCart\VnpayReturn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

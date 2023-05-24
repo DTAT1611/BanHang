@@ -47,6 +47,13 @@
             }
         }
         $(document).ready(function () {
+            $('body').on('change', '#drTypePayment', function () {
+                var type = $(this).val();
+                $('#load_form_payment').hide();
+                if (type == "2") {
+                    $('#load_form_payment').show();
+                }
+            });
             $('#myForm').validate({
                 rules: {
                     'CustomerName': {
@@ -56,19 +63,18 @@
                         required: true
                     },
                     'Address': {
-                        required: true  
+                        required: true
                     },
                     'Email': {
                         required: true,
                         email: true
                     }
-
                 },
                 messages: {
-                    'CustomerName': 'không được để trống',
-                    'Phone': 'không được để trống',
-                    'Address': 'không được để trống',
-                    'Email': 'vui lòng nhập đúng email'
+                    'CustomerName': 'Bạn khổng để trống trường này',
+                    'Phone': 'Bạn khổng để trống trường này',
+                    'Address': 'Bạn khổng để trống trường này',
+                    'Email': 'Email chưa hợp lệ'
                 }
             });
         });
