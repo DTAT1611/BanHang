@@ -25,6 +25,12 @@ namespace BanHang
              namespaces: new[] { "BanHang.Controllers" }
                 );
             routes.MapRoute(
+       name: "vnpay_return",
+       url: "vnpay_return",
+       defaults: new { controller = "AddToCart", action = "VnpayReturn", alias = UrlParameter.Optional },
+       namespaces: new[] { "BanHang.Controllers" }
+   );
+            routes.MapRoute(
             name: "NewsList",
             url: "tin-tuc",
             defaults: new { controller = "News", action = "Index", alias = UrlParameter.Optional },
