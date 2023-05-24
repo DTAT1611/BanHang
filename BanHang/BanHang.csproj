@@ -190,6 +190,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductImageController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ShiperController.cs" />
     <Compile Include="Areas\Admin\ViewModels\ProductIndexViewModel.cs" />
     <Compile Include="Common\Common.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Models\EF\Product.cs" />
     <Compile Include="Models\EF\ProductCategories.cs" />
     <Compile Include="Models\EF\ProductImage.cs" />
+    <Compile Include="Models\EF\Shipper.cs" />
     <Compile Include="Models\EF\SystemSetting.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -4243,6 +4245,8 @@
     <Content Include="Areas\Admin\Views\Account\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Order\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Shiper\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shiper\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

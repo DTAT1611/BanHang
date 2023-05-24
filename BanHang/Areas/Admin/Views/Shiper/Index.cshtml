@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BanHang.Models.EF.Shipper>
+@{
+    ViewBag.Title = "Danh sách shipper";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <a href="@Url.Action("Create")" class="btn btn-primary">Tạo mới</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên</th>
+            <th>Email</th>
+            <th>Điện thoại</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var shipper in Model)
+        {
+            <tr>
+                <td>@shipper.Id</td>
+                <td>@shipper.Name</td>
+                <td>@shipper.Email</td>
+                <td>@shipper.Phone</td>
+                <td>
+                    <form action="@Url.Action("Delete", new { id = shipper.Id })" method="post">
+                        <a href="@Url.Action("Edit", new { id = shipper.Id })" class="btn btn-primary">Chỉnh sửa</a>
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
