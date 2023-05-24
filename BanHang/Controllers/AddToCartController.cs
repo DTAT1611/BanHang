@@ -70,29 +70,25 @@ namespace BanHang.Controllers
                 {
                     if (vnp_ResponseCode == "00" && vnp_TransactionStatus == "00")
                     {
-                        //var itemOrder = dbConect.Orders.FirstOrDefault(x => x.Code == orderCode);
-                        //if (itemOrder != null)
-                        //{
-
-                        //    dbConect.Orders.Attach(itemOrder);
-                        //    dbConect.Entry(itemOrder).State = System.Data.Entity.EntityState.Modified;
-                        //    dbConect.SaveChanges();
-                        //}
-                        //Thanh toan thanh cong
+                        var itemOrder = dbConect.Orders.FirstOrDefault(x => x.Code == orderCode);
+                        if (itemOrder != null)
+                        {
+                            itemOrder.Status = 2;
+                            dbConect.SaveChanges();
+                        }
+                        
                         ViewBag.InnerText = "Giao dịch được thực hiện thành công. Cảm ơn quý khách đã sử dụng dịch vụ";
-                        //log.InfoFormat("Thanh toan thanh cong, OrderId={0}, VNPAY TranId={1}", orderId, vnpayTranId);
+                        
                     }
                     else
                     {
-                        //Thanh toan khong thanh cong. Ma loi: vnp_ResponseCode
+                        
                         ViewBag.InnerText = "Có lỗi xảy ra trong quá trình xử lý.Mã lỗi: " + vnp_ResponseCode;
-                        //log.InfoFormat("Thanh toan loi, OrderId={0}, VNPAY TranId={1},ResponseCode={2}", orderId, vnpayTranId, vnp_ResponseCode);
+                        
                     }
-                    //displayTmnCode.InnerText = "Mã Website (Terminal ID):" + TerminalID;
-                    //displayTxnRef.InnerText = "Mã giao dịch thanh toán:" + orderId.ToString();
-                    //displayVnpayTranNo.InnerText = "Mã giao dịch tại VNPAY:" + vnpayTranId.ToString();
+                    
                     ViewBag.ThanhToanThanhCong = "Số tiền thanh toán (VND):" + vnp_Amount.ToString();
-                    //displayBankCode.InnerText = "Ngân hàng thanh toán:" + bankCode;
+                    
                 }
             }
 
@@ -122,7 +118,7 @@ namespace BanHang.Controllers
         {
 
 
-            var code = new { Success = false, Code = -1, Url = "" };
+            
             if (ModelState.IsValid)
             {
                 decimal sum = 0;
@@ -133,6 +129,7 @@ namespace BanHang.Controllers
                 order.Address = o.Address;
                 order.Phone = o.Phone;
                 order.Email = o.Email;
+                order.Status = 1;
                 foreach (var i in LGH) {
                     if (i != null) { 
                     Product p = dbConect.Products.Find(i.iId);
@@ -159,6 +156,7 @@ namespace BanHang.Controllers
                 order.TypePayment = o.TypePayment;
                 order.CreatedDate = DateTime.Now;
                 order.ModifierDate = DateTime.Now;
+                
                 order.CreatedBy = o.Phone;
                 Random rd = new Random();
                 order.Code = "Đơn Hàng" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);//todo:add more random
