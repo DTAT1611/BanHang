@@ -56,8 +56,8 @@
                         <th class="text-center">Số tiền</th>
                         <th class="text-center">Ngày tạo</th>
                         <th class="text-center">Ngày chỉnh sửa</th>
-                        @*<th class="text-center">Hình thức trả tiền</th>*@
-                        @*<th class="text-center">Đã trả tiền</th>*@
+                        <th class="text-center">Hình thức trả tiền</th>
+                        <th class="text-center">tình trạng</th>
                         <th class="text-center"></th>
                     </tr>
                 </thead>
@@ -76,12 +76,16 @@
                                 <td class="text-center">@item.Phone</td>
                                 <td class="text-center">@item.Address</td>
                                 <td class="text-center">@item.TotalAmount</td>
+
                                 <td class="text-center">@item.CreatedDate</td>
                                 <td class="text-center">@item.ModifierDate</td>
+                                <td class="text-center">@(item.TypePayment==1?"COD":"Chuyển khoản")</td>
+                                <td class="text-center">@(item.Status == 1? "chưa thanh toán" : "đã thanh toán")</td>
+                                
 
                                 @*<td class="text-center">
-                                    <a href="#" data-id="@item.Id" class="btnActive"> @Html.Raw(strCheck) </a>
-                                </td>*@
+            <a href="#" data-id="@item.Id" class="btnActive"> @Html.Raw(strCheck) </a>
+        </td>*@
                                 <td>
                                     <a href="/admin/Order/Details/@item.Id" class="btn btn-sm btn-primary">Chi tiết</a>
                                     <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>

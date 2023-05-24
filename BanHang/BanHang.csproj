@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44325</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -229,6 +228,10 @@
     <Compile Include="Migrations\202305150541024_updateEmailOrder.cs" />
     <Compile Include="Migrations\202305150541024_updateEmailOrder.designer.cs">
       <DependentUpon>202305150541024_updateEmailOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305240836432_status.cs" />
+    <Compile Include="Migrations\202305240836432_status.designer.cs">
+      <DependentUpon>202305240836432_status.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -4352,6 +4355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305150541024_updateEmailOrder.resx">
       <DependentUpon>202305150541024_updateEmailOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305240836432_status.resx">
+      <DependentUpon>202305240836432_status.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
