@@ -1,13 +1,17 @@
 ﻿using BanHang.Models;
 using BanHang.Models.EF;
 using Microsoft.Ajax.Utilities;
+using Microsoft.Owin.BuilderProperties;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
+using System.Xml.Linq;
 
 namespace BanHang.Controllers
 {
@@ -42,9 +46,12 @@ namespace BanHang.Controllers
         }
         public ActionResult VnpayReturn()
         {
+            List<AddToCart> LGH = TakeAddToCart();
+
+            
             if (Request.QueryString.Count > 0)
             {
-                string vnp_HashSecret = ConfigurationManager.AppSettings["vnp_HashSecret"]; //Chuoi bi mat
+                string vnp_HashSecret = ConfigurationManager.AppSettings["vnp_HashSecret"];
                 var vnpayData = Request.QueryString;
                 VnPayLibrary vnpay = new VnPayLibrary();
 
@@ -68,25 +75,96 @@ namespace BanHang.Controllers
                 bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, vnp_HashSecret);
                 if (checkSignature)
                 {
+                    Order order = new Order();
+                    foreach (var i in LGH)
+                    {
+                        if (i != null)
+                        {
+                            Product p = dbConect.Products.Find(i.iId);
+                            int s = 0;
+                            s = p.Quantity - i.isoluong;
+                            p.Quantity = s;
+                            if (p.Quantity <= 0)
+                            {
+                                p.IsHome = false;
+                            }
+
+
+                            order.OrderDetails.Add(new OrderDetail
+                            {
+                                ProductId = i.iId,
+                                Quantity = i.isoluong,
+                                Price = i.dprice
+
+                            });
+
+                            
+                        }
+                    }
+                    order.CustomerName = Convert.ToString(TempData["CustomerName"]);
+                    order.Email = Convert.ToString(TempData["Email"]);
+                    order.Address = Convert.ToString(TempData["Address"]);
+                    order.Phone= Convert.ToString(TempData["Phone"]);
+                    order.TotalAmount = Convert.ToDecimal(TempData["TotalAmount"]);
+                    order.Code = orderCode;
+                    order.TypePayment = 2;
+                    order.Status = 2;
+                    order.CreatedDate= DateTime.Now;
+                    order.ModifierDate = DateTime.Now;
+                    order.CreatedBy =order.CustomerName;
+                    var strSanPham = "";
+                    var tongtien = decimal.Zero;
+                    foreach (var item in LGH)
+                    {
+                        strSanPham += "<tr>";
+                        strSanPham += "<td>" + item.stitle + "</td>";
+                        strSanPham += "<td>" + item.isoluong + "</td>";
+                        strSanPham += "<td>" + BanHang.Common.Common.FormatNumber(item.ThanhTien, 0) + "<td>";
+                        strSanPham += "</tr>";
+                        tongtien += item.dprice * item.isoluong;
+
+                    }
+                    dbConect.Orders.Add(order);
+
+                    dbConect.SaveChanges();
+                    string contentcus = System.IO.File.ReadAllText(Server.MapPath("~/Content/template/send2.html"));
+                    contentcus = contentcus.Replace("{{MaDon}}", orderCode);
+                    contentcus = contentcus.Replace("{{SanPham}}", strSanPham);
+                    contentcus = contentcus.Replace("{{NgayDat}}", DateTime.Now.ToString("dd/MM/yyyy"));
+                    contentcus = contentcus.Replace("{{TenKhachHang}}", order.CustomerName);
+                    contentcus = contentcus.Replace("{{Phone}}", order.Phone);
+                    contentcus = contentcus.Replace("{{Email}}", order.Email);
+                    contentcus = contentcus.Replace("{{DiaChiNhanHang}}", order.Address);
+                    contentcus = contentcus.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
+                    BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng #" + order.Code, contentcus.ToString(), order.Email);
+                    string contentad = System.IO.File.ReadAllText(Server.MapPath("~/Content/template/send1.html"));
+                    contentad = contentad.Replace("{{MaDon}}", order.Code);
+                    contentad = contentad.Replace("{{SanPham}}", strSanPham);
+                    contentad = contentad.Replace("{{NgayDat}}", DateTime.Now.ToString("dd/MM/yyyy"));
+                    contentad = contentad.Replace("{{TenKhachHang}}", order.CustomerName);
+                    contentad = contentad.Replace("{{Phone}}", order.Phone);
+                    contentad = contentad.Replace("{{Email}}", order.Email);
+                    contentad = contentad.Replace("{{DiaChiNhanHang}}", order.Address);
+                    contentad = contentad.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
+                    BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng mới #" + order.Code, contentad.ToString(), ConfigurationManager.AppSettings["Email"]);
+                    LGH.Clear();
+
+
+
                     if (vnp_ResponseCode == "00" && vnp_TransactionStatus == "00")
                     {
-                        var itemOrder = dbConect.Orders.FirstOrDefault(x => x.Code == orderCode);
-                        if (itemOrder != null)
-                        {
-                            itemOrder.Status = 2;
-                            dbConect.SaveChanges();
-                        }
-                        
+
                         ViewBag.InnerText = "Giao dịch được thực hiện thành công. Cảm ơn quý khách đã sử dụng dịch vụ";
-                        
+
                     }
                     else
                     {
-                        
+
                         ViewBag.InnerText = "Có lỗi xảy ra trong quá trình xử lý.Mã lỗi: " + vnp_ResponseCode;
-                        
+
                     }
-                    
+
+
                     ViewBag.ThanhToanThanhCong = "Số tiền thanh toán (VND):" + vnp_Amount.ToString();
                     
                 }
@@ -114,7 +192,7 @@ namespace BanHang.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CheckOut(OrderViewModel o,string url)
+        public ActionResult CheckOut(OrderViewModel o)
         {
 
 
@@ -125,44 +203,68 @@ namespace BanHang.Controllers
 
                 List<AddToCart> LGH = TakeAddToCart();
                 Order order = new Order();
+                Random rd = new Random();
+                foreach (var i in LGH)
+                {
+                    if (i != null)
+                    {
+                        Product p = dbConect.Products.Find(i.iId);
+                        int s = 0;
+                        s = p.Quantity - i.isoluong;
+                        p.Quantity = s;
+                        if (p.Quantity <= 0)
+                        {
+                            p.IsHome = false;
+                        }
+
+
+                        order.OrderDetails.Add(new OrderDetail
+                        {
+                            ProductId = i.iId,
+                            Quantity = i.isoluong,
+                            Price = i.dprice
+
+                        });
+
+                        sum = sum + (i.dprice * i.isoluong);
+                    }
+                }
                 order.CustomerName = o.CustomerName;
                 order.Address = o.Address;
                 order.Phone = o.Phone;
                 order.Email = o.Email;
-                order.Status = 1;
-                foreach (var i in LGH) {
-                    if (i != null) { 
-                    Product p = dbConect.Products.Find(i.iId);
-                    int s = 0;
-                    s = p.Quantity - i.isoluong;
-                    p.Quantity= s ;
-                        if (p.Quantity <= 0) {
-                            p.IsHome = false;
-                        }
+                order.TotalAmount = sum;
+                if (o.TypePayment == 2)
+                {
+
                     
-                    
-                    order.OrderDetails.Add(new OrderDetail {
-                        ProductId = i.iId,
-                        Quantity = i.isoluong,
-                        Price = i.dprice
-                          
-                    }) ;
-                    
-                    sum = sum + (i.dprice * i.isoluong);
+                    if (o.TypePaymentVN == 0) {
+                        TempData["CustomerName"] = order.CustomerName;
+                        TempData["Email"] = order.Email;
+                        TempData["Address"] = order.Address;
+                        TempData["Phone"]= order.Phone;
+                        TempData["TotalAmount"] = order.TotalAmount;
+                        order.Code = "Đơn Hàng" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
+                        order.CreatedDate = DateTime.Now;
+                        string url = UrlPayment(o.TypePaymentVN, order.Code, order.TotalAmount, order.CreatedDate);
+                        
+                        return Redirect(url);
                     }
+ 
                 }
                 
-                order.TotalAmount = sum;
+                
                 order.TypePayment = o.TypePayment;
                 order.CreatedDate = DateTime.Now;
                 order.ModifierDate = DateTime.Now;
+                order.Status=1;
+                order.CreatedBy = o.CustomerName;
                 
-                order.CreatedBy = o.Phone;
-                Random rd = new Random();
-                order.Code = "Đơn Hàng" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);//todo:add more random
+                order.Code = "Đơn Hàng" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                 dbConect.Orders.Add(order);
                 
                 dbConect.SaveChanges();
+
                 var strSanPham = "";
                 var tongtien = decimal.Zero;
                 foreach (var item in LGH)
@@ -197,21 +299,10 @@ namespace BanHang.Controllers
                 contentad = contentad.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
                 BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng mới #" + order.Code, contentad.ToString(), ConfigurationManager.AppSettings["Email"]);
                 LGH.Clear();
-                
-                //var url = "";
-                if (o.TypePayment == 2)
-                {
-                    url = UrlPayment(o.TypePaymentVN, order.Code);
-                    return Redirect(url);
-
-                }
-                
-
+            }
+            return RedirectToAction("CheckOutSuccess");
 
             }
-
-            return RedirectToAction("CheckOutSuccess");
-        }
         public ActionResult CheckOutPartial()
         {
             return PartialView();
@@ -353,10 +444,16 @@ namespace BanHang.Controllers
             }
             return RedirectToAction("AddToCart");
         }
-        public string UrlPayment(int TypePaymentVN, string orderCode)
+        public string UrlPayment(int TypePaymentVN, string orderCode,decimal total,DateTime date)
         {
+            OrderViewModel o = new OrderViewModel();
+            o.Code= orderCode;
+            o.TotalAmount= total;
+            o.CreatedDate = date;
             var urlPayment = "";
-            var order = dbConect.Orders.FirstOrDefault(x => x.Code == orderCode);
+            
+            
+            
             //Get Config Info
             string vnp_Returnurl = ConfigurationManager.AppSettings["vnp_Returnurl"]; //URL nhan ket qua tra ve 
             string vnp_Url = ConfigurationManager.AppSettings["vnp_Url"]; //URL thanh toan cua VNPAY 
@@ -365,7 +462,7 @@ namespace BanHang.Controllers
 
             //Build URL for VNPAY
             VnPayLibrary vnpay = new VnPayLibrary();
-            var Price = (long)order.TotalAmount * 100;
+            var Price = (long)o.TotalAmount * 100;
             vnpay.AddRequestData("vnp_Version", VnPayLibrary.VERSION);
             vnpay.AddRequestData("vnp_Command", "pay");
             vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
@@ -383,20 +480,24 @@ namespace BanHang.Controllers
                 vnpay.AddRequestData("vnp_BankCode", "INTCARD");
             }
 
-            vnpay.AddRequestData("vnp_CreateDate", order.CreatedDate.ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_CreateDate", o.CreatedDate.ToString("yyyyMMddHHmmss"));
             vnpay.AddRequestData("vnp_CurrCode", "VND");
             vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
             vnpay.AddRequestData("vnp_Locale", "vn");
-            vnpay.AddRequestData("vnp_OrderInfo", "Thanh toán đơn hàng :" + order.Code);
+            vnpay.AddRequestData("vnp_OrderInfo", "Thanh toán đơn hàng :" + o.Code);
             vnpay.AddRequestData("vnp_OrderType", "other"); //default value: other
 
             vnpay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl);
-            vnpay.AddRequestData("vnp_TxnRef", order.Code); // Mã tham chiếu của giao dịch tại hệ thống của merchant. Mã này là duy nhất dùng để phân biệt các đơn hàng gửi sang VNPAY. Không được trùng lặp trong ngày
+            vnpay.AddRequestData("vnp_TxnRef", o.Code); // Mã tham chiếu của giao dịch tại hệ thống của merchant. Mã này là duy nhất dùng để phân biệt các đơn hàng gửi sang VNPAY. Không được trùng lặp trong ngày
 
             //Add Params of 2.1.0 Version
             //Billing
+            
 
             urlPayment = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
+            
+            
+            
             //log.InfoFormat("VNPAY URL: {0}", paymentUrl);
             return urlPayment;
         }
