@@ -9,7 +9,7 @@ namespace BanHang.Models.EF
     public class AddToCart
 
     {
-        public List<AddToCart> item { get; set; }
+        
         private ApplicationDbContext dbConect = new ApplicationDbContext();
         public int iId { get; set; }
         public string stitle { get; set; }
@@ -27,16 +27,16 @@ namespace BanHang.Models.EF
             Product p = dbConect.Products.Single(n => n.Id == iId);
             stitle = p.Title;
             isoluong = int.Parse(f["txtsoluong"].ToString());
-            dprice = decimal.Parse(p.Price.ToString());
-           
-            
-                        
-
+            if (p.IsSale == true)
+            {
+                dprice = decimal.Parse(p.PriceSale.ToString());
+            }
+            else
+            {
+                dprice = decimal.Parse(p.Price.ToString());
+            }
         }
-        public AddToCart()
-        {
-            item = new List<AddToCart>();
-        }
+       
         
     }
 }
