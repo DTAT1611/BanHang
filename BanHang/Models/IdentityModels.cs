@@ -39,7 +39,6 @@ namespace BanHang.Models
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
-        public DbSet<Shipper> Shippers { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
