@@ -11,23 +11,12 @@ namespace BanHang.Areas.Admin.Controllers
 {
     public class ShiperController : Controller
     {
-        private ApplicationDbContext dbConect = new ApplicationDbContext();`
+        private ApplicationDbContext dbConect = new ApplicationDbContext();
         // GET: Admin/Shiper
         public ActionResult Index()
         {
-            var items = dbConect.Shippers;
+            var items = dbConect.Users;
             return View(items);
-        }
-        public ActionResult Create()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Create(Shipper shipper)
-        {
-            dbConect.Shippers.Add(shipper);
-            dbConect.SaveChanges();
-            return RedirectToAction("Index");
         }
     }
 }
