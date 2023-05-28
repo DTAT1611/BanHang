@@ -71,7 +71,8 @@
                                     <li class="account">
 
                                         @if (!Request.IsAuthenticated)
-                                        {
+                                                {
+                                                    Session.Abandon();
                                             <a href="#">
                                                 My Account
                                                 <i class="fa fa-angle-down"></i>

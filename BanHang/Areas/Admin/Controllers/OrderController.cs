@@ -5,9 +5,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace BanHang.Areas.Admin.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class OrderController : Controller
     {
         // GET: Admin/Order
@@ -65,6 +67,12 @@ namespace BanHang.Areas.Admin.Controllers
                 return Json(new { success = true });
             }
             return Json(false);
+        }
+        public ActionResult GetShip(int id) {
+            
+            dbConect.Orders.Find(id).ShipperID = User.Identity.GetUserId();
+            dbConect.SaveChanges();
+            return Json(new { success = true });
         }
         [HttpPost]
         public ActionResult DeleteAllDetails(string ids)

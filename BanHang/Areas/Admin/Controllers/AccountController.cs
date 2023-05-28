@@ -182,7 +182,7 @@ namespace BanHang.Areas.Admin.Controllers
                 
 
                 dbConect.Entry(model).State = EntityState.Modified;
-                
+                dbConect.Users.Find(model.Id).EmailConfirmed = true;
                 dbConect.SaveChanges();
                 
                 return RedirectToAction("Index");
