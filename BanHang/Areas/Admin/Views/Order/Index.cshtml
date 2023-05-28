@@ -81,15 +81,22 @@
                                 <td class="text-center">@item.ModifierDate</td>
                                 <td class="text-center">@(item.TypePayment==1?"COD":"Chuyển khoản")</td>
                                 <td class="text-center">@(item.Status == 1? "chưa thanh toán" : "đã thanh toán")</td>
-                                
-
-                                @*<td class="text-center">
-            <a href="#" data-id="@item.Id" class="btnActive"> @Html.Raw(strCheck) </a>
-        </td>*@
                                 <td>
                                     <a href="/admin/Order/Details/@item.Id" class="btn btn-sm btn-primary">Chi tiết</a>
-                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
-                                </td>
+                                    @if (!Request.IsAuthenticated)
+                                    {
+                                        if (User.IsInRole("Admin"))
+                                        {
+                                            <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                                        }
+                                        else
+                                            if (User.IsInRole("SHIP"))
+                                        {
+                                            <a href="#" data-id="@item.Id" class="btn btn-sm btn-success">Nhận hàng</a>
+                                        }
+                                    }
+
+                                    </td>
                             </tr>
                             i++;
                         }
