@@ -61,8 +61,14 @@
 
                     </div>
                     <div>Danh Mục: @ViewBag.DanhMuc</div>
-
-                    <div>Giá: @Model.Price</div>
+                    @if (Model.IsSale == true)
+                    {
+                        <div>Giá: @Model.PriceSale</div>
+                    }
+                    else
+                    {
+                        <div>Giá: @Model.Price</div>
+                    }
                     <div>Mổ tả:@Model.Detail</div>
                     <div>số lượng:@Model.Quantity</div>
                     <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
@@ -73,11 +79,11 @@
                         @using (Html.BeginForm("addAddToCart", "AddToCart", new { @intid = Model.Id, @strURL = Request.Url.ToString() }))
                         {
 
-                            
-                                
-                                @Html.TextBox("txtsoluong", Model.Quantity=1 )
-                                
-                            
+
+
+                            @Html.TextBox("txtsoluong", Model.Quantity = 1)
+
+
 
                             <input type="submit" value="Vào giỏ hàng" id="btnGioHang" class="btn btn-primary" />
 
