@@ -203,41 +203,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202304101927310_CreatedData.cs" />
-    <Compile Include="Migrations\202304101927310_CreatedData.designer.cs">
-      <DependentUpon>202304101927310_CreatedData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202304151507590_Update.cs" />
-    <Compile Include="Migrations\202304151507590_Update.designer.cs">
-      <DependentUpon>202304151507590_Update.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202304150358302_test2.cs" />
-    <Compile Include="Migrations\202304150358302_test2.designer.cs">
-      <DependentUpon>202304150358302_test2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202304280112495_test11.cs" />
-    <Compile Include="Migrations\202304280112495_test11.designer.cs">
-      <DependentUpon>202304280112495_test11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305140650430_UpdatePayment.cs" />
-    <Compile Include="Migrations\202305140650430_UpdatePayment.designer.cs">
-      <DependentUpon>202305140650430_UpdatePayment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305141224091_decimal.cs" />
-    <Compile Include="Migrations\202305141224091_decimal.designer.cs">
-      <DependentUpon>202305141224091_decimal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305150541024_updateEmailOrder.cs" />
-    <Compile Include="Migrations\202305150541024_updateEmailOrder.designer.cs">
-      <DependentUpon>202305150541024_updateEmailOrder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305240836432_status.cs" />
-    <Compile Include="Migrations\202305240836432_status.designer.cs">
-      <DependentUpon>202305240836432_status.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305280844202_fixshipper.cs" />
-    <Compile Include="Migrations\202305280844202_fixshipper.designer.cs">
-      <DependentUpon>202305280844202_fixshipper.cs</DependentUpon>
+    <Compile Include="Migrations\202305310648391_fix.cs" />
+    <Compile Include="Migrations\202305310648391_fix.designer.cs">
+      <DependentUpon>202305310648391_fix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202305310703138_RemoveImageFromProduct.cs" />
     <Compile Include="Migrations\202305310703138_RemoveImageFromProduct.designer.cs">
@@ -4349,32 +4317,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202304101927310_CreatedData.resx">
-      <DependentUpon>202304101927310_CreatedData.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202304151507590_Update.resx">
-      <DependentUpon>202304151507590_Update.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202304150358302_test2.resx">
-      <DependentUpon>202304150358302_test2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202304280112495_test11.resx">
-      <DependentUpon>202304280112495_test11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305140650430_UpdatePayment.resx">
-      <DependentUpon>202305140650430_UpdatePayment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305141224091_decimal.resx">
-      <DependentUpon>202305141224091_decimal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305150541024_updateEmailOrder.resx">
-      <DependentUpon>202305150541024_updateEmailOrder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305240836432_status.resx">
-      <DependentUpon>202305240836432_status.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305280844202_fixshipper.resx">
-      <DependentUpon>202305280844202_fixshipper.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202305310648391_fix.resx">
+      <DependentUpon>202305310648391_fix.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305310703138_RemoveImageFromProduct.resx">
       <DependentUpon>202305310703138_RemoveImageFromProduct.cs</DependentUpon>

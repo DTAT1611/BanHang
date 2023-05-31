@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreatedData : DbMigration
+    public partial class fix : DbMigration
     {
         public override void Up()
         {
@@ -30,6 +30,7 @@
                         Id = c.Int(nullable: false, identity: true),
                         Tiltle = c.String(nullable: false, maxLength: 150),
                         Alias = c.String(),
+                        Link = c.String(),
                         Discription = c.String(maxLength: 250),
                         Position = c.Int(nullable: false),
                         SeoTitle = c.String(maxLength: 150),
@@ -136,8 +137,12 @@
                         CustomerName = c.String(nullable: false),
                         Phone = c.String(nullable: false),
                         Address = c.String(nullable: false),
-                        TotalAmount = c.String(),
+                        Email = c.String(),
+                        TotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Quantity = c.Int(nullable: false),
+                        TypePayment = c.Int(nullable: false),
+                        Status = c.Int(nullable: false),
+                        ShipperID = c.String(),
                         CreatedBy = c.String(),
                         CreatedDate = c.DateTime(nullable: false),
                         ModifierDate = c.DateTime(nullable: false),
@@ -189,8 +194,8 @@
                         Tiltle = c.String(nullable: false, maxLength: 250),
                         Alias = c.String(nullable: false, maxLength: 250),
                         Discription = c.String(maxLength: 250),
-                        Icon = c.String(maxLength: 250),
-                        SeoTitle = c.String(maxLength: 250),
+                        Icon = c.String(),
+                        SeoTitle = c.String(),
                         SeoDiscription = c.String(maxLength: 500),
                         SeoKeywords = c.String(maxLength: 250),
                         CreatedBy = c.String(),
@@ -253,6 +258,7 @@
                         Id = c.String(nullable: false, maxLength: 128),
                         FullName = c.String(),
                         Phone = c.String(),
+                        Role = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
