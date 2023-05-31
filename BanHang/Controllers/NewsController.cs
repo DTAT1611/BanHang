@@ -22,7 +22,7 @@ namespace BanHang.Controllers
             {
                 page = 1;
             }
-            IEnumerable<New> items = dbConect.News.OrderByDescending(x => x.CreatedDate);
+            IEnumerable<New> items = dbConect.News.OrderByDescending(x => x.CreatedDate).Where(x=>x.IsActive);
             var pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
             items = items.ToPagedList(pageIndex, pageSize);
             ViewBag.PageSize = pageSize;
@@ -36,7 +36,7 @@ namespace BanHang.Controllers
         }
         public ActionResult Partial_News_Home()
         {
-            var items = dbConect.News.Take(3).ToList();
+            var items = dbConect.News.Take(3).Where(x=>x.IsActive).ToList();
             return PartialView(items);
         }
     }

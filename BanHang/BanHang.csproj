@@ -203,22 +203,28 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202305310648391_fix.cs" />
-    <Compile Include="Migrations\202305310648391_fix.designer.cs">
-      <DependentUpon>202305310648391_fix.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\202305310703138_RemoveImageFromProduct.cs" />
     <Compile Include="Migrations\202305310703138_RemoveImageFromProduct.designer.cs">
       <DependentUpon>202305310703138_RemoveImageFromProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305310805042_Fix3105.cs" />
+    <Compile Include="Migrations\202305310805042_Fix3105.designer.cs">
+      <DependentUpon>202305310805042_Fix3105.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305310817598_Remove2UselessClasses.cs" />
+    <Compile Include="Migrations\202305310817598_Remove2UselessClasses.designer.cs">
+      <DependentUpon>202305310817598_Remove2UselessClasses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202305310828476_FixTHO3105_1.cs" />
+    <Compile Include="Migrations\202305310828476_FixTHO3105_1.designer.cs">
+      <DependentUpon>202305310828476_FixTHO3105_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
     <Compile Include="Models\Common\Filter.cs" />
     <Compile Include="Models\EF\AddToCart.cs" />
-    <Compile Include="Models\EF\Adv.cs" />
     <Compile Include="Models\EF\Category.cs" />
-    <Compile Include="Models\EF\Contact.cs" />
     <Compile Include="Models\EF\New.cs" />
     <Compile Include="Models\EF\Order.cs" />
     <Compile Include="Models\EF\OrderDetail.cs" />
@@ -226,7 +232,6 @@
     <Compile Include="Models\EF\Product.cs" />
     <Compile Include="Models\EF\ProductCategories.cs" />
     <Compile Include="Models\EF\ProductImage.cs" />
-    <Compile Include="Models\EF\Shipper.cs" />
     <Compile Include="Models\EF\SystemSetting.cs" />
     <Compile Include="Models\EF\VnPayLibrary.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -4317,11 +4322,17 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202305310648391_fix.resx">
-      <DependentUpon>202305310648391_fix.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305310703138_RemoveImageFromProduct.resx">
       <DependentUpon>202305310703138_RemoveImageFromProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305310805042_Fix3105.resx">
+      <DependentUpon>202305310805042_Fix3105.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305310817598_Remove2UselessClasses.resx">
+      <DependentUpon>202305310817598_Remove2UselessClasses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305310828476_FixTHO3105_1.resx">
+      <DependentUpon>202305310828476_FixTHO3105_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

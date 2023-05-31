@@ -32,6 +32,5 @@ namespace BanHang.Models.EF
         [StringLength(200)]
         public string SeoKeywords { get; set; }
         public bool IsActive { get; set; }
-        public virtual Post Posts { get; set; }
     }
 }
