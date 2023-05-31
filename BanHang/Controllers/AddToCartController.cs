@@ -244,7 +244,7 @@ namespace BanHang.Controllers
                         TempData["Address"] = order.Address;
                         TempData["Phone"]= order.Phone;
                         TempData["TotalAmount"] = order.TotalAmount;
-                        order.Code = "Đơn Hàng" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
+                        order.Code = "Đơn Hàng " + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                         order.CreatedDate = DateTime.Now;
                         string url = UrlPayment(o.TypePaymentVN, order.Code, order.TotalAmount, order.CreatedDate);
                         
@@ -260,7 +260,7 @@ namespace BanHang.Controllers
                 order.Status=1;
                 order.CreatedBy = o.CustomerName;
                 
-                order.Code = "Đơn Hàng" + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
+                order.Code = "Đơn Hàng " + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                 dbConect.Orders.Add(order);
                 
                 dbConect.SaveChanges();
@@ -484,7 +484,7 @@ namespace BanHang.Controllers
             vnpay.AddRequestData("vnp_CurrCode", "VND");
             vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
             vnpay.AddRequestData("vnp_Locale", "vn");
-            vnpay.AddRequestData("vnp_OrderInfo", "Thanh toán đơn hàng :" + o.Code);
+            vnpay.AddRequestData("vnp_OrderInfo", "Thanh toán đơn hàng: " + o.Code);
             vnpay.AddRequestData("vnp_OrderType", "other"); //default value: other
 
             vnpay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl);
