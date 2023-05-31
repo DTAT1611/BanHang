@@ -68,12 +68,6 @@ namespace BanHang.Areas.Admin.Controllers
             }
             return Json(false);
         }
-        public ActionResult GetShip(int id) {
-            
-            dbConect.Orders.Find(id).ShipperID = User.Identity.GetUserId();
-            dbConect.SaveChanges();
-            return Json(new { success = true });
-        }
         [HttpPost]
         public ActionResult DeleteAllDetails(string ids)
         {

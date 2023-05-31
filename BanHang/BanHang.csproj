@@ -239,6 +239,10 @@
     <Compile Include="Migrations\202305280844202_fixshipper.designer.cs">
       <DependentUpon>202305280844202_fixshipper.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305310703138_RemoveImageFromProduct.cs" />
+    <Compile Include="Migrations\202305310703138_RemoveImageFromProduct.designer.cs">
+      <DependentUpon>202305310703138_RemoveImageFromProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -4371,6 +4375,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202305280844202_fixshipper.resx">
       <DependentUpon>202305280844202_fixshipper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305310703138_RemoveImageFromProduct.resx">
+      <DependentUpon>202305310703138_RemoveImageFromProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
