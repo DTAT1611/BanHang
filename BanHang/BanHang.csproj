@@ -207,6 +207,10 @@
     <Compile Include="Migrations\202305310648391_fix.designer.cs">
       <DependentUpon>202305310648391_fix.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202305310703138_RemoveImageFromProduct.cs" />
+    <Compile Include="Migrations\202305310703138_RemoveImageFromProduct.designer.cs">
+      <DependentUpon>202305310703138_RemoveImageFromProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
@@ -4315,6 +4319,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202305310648391_fix.resx">
       <DependentUpon>202305310648391_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202305310703138_RemoveImageFromProduct.resx">
+      <DependentUpon>202305310703138_RemoveImageFromProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

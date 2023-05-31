@@ -83,7 +83,7 @@
                                 <td class="text-center">@(item.Status == 1? "chưa thanh toán" : "đã thanh toán")</td>
                                 <td>
                                     <a href="/admin/Order/Details/@item.Id" class="btn btn-sm btn-primary">Chi tiết</a>
-                                    @if (!Request.IsAuthenticated)
+                                    @if (Request.IsAuthenticated)
                                     {
                                         if (User.IsInRole("Admin"))
                                         {
