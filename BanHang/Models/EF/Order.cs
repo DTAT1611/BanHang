@@ -32,7 +32,6 @@ namespace BanHang.Models.EF
         public int Quantity { get; set; }
         public int TypePayment { get; set; }
         public int Status { get; set; }
-        public string ShipperID { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }
