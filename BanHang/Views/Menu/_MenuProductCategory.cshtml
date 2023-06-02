@@ -10,7 +10,7 @@
                    <div class="col-md-4">
                        <div class="banner_item align-items-center" style="background-image: url(@item.Icon)">
                            <div class="banner_category">
-                               <a href="@item.Alias">@item.Tiltle</a>
+                               <a href="@Url.Action("Index", "Products", new {id=item.Id})">@item.Tiltle</a>
                            </div>
                        </div>
                    </div>

@@ -3,16 +3,16 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class status : DbMigration
+    public partial class RemoveImageFromProduct : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.tb_Order", "Status", c => c.Int(nullable: false));
+            DropColumn("dbo.tb_Product", "Image");
         }
         
         public override void Down()
         {
-            DropColumn("dbo.tb_Order", "Status");
+            AddColumn("dbo.tb_Product", "Image", c => c.String(maxLength: 250));
         }
     }
 }

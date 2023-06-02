@@ -7,13 +7,13 @@ namespace BanHang.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class test11 : IMigrationMetadata
+    public sealed partial class RemoveImageFromProduct : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(test11));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(RemoveImageFromProduct));
         
         string IMigrationMetadata.Id
         {
-            get { return "202304280112495_test11"; }
+            get { return "202305310703138_RemoveImageFromProduct"; }
         }
         
         string IMigrationMetadata.Source

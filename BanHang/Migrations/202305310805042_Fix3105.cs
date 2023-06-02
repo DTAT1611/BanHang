@@ -3,16 +3,16 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class UpdatePayment : DbMigration
+    public partial class Fix3105 : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.tb_Order", "TypePayment", c => c.Int(nullable: false));
+            DropColumn("dbo.tb_Order", "ShipperID");
         }
         
         public override void Down()
         {
-            DropColumn("dbo.tb_Order", "TypePayment");
+            AddColumn("dbo.tb_Order", "ShipperID", c => c.String());
         }
     }
 }
