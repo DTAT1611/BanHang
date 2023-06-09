@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44325</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -203,21 +202,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202305310703138_RemoveImageFromProduct.cs" />
-    <Compile Include="Migrations\202305310703138_RemoveImageFromProduct.designer.cs">
-      <DependentUpon>202305310703138_RemoveImageFromProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305310805042_Fix3105.cs" />
-    <Compile Include="Migrations\202305310805042_Fix3105.designer.cs">
-      <DependentUpon>202305310805042_Fix3105.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305310817598_Remove2UselessClasses.cs" />
-    <Compile Include="Migrations\202305310817598_Remove2UselessClasses.designer.cs">
-      <DependentUpon>202305310817598_Remove2UselessClasses.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202305310828476_FixTHO3105_1.cs" />
-    <Compile Include="Migrations\202305310828476_FixTHO3105_1.designer.cs">
-      <DependentUpon>202305310828476_FixTHO3105_1.cs</DependentUpon>
+    <Compile Include="Migrations\202306020109507_M.cs" />
+    <Compile Include="Migrations\202306020109507_M.designer.cs">
+      <DependentUpon>202306020109507_M.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -4322,17 +4309,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202305310703138_RemoveImageFromProduct.resx">
-      <DependentUpon>202305310703138_RemoveImageFromProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305310805042_Fix3105.resx">
-      <DependentUpon>202305310805042_Fix3105.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305310817598_Remove2UselessClasses.resx">
-      <DependentUpon>202305310817598_Remove2UselessClasses.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202305310828476_FixTHO3105_1.resx">
-      <DependentUpon>202305310828476_FixTHO3105_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202306020109507_M.resx">
+      <DependentUpon>202306020109507_M.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
