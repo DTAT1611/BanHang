@@ -7,13 +7,13 @@ namespace BanHang.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class fix : IMigrationMetadata
+    public sealed partial class tuan : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(fix));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(tuan));
         
         string IMigrationMetadata.Id
         {
-            get { return "202305310648391_fix"; }
+            get { return "202306091512128_tuan"; }
         }
         
         string IMigrationMetadata.Source
