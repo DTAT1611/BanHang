@@ -48,16 +48,21 @@
                                     <li class="account">
 
                                         @if (!Request.IsAuthenticated)
-                                                {
-                                                    Session.Abandon();
+                                        {
+                                            Session.Abandon();
                                             <a href="#">
                                                 tài khoản
                                                 <i class="fa fa-angle-down"></i>
                                             </a>
+                                            <ul class="navbar_user">
+                                                <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                            </ul>   
                                             <ul class="account_selection">
                                                 <li><a href="@Url.Action("Login","Account")"><i class="fa fa-sign-in" aria-hidden="true"></i>đăng nhập</a></li>
                                                 <li><a href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" aria-hidden="true"></i>đăng ký</a></li>
                                             </ul>
+
                                         }
                                         else
                                         {
@@ -109,7 +114,7 @@
                             </div>
                             <nav class="navbar">
                                 @Html.Action("menutop", "menu")
-                                <ul class="navbar_user">
+                                @*<ul class="navbar_user">
                                     <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                                     <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
                                     <li class="checkout">
@@ -118,7 +123,7 @@
                                             <span id="checkout_items" class="checkout_items">2</span>
                                         </a>
                                     </li>
-                                </ul>
+                                </ul>*@
                                 <div class="hamburger_container">
                                     <i class="fa fa-bars" aria-hidden="true"></i>
                                 </div>
