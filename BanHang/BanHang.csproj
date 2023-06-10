@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44325</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -203,18 +202,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202306091512128_tuan.cs" />
-    <Compile Include="Migrations\202306091512128_tuan.designer.cs">
-      <DependentUpon>202306091512128_tuan.cs</DependentUpon>
+    <Compile Include="Migrations\202306020109507_M.cs" />
+    <Compile Include="Migrations\202306020109507_M.designer.cs">
+      <DependentUpon>202306020109507_M.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CommonAbstract.cs" />
     <Compile Include="Models\Common\Filter.cs" />
     <Compile Include="Models\EF\AddToCart.cs" />
-    <Compile Include="Models\EF\Adv.cs" />
     <Compile Include="Models\EF\Category.cs" />
-    <Compile Include="Models\EF\Contact.cs" />
     <Compile Include="Models\EF\New.cs" />
     <Compile Include="Models\EF\Order.cs" />
     <Compile Include="Models\EF\OrderDetail.cs" />
@@ -222,7 +219,6 @@
     <Compile Include="Models\EF\Product.cs" />
     <Compile Include="Models\EF\ProductCategories.cs" />
     <Compile Include="Models\EF\ProductImage.cs" />
-    <Compile Include="Models\EF\Shipper.cs" />
     <Compile Include="Models\EF\SystemSetting.cs" />
     <Compile Include="Models\EF\VnPayLibrary.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -4313,8 +4309,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202306091512128_tuan.resx">
-      <DependentUpon>202306091512128_tuan.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202306020109507_M.resx">
+      <DependentUpon>202306020109507_M.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
