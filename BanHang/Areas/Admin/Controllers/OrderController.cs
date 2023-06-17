@@ -6,10 +6,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using BanHang.Models.EF;
 
 namespace BanHang.Areas.Admin.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    //[Authorize(Roles ="Admin")]
     public class OrderController : Controller
     {
         // GET: Admin/Order
@@ -55,6 +56,20 @@ namespace BanHang.Areas.Admin.Controllers
         {
             var items = dbConect.OrderDetails.Where(x=>x.OrderId==id);
             return View(items);
+        }
+        [HttpPost]
+        public ActionResult UpdateTT(int id, int trangthai)
+        {
+            var item = dbConect.Orders.Find(id);
+            if (item != null)
+            {
+                dbConect.Orders.Attach(item);
+                item.Status = trangthai;
+                dbConect.Entry(item).Property(x => x.Status).IsModified = true;
+                dbConect.SaveChanges();
+                return Json(new { message = "Success", Success = true });
+            }
+            return Json(new { message = "Unsuccess", Success = false });
         }
         public ActionResult DeleteDetail(int id)
         {
