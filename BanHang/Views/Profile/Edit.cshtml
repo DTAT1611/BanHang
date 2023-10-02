@@ -4,15 +4,17 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_responsive.css">
 <h2>Edit</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>ApplicationUser</h4>
+    <div class="form-horizontal" style="margin-top:160px">
+        <h4>Thay đổi thông tin người dùng</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
@@ -41,8 +43,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Role</label>
-            @Html.HiddenFor(model => model.Role)
+            
+            @Html.DisplayFor(model => model.Role)
         </div>
         @Html.HiddenFor(model => model.UserName)
         @Html.HiddenFor(model => model.PasswordHash)
@@ -52,9 +54,9 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                
-                    <input type="submit" value="Save" class="btn btn-default"a href="~/Profile/Index/@User.Identity.GetUserId()" />
-                
+
+                <input type="submit" value="Save" class="btn btn-default" a href="~/Profile/Index/@User.Identity.GetUserId()" />
+
             </div>
         </div>
     </div>
