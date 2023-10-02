@@ -1,0 +1,32 @@
+﻿@model BanHang.Models.ApplicationUser
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_responsive.css">
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal" style="margin-top:160px">
+    <h4>Thông tin người dùng</h4>
+
+    <div class="user_details">
+        <div class="user_details_title">
+            
+            <h4>Tên: @Model.FullName</h4>
+            <h4>Tên: @Model.Email</h4>
+            <h4>Tên: @Model.Phone</h4>
+        </div>
+        
+
+    </div>
+    <a href="~/Profile/Edit/@Model.Id" class="btn btn-sm btn-primary">sửa</a>
+</div>
+}
+
