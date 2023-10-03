@@ -1,5 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
+@using Microsoft.AspNet.Identity
+@model BanHang.Models.ApplicationUser
 <head>
     <title>Chợ Online</title>
     <meta charset="utf-8">
@@ -44,7 +46,7 @@
 
                                     <!-- Currency / Language / My Account -->
 
-                                   
+
                                     <li class="account">
 
                                         @if (!Request.IsAuthenticated)
@@ -57,7 +59,7 @@
                                             <ul class="navbar_user">
                                                 <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                                                 <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                                            </ul>   
+                                            </ul>
                                             <ul class="account_selection">
                                                 <li><a href="@Url.Action("Login","Account")"><i class="fa fa-sign-in" aria-hidden="true"></i>đăng nhập</a></li>
                                                 <li><a href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" aria-hidden="true"></i>đăng ký</a></li>
@@ -79,7 +81,14 @@
                                                     </li>
                                                     @Html.Action("AddToCartPartial", "AddToCart")
                                                     <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link"><i class="fa fa-user-plus" aria-hidden="true"></i>Log Off</a></li>
+                                                    <li>
+                                                        <a href="~/Profile/Index/@User.Identity.GetUserId()" class="nav-link">
+                                                            test
+                                                        </a>
+                                                    </li>
                                                 </ul>
+
+
                                             }
                                             else
                                             {
@@ -115,15 +124,15 @@
                             <nav class="navbar">
                                 @Html.Action("menutop", "menu")
                                 @*<ul class="navbar_user">
-                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                                    <li class="checkout">
-                                        <a href="#">
-                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items">2</span>
-                                        </a>
-                                    </li>
-                                </ul>*@
+                                        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+                                        <li class="checkout">
+                                            <a href="#">
+                                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                                <span id="checkout_items" class="checkout_items">2</span>
+                                            </a>
+                                        </li>
+                                    </ul>*@
                                 <div class="hamburger_container">
                                     <i class="fa fa-bars" aria-hidden="true"></i>
                                 </div>
@@ -205,25 +214,25 @@
         <!--End of Tawk.to Script-->
         <!-- Newsletter -->
         @*<div class="newsletter">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
-                            <h4>Newsletter</h4>
-                            <p>Subscribe to our newsletter and get 20% off your first purchase</p>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
+                                <h4>Newsletter</h4>
+                                <p>Subscribe to our newsletter and get 20% off your first purchase</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <form action="post">
+                                <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
+                                    <input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required.">
+                                    <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <form action="post">
-                            <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
-                                <input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required.">
-                                <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
-            </div>
-        </div>*@
+            </div>*@
 
         <!-- Footer -->
         <br />
@@ -231,7 +240,7 @@
         <footer class="footer">
             <div class="container">
                 @*<div class="row">*@
-                    @*<div class="col-lg-6">
+                @*<div class="col-lg-6">
                         <div class="footer_nav_container d-flex flex-sm-row flex-column align-items-center justify-content-lg-start justify-content-center text-center">
                             <ul class="footer_nav">
                                 <li><a href="#">Blog</a></li>
@@ -240,7 +249,7 @@
                             </ul>
                         </div>
                     </div>*@
-                    @*<div class="col-lg-6">
+                @*<div class="col-lg-6">
                         <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
                             <ul>
                                 <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
