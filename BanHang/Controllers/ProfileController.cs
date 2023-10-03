@@ -1,5 +1,7 @@
 ﻿using BanHang.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,7 +13,28 @@ namespace BanHang.Controllers
 {
     public class ProfileController : Controller
     {
+        private ApplicationUserManager _userManager;
         private ApplicationDbContext dbConect = new ApplicationDbContext();
+        public ProfileController()
+        {
+
+        }
+        public ProfileController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+            
+        }
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
         // GET: Profile
         public ActionResult Index(string id)
         {
@@ -35,14 +58,18 @@ namespace BanHang.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+                var oldUser = UserManager.FindById(model.Id);
+                var oldRoleId = oldUser.Roles.SingleOrDefault().RoleId;
+                var oldRoleName = dbConect.Roles.SingleOrDefault(r => r.Id == oldRoleId).Name;
+                UserManager.AddToRole(model.Id, oldRoleName);
                 dbConect.Users.Attach(model);
-
-
+                dbConect.Users.Find(model.Id).EmailConfirmed = true;
                 dbConect.Entry(model).State = EntityState.Modified;
                 
-                
-                dbConect.SaveChanges();
 
+                dbConect.SaveChanges();
+               
                 return RedirectToAction("Index","Profile",new {id=model.Id});
 
             }
