@@ -42,70 +42,102 @@
                         </div>
                         <div class="col-md-6 text-right">
                             <div class="top_nav_right">
+                               
+
                                 <ul class="top_nav_menu">
+                                    @*@if (!Request.IsAuthenticated)
+                                    {
+                                        Session.Abandon();
+                                        <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="~/Uploads/images/slider_1.jpg" class="round-image" alt="Avatar" />
+
+                                    }
+                                    else
+                                    {
+                                        <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@Model.Ava" class="round-image" alt="Avatar" />
+
+                                    }*@
+
+
 
                                     <!-- Currency / Language / My Account -->
 
 
-                                    <li class="account">
+                                <li class="account">
 
-                                        @if (!Request.IsAuthenticated)
+                                    @if (!Request.IsAuthenticated)
+                                    {
+                                        
+                                            
+                                        
+                                        Session.Abandon();
+                                        <a href="#">
+                                            <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="~/Uploads/images/slider_1.jpg" class="round-image" alt="Avatar" />
+
+                                            tài khoản
+
+                                            <i class="fa fa-angle-down"></i>
+                                        </a>
+                                        @*<ul class="navbar_user">
+                <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
+
+            </ul>*@
+                                        <ul class="account_selection ">
+                                            <li><a style="font-size: 10px;" href="@Url.Action("Login","Account")"><i class="fa fa-sign-in" aria-hidden="true"></i>đăng nhập</a></li>
+                                            <li><a style="font-size: 10px;" href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" aria-hidden="true"></i>đăng ký</a></li>
+
+                                        </ul>
+
+                                    }
+                                    else
+                                    {
+                                        if (User.IsInRole("Admin"))
                                         {
-                                            Session.Abandon();
-                                            <a href="#">
-                                                tài khoản
-                                                <i class="fa fa-angle-down"></i>
-                                            </a>
-                                            <ul class="navbar_user">
-                                                <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                                            </ul>
-                                            <ul class="account_selection">
-                                                <li><a href="@Url.Action("Login","Account")"><i class="fa fa-sign-in" aria-hidden="true"></i>đăng nhập</a></li>
-                                                <li><a href="@Url.Action("Register","Account")"><i class="fa fa-user-plus" aria-hidden="true"></i>đăng ký</a></li>
-                                            </ul>
+                                 <a href="#">
+                                    @*<image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@Model.Ava" class="round-image" alt="Avatar" />*@
+                                    @User.Identity.Name
+     
+                                    <i class="fa fa-angle-down"></i>
+
+                                </a>
+                                 <ul class="account_selection">
+                                     <li class="Role">
+                                         <a style="font-size: 10px;" href="~/Admin/Home/Index">Quản Lý Trang</a>
+                                     </li>
+                                     @Html.Action("AddToCartPartial", "AddToCart")
+                                     <li>
+                                         <a style="font-size: 10px;" href="~/Profile/Index/@User.Identity.GetUserId()" class="nav-link">
+                                             trang thông tin
+                                         </a>
+                                     </li>
+                                     <li><a style="font-size: 10px;" href="javascript:document.getElementById('logoutForm').submit()" class="nav-link"><i class="fa fa-user-plus" aria-hidden="true"></i>Log Off</a></li>
+
+                                 </ul>
+
 
                                         }
                                         else
                                         {
-                                            if (User.IsInRole("Admin"))
-                                            {
-                                                <a href="#">
-                                                    @User.Identity.Name
-                                                    <i class="fa fa-angle-down"></i>
+                                            <a  href="#">
+                                                @User.Identity.Name
+                                                <i class="fa fa-angle-down"></i>
 
-                                                </a>
-                                                <ul class="account_selection">
-                                                    <li class="Role">
-                                                        <a href="~/Admin/Home/Index">Quản Lý Trang</a>
-                                                    </li>
-                                                    @Html.Action("AddToCartPartial", "AddToCart")
-                                                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link"><i class="fa fa-user-plus" aria-hidden="true"></i>Log Off</a></li>
-                                                    <li>
-                                                        <a href="~/Profile/Index/@User.Identity.GetUserId()" class="nav-link">
-                                                            test
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                            </a>
+                                            <ul class="account_selection">
 
+                                                @Html.Action("AddToCartPartial", "AddToCart")
+                                                <li>
+                                                    <a style="font-size: 10px;" href="~/Profile/Index/@User.Identity.GetUserId()" class="nav-link">
+                                                        trang thông tin
+                                                    </a>
+                                                </li>
+                                                <li><a style="font-size: 10px;" href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log Off</a></li>
 
-                                            }
-                                            else
-                                            {
-                                                <a href="#">
-                                                    @User.Identity.Name
-                                                    <i class="fa fa-angle-down"></i>
-
-                                                </a>
-                                                <ul class="account_selection">
-
-                                                    @Html.Action("AddToCartPartial", "AddToCart")
-                                                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="nav-link">Log Off</a></li>
-                                                </ul>
-                                            }
-
+                                            </ul>
                                         }
-                                    </li>
+
+                                    }
+                                </li>
 
                                 </ul>
                             </div>
