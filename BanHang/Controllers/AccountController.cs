@@ -158,7 +158,7 @@ namespace BanHang.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email,FullName=model.FullName,Phone=model.Phone ,Role=model.Role="CUS"};
+                var user = new ApplicationUser {Ava=model.Ava, UserName = model.UserName, Email = model.Email,FullName=model.FullName,Phone=model.Phone ,Role=model.Role="CUS"};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
