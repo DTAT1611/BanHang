@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44325</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -259,13 +258,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202306110936157_tuanfixing.cs" />
-    <Compile Include="Migrations\202306110936157_tuanfixing.designer.cs">
-      <DependentUpon>202306110936157_tuanfixing.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310040803423_ava.cs" />
-    <Compile Include="Migrations\202310040803423_ava.designer.cs">
-      <DependentUpon>202310040803423_ava.cs</DependentUpon>
+    <Compile Include="Migrations\202310070554385_test.cs" />
+    <Compile Include="Migrations\202310070554385_test.designer.cs">
+      <DependentUpon>202310070554385_test.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -4418,11 +4413,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202306110936157_tuanfixing.resx">
-      <DependentUpon>202306110936157_tuanfixing.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310040803423_ava.resx">
-      <DependentUpon>202310040803423_ava.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310070554385_test.resx">
+      <DependentUpon>202310070554385_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
