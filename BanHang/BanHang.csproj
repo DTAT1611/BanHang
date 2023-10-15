@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
     <IISExpressSSLPort>44325</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -262,10 +261,6 @@
     <Compile Include="Migrations\202306110936157_tuanfixing.cs" />
     <Compile Include="Migrations\202306110936157_tuanfixing.designer.cs">
       <DependentUpon>202306110936157_tuanfixing.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202310040803423_ava.cs" />
-    <Compile Include="Migrations\202310040803423_ava.designer.cs">
-      <DependentUpon>202310040803423_ava.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -4293,52 +4288,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jsShopping.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Uploads\files\10-loi-ich-suc-khoe-tuyet-voi-cua-tao-xanh.jpg" />
-    <Content Include="Uploads\files\1686886213-tra-xanh2-16867166977961629644370-width640height360.jpg" />
-    <Content Include="Uploads\files\20191120_085421_373104_thit-do_max-1800x1800.jpg" />
-    <Content Include="Uploads\files\93a.png" />
-    <Content Include="Uploads\files\cach-chon-va-bao-quan-thit-heo-202201151133218208.jpg" />
-    <Content Include="Uploads\files\dau-la-dai-luc-1.jpg" />
-    <Content Include="Uploads\files\download %281%29.jpg" />
-    <Content Include="Uploads\files\download %282%29.jpg" />
-    <Content Include="Uploads\files\download %283%29.jpg" />
-    <Content Include="Uploads\files\download %284%29.jpg" />
-    <Content Include="Uploads\files\download %285%29.jpg" />
-    <Content Include="Uploads\files\download %286%29.jpg" />
-    <Content Include="Uploads\files\download%281%29.jpg" />
-    <Content Include="Uploads\files\download.jpg" />
-    <Content Include="Uploads\files\one-piece.jpg" />
-    <Content Include="Uploads\files\qua2_png.jpg" />
-    <Content Include="Uploads\files\Ukraine-5-nha-lanh-dao-chau-Phi-vua-den-tham-Kiev-rung-chuyen-vi-no-lon-7jwi3pxaujnexh3kvcv6trqyva-1686924269-11-width960height640.jpg" />
-    <Content Include="Uploads\files\Uong-2-coc-nuoc-ep-nay-moi-ngay-nguoi-dan-ong-phai-chay-than-ca-doi-3-1683516134-338-width1024height700.jpg" />
-    <Content Include="Uploads\images\banner_2.jpg" />
-    <Content Include="Uploads\images\download %281%29.jpg" />
-    <Content Include="Uploads\images\download %282%29.jpg" />
-    <Content Include="Uploads\images\download.jpg" />
-    <Content Include="Uploads\images\slider_1.jpg" />
-    <Content Include="Uploads\_thumbs\Files\10-loi-ich-suc-khoe-tuyet-voi-cua-tao-xanh.jpg" />
-    <Content Include="Uploads\_thumbs\Files\1686886213-tra-xanh2-16867166977961629644370-width640height360.jpg" />
-    <Content Include="Uploads\_thumbs\Files\20191120_085421_373104_thit-do_max-1800x1800.jpg" />
-    <Content Include="Uploads\_thumbs\Files\93a.png" />
-    <Content Include="Uploads\_thumbs\Files\cach-chon-va-bao-quan-thit-heo-202201151133218208.jpg" />
-    <Content Include="Uploads\_thumbs\Files\dau-la-dai-luc-1.jpg" />
-    <Content Include="Uploads\_thumbs\Files\download %281%29.jpg" />
-    <Content Include="Uploads\_thumbs\Files\download %282%29.jpg" />
-    <Content Include="Uploads\_thumbs\Files\download %283%29.jpg" />
-    <Content Include="Uploads\_thumbs\Files\download %284%29.jpg" />
-    <Content Include="Uploads\_thumbs\Files\download %285%29.jpg" />
-    <Content Include="Uploads\_thumbs\Files\download %286%29.jpg" />
-    <Content Include="Uploads\_thumbs\Files\download%281%29.jpg" />
-    <Content Include="Uploads\_thumbs\Files\download.jpg" />
-    <Content Include="Uploads\_thumbs\Files\one-piece.jpg" />
-    <Content Include="Uploads\_thumbs\Files\qua2_png.jpg" />
-    <Content Include="Uploads\_thumbs\Files\Ukraine-5-nha-lanh-dao-chau-Phi-vua-den-tham-Kiev-rung-chuyen-vi-no-lon-7jwi3pxaujnexh3kvcv6trqyva-1686924269-11-width960height640.jpg" />
-    <Content Include="Uploads\_thumbs\Files\Uong-2-coc-nuoc-ep-nay-moi-ngay-nguoi-dan-ong-phai-chay-than-ca-doi-3-1683516134-338-width1024height700.jpg" />
-    <Content Include="Uploads\_thumbs\Images\banner_2.jpg" />
-    <Content Include="Uploads\_thumbs\Images\download %281%29.jpg" />
-    <Content Include="Uploads\_thumbs\Images\download %282%29.jpg" />
-    <Content Include="Uploads\_thumbs\Images\download.jpg" />
-    <Content Include="Uploads\_thumbs\Images\slider_1.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -4420,9 +4369,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202306110936157_tuanfixing.resx">
       <DependentUpon>202306110936157_tuanfixing.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202310040803423_ava.resx">
-      <DependentUpon>202310040803423_ava.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
