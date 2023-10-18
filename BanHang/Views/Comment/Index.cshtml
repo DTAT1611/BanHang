@@ -1,0 +1,31 @@
+﻿@model IEnumerable<BanHang.Models.EF.Comment>
+@using Microsoft.AspNet.Identity
+<h3>Bình luận</h3>
+<div class="">
+
+    @if (Model != null && Model.Any())
+    {
+        
+
+
+        foreach (var item in Model)
+        {
+            @Html.HiddenFor(x => item.Id)
+            @Html.HiddenFor(x => item.CreatedBy)
+            @Html.HiddenFor(x => item.ModifierDate)
+            @Html.HiddenFor(x => item.ModifierBy)
+           
+           
+
+            <div>
+                <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@(item.ApplicationUsers.Ava)" class="round-image" />
+                <h4>@(item.ApplicationUsers.UserName): @item.comms</h4>
+            </div>
+
+        }
+    }
+    else 
+    {
+        <p>chưa có bình luận</p>
+    }
+</div>

@@ -1,4 +1,6 @@
 ﻿@model BanHang.Models.EF.Product
+
+
 @{
     ViewBag.Title = "Details";
 }
@@ -54,7 +56,7 @@
                 }
             </div>
             <div class="col-lg-3">
-                  
+
             </div>
             <div class="col-lg-5">
                 <div class="product_details">
@@ -98,11 +100,13 @@
                 </div>
             </div>
         </div>
-
+        @Html.Action("Index","Comment")
+        
     </div>
+    
 
 }
 @section scripts{
     <script src="~/Content/assets/js/single_custom.js"></script>
-    
+
 }

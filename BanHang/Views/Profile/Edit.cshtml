@@ -53,10 +53,7 @@
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="form-group">
-
-        @Html.HiddenFor(model => model.Role)
-    </div>
+    @Html.HiddenFor(model => model.Role)
     @Html.HiddenFor(model => model.UserName)
     @Html.HiddenFor(model => model.PasswordHash)
     @Html.HiddenFor(model => model.SecurityStamp)
