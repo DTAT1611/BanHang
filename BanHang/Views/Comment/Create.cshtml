@@ -1,0 +1,26 @@
+﻿@model BanHang.Models.EF.Comment
+
+<div id="test">
+    @using (Html.BeginForm("Details", "Products", FormMethod.Post, new { role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        if (Request.IsAuthenticated)
+        {
+            <div class="form-group">
+
+                <label for="exampleInputEmail1">Bình luận</label>
+                @Html.TextBoxFor(x => x.comms, new { @class = "form-control", @placeholder = "Bình luận" })
+
+            </div>
+
+            <div class="col-3 text-left">
+                <input type="submit" class=" btn btn-success" value="Thêm" onClick="test">
+            </div>
+        }
+        else
+        {
+            <p>Đăng nhập để bình luận</p>
+        }
+
+    }
+</div>

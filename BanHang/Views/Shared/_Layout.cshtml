@@ -92,9 +92,10 @@
                                             }
                                             else
                                             {
+                                                var ava = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("Ava");
                                                 if (User.IsInRole("Admin"))
                                                 {
-                                                    var ava = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("Ava");
+
                                                     <a href="#">
 
                                                         <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@ava.Value" class="round-image" />
@@ -122,6 +123,7 @@
                                                 else
                                                 {
                                                     <a href="#">
+                                                         <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@ava.Value" class="round-image" />
                                                         @User.Identity.Name
                                                         <i class="fa fa-angle-down"></i>
 

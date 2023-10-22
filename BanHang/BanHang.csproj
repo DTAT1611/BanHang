@@ -249,6 +249,7 @@
     <Compile Include="Common\Common.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddToCartController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
@@ -258,9 +259,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202310070554385_test.cs" />
-    <Compile Include="Migrations\202310070554385_test.designer.cs">
-      <DependentUpon>202310070554385_test.cs</DependentUpon>
+    <Compile Include="Migrations\202310220859502_rebuild.cs" />
+    <Compile Include="Migrations\202310220859502_rebuild.designer.cs">
+      <DependentUpon>202310220859502_rebuild.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -268,6 +269,7 @@
     <Compile Include="Models\Common\Filter.cs" />
     <Compile Include="Models\EF\AddToCart.cs" />
     <Compile Include="Models\EF\Category.cs" />
+    <Compile Include="Models\EF\Comment.cs" />
     <Compile Include="Models\EF\New.cs" />
     <Compile Include="Models\EF\Order.cs" />
     <Compile Include="Models\EF\OrderDetail.cs" />
@@ -280,6 +282,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
+    <Compile Include="Models\commentsviewmodel.cs" />
     <Compile Include="Models\Payments\VnPayLibrary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -4393,6 +4396,8 @@
     <Content Include="Views\Shared\View.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
+    <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\Comment\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -4413,8 +4418,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202310070554385_test.resx">
-      <DependentUpon>202310070554385_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310220859502_rebuild.resx">
+      <DependentUpon>202310220859502_rebuild.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
