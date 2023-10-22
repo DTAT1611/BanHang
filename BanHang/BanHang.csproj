@@ -259,9 +259,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202310171312243_rebuild.cs" />
-    <Compile Include="Migrations\202310171312243_rebuild.designer.cs">
-      <DependentUpon>202310171312243_rebuild.cs</DependentUpon>
+    <Compile Include="Migrations\202310220859502_rebuild.cs" />
+    <Compile Include="Migrations\202310220859502_rebuild.designer.cs">
+      <DependentUpon>202310220859502_rebuild.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -4397,12 +4397,12 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Comment\Index.cshtml" />
+    <Content Include="Views\Comment\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\ckfinder\userfiles\" />
     <Folder Include="Content\client\ckfinder\userfiles\" />
-    <Folder Include="Views\commentindex\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -4418,8 +4418,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202310171312243_rebuild.resx">
-      <DependentUpon>202310171312243_rebuild.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310220859502_rebuild.resx">
+      <DependentUpon>202310220859502_rebuild.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

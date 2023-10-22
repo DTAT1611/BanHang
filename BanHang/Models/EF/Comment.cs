@@ -15,6 +15,7 @@ namespace BanHang.Models.EF
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string comms { get; set; }
+        
         public virtual Product Product { get; set; }
         public virtual ApplicationUser ApplicationUsers { get; set; }
         public int Reply { get; set; }

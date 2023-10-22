@@ -100,8 +100,13 @@
                 </div>
             </div>
         </div>
-        @Html.Action("Index","Comment")
+
+        @Html.Action("Index", "Comment")
+    <div id="test">@Html.Action("Create", "Comment")</div>
         
+    
+       
+
     </div>
     
 
@@ -110,3 +115,8 @@
     <script src="~/Content/assets/js/single_custom.js"></script>
 
 }
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        $("body").load(window.location.href);
+    });
+</script>*@
