@@ -13,21 +13,17 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal" style="margin-top:160px; margin-left:400px">
+<div class="form-horizontal" style="margin-top:160px">
     <h4>Thông tin người dùng</h4>
-    <div style="display:inline-block;margin-right: 200px">
 
-        <img style=" width: 168px; height: 168px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@Model.Ava" class="round-image" alt="Avatar" />
-
-    </div>
-    <div style="display: inline-block" class="user_details">
-        <div class="user_details_title" style="margin-top:20px;">
-
+    <div class="user_details">
+        <div class="user_details_title">
+            
             <h4>Tên: @Model.FullName</h4>
-            <h4>Email: @Model.Email</h4>
-            <h4>Sdt: @Model.Phone</h4>
+            <h4>Tên: @Model.Email</h4>
+            <h4>Tên: @Model.Phone</h4>
         </div>
-
+        
 
     </div>
     <a href="~/Profile/Edit/@Model.Id" class="btn btn-sm btn-primary">sửa</a>
