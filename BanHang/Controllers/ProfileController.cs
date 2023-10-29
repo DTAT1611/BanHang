@@ -41,8 +41,6 @@ namespace BanHang.Controllers
             ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
             var item = dbConect.Users.Find(id);
             return View(item);
-
-
         }
         public ActionResult Edit(string id)
         {

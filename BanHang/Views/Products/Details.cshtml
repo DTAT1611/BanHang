@@ -2,13 +2,16 @@
 
 
 @{
+
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-}
+
 
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_responsive.css">
+
 @if (Model != null)
 {
     <div class="container single_product_container">
@@ -102,21 +105,10 @@
         </div>
 
         @Html.Action("Index", "Comment")
-    <div id="test">@Html.Action("Create", "Comment")</div>
-        
-    
-       
+        <div id="test">
+            @Html.Action("Create", "Comment")
+        </div>
 
     </div>
-    
 
 }
-@section scripts{
-    <script src="~/Content/assets/js/single_custom.js"></script>
-
-}
-@*<script type="text/javascript">
-    $(document).ready(function () {
-        $("body").load(window.location.href);
-    });
-</script>*@

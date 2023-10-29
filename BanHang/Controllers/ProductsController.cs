@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace BanHang.Controllers
 {
@@ -33,7 +34,10 @@ namespace BanHang.Controllers
         }
         public ActionResult Details(int id)
         {
+            
+            
             Product p = dbConect.Products.SingleOrDefault(n => n.Id == id);
+           
             ViewBag.DanhMuc = dbConect.ProductCategories.SingleOrDefault(n => n.Id == p.ProductCategoryId).Tiltle;
             return View(p);
         }
