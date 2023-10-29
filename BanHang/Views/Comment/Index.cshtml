@@ -1,7 +1,12 @@
 ﻿@model IEnumerable<BanHang.Models.EF.Comment>
-
+<style>
+    .comment{
+        border: 2px outset #856073;
+          opacity:0.7;
+    }
+</style>
 <h3>Bình luận</h3>
-<div class="">
+<div class="comment">
 
     @if (Model != null && Model.Any())
     {

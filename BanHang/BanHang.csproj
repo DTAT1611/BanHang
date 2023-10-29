@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort>44325</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -259,9 +260,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202310220859502_rebuild.cs" />
-    <Compile Include="Migrations\202310220859502_rebuild.designer.cs">
-      <DependentUpon>202310220859502_rebuild.cs</DependentUpon>
+    <Compile Include="Migrations\202310270633105_fix.cs" />
+    <Compile Include="Migrations\202310270633105_fix.designer.cs">
+      <DependentUpon>202310270633105_fix.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -4418,8 +4419,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202310220859502_rebuild.resx">
-      <DependentUpon>202310220859502_rebuild.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202310270633105_fix.resx">
+      <DependentUpon>202310270633105_fix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

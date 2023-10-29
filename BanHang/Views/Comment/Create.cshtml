@@ -3,24 +3,43 @@
 <div id="test">
     @using (Html.BeginForm("Details", "Products", FormMethod.Post, new { role = "form" }))
     {
-        @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
         if (Request.IsAuthenticated)
         {
-            <div class="form-group">
+    <div class="form-group">
 
-                <label for="exampleInputEmail1">Bình luận</label>
-                @Html.TextBoxFor(x => x.comms, new { @class = "form-control", @placeholder = "Bình luận" })
+        <label for="exampleInputEmail1">Bình luận</label>
+        @Html.TextBoxFor(x => x.comms, new { @class = "form-control", @placeholder = "Bình luận" })
 
-            </div>
+    </div>
 
-            <div class="col-3 text-left">
-                <input type="submit" class=" btn btn-success" value="Thêm" onClick="test">
-            </div>
+    <div class="col-3 text-left">
+        <input type="submit" class=" btn btn-success" value="Thêm" onClick="test">
+    </div>
         }
         else
         {
-            <p>Đăng nhập để bình luận</p>
+    <p>Đăng nhập để bình luận</p>
         }
 
     }
 </div>
+@section scripts{
+    <script src="~/Content/assets/js/single_custom.js"></script>
+    <script>
+        function Create(id, url) {
+            debugger;
+            $.ajax({
+                url: '/Comment/Create',
+                type: 'POST',
+                data: { userId: id, url: url },
+                success: function (rs) {
+                    if (rs.Success) {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+    </script>
+}
+
