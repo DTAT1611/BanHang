@@ -25,29 +25,12 @@ namespace BanHang.Controllers
             
             return PartialView(items);
         }
-        public PartialViewResult Create(int id)
-        {
-            ViewBag.id = id;
-            return PartialView("Create");
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //////public PartialViewResult Create(int id)
+        //////{
+
+        //////    return PartialView("Create");
+        //////}
         
-        public ActionResult Create(int id,string com )
-        {
-            dbConect.Comments.Add(new Comment
-            {
-                Product = dbConect.Products.Find(id),
-                comms = com,
-                ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId()),
-                CreatedDate=DateTime.Now,
-                CreatedBy = User.Identity.GetUserId(),
-                ModifierDate=DateTime.Now
-            });
-            dbConect.SaveChanges();
-            return Json(new { Success = true });
-           
-        }
         public ActionResult Edit(int id)
         {
             return View(dbConect.Comments.Find(id));

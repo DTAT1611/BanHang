@@ -1,13 +1,14 @@
 ﻿@model BanHang.Models.EF.Product
-
-
 @{
 
     ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+   
 }
 
-
+@*<script src="~/Scripts/jquery-3.4.1.min.js"></script>*@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_responsive.css">
@@ -105,10 +106,61 @@
         </div>
 
         @Html.Action("Index", "Comment")
-        <div id="test">
+        @*<div id="test">
             @Html.Action("Create", "Comment")
-        </div>
+        </div>*@
+        <div id="create">
+            @Html.AntiForgeryToken()
+@if (Request.IsAuthenticated)
+{
+    {
+        <div class="form-group" id="comment">
 
+            <label for="exampleInputEmail1">Bình luận</label>
+            <input type="text" id="textboxcomment" class="textcommnet" />
+
+        </div>
+    }
+
+    <div class="col-3 text-left">
+        <input type="button" value="Add" id="btnclick"class="btnclick" onclick="AddCommnet();" />
+
+    </div>
+}
+
+else
+{
+    <p>Đăng nhập để bình luận</p>
+}
+        </div>
     </div>
 
 }
+<script>
+    
+    function AddCommnet() {
+        
+        
+        var id = @Model.Id;
+        var comment = document.getElementById("textboxcomment").value;
+        
+        $.ajax({
+            url: '/products/AddCommnet',
+            type: 'POST',
+            data: {
+                productid: id, com: comment
+            },
+            success: function (rs) {
+                if (rs.Success) {
+                    window.location.reload();
+                    
+                }
+                else {
+                    alert("binh luan that bai");
+                }
+            }
+
+        })
+    }
+
+</script>
