@@ -1,32 +1,46 @@
 ﻿@model IEnumerable<BanHang.Models.EF.Comment>
 <style>
-    .comment{
+    .text {
+        word-break:break-all;
+        display:inline;
+    }
+    .div_left { 
+    }
+    .div_right {
         border: 2px outset #856073;
-          opacity:0.7;
+        border-radius: 10px;
+        opacity: 0.7;
+        width: 150px;
+        margin-left: 60px;
+        margin-top: -50px
     }
 </style>
 <h3>Bình luận</h3>
 <div class="comment">
 
     @if (Model != null && Model.Any())
-    {
+                {
+
+
+                    foreach (var item in Model)
+                    {
+                        @Html.HiddenFor(x => item.Id)
+                        @Html.HiddenFor(x => item.CreatedBy)
+                        @Html.HiddenFor(x => item.ModifierDate)
+                        @Html.HiddenFor(x => item.ModifierBy)
 
 
 
-        foreach (var item in Model)
-        {
-            @Html.HiddenFor(x => item.Id)
-            @Html.HiddenFor(x => item.CreatedBy)
-            @Html.HiddenFor(x => item.ModifierDate)
-            @Html.HiddenFor(x => item.ModifierBy)
+    <div class="text">
+        <br />
+        <image class="div_left" style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@(item.ApplicationUsers.Ava)"  />  
+      
+        <div class="div_right ">
+            <h4 >@(item.ApplicationUsers.UserName) </h4>
+            <h5>@item.comms</h5>
+        </div>
 
-
-
-            <div>
-                <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@(item.ApplicationUsers.Ava)" class="round-image" />
-                <h4>@(item.ApplicationUsers.UserName): @item.comms</h4>
-            </div>
-
+    </div>
         }
     }
     else
