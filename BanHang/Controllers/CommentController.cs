@@ -6,8 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace BanHang.Controllers
 {
@@ -19,31 +21,31 @@ namespace BanHang.Controllers
         // GET: Comment
         public PartialViewResult Index(int id)
         {
-            
             var items = dbConect.Comments.Where(x => x.Product.Id == id).ToList();
             
             return PartialView(items);
         }
-        public PartialViewResult Create()
+        //////public PartialViewResult Create(int id)
+        //////{
+
+        //////    return PartialView("Create");
+        //////}
+        
+        public ActionResult Edit(int id)
         {
-            return PartialView();
+            return View(dbConect.Comments.Find(id));
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public PartialViewResult Create(Comment model,int id)
+        public ActionResult Edit(Comment model)
         {
-            model.Product = dbConect.Products.Find(id);
-            model.ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId());
             if (ModelState.IsValid)
             {
-                model.Reply = 0;
-                model.CreatedDate=DateTime.Now;
-                model.ModifierDate=DateTime.Now;
-                dbConect.Comments.Add(model);
+                model.ModifierDate = DateTime.Now;
+                dbConect.Comments.Attach(model);
                 dbConect.SaveChanges();
-                
+               
             }
-            return PartialView("Create",model);
+            return View(model);
         }
 
     }
