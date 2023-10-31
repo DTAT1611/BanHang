@@ -38,14 +38,13 @@ namespace BanHang.Controllers
             
             
             Product p = dbConect.Products.SingleOrDefault(n => n.Id == id);
-            ViewBag.id = id;
+            TempData["id"]=id;
             ViewBag.DanhMuc = dbConect.ProductCategories.SingleOrDefault(n => n.Id == p.ProductCategoryId).Tiltle;
             return View(p);
         }
+        
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-
-        public ActionResult AddCommnet(int productid, string com)
+        public ActionResult AddReply(int productid, string com)
         {
             dbConect.Comments.Add(new Comment
             {
@@ -54,12 +53,13 @@ namespace BanHang.Controllers
                 ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId()),
                 CreatedDate = DateTime.Now,
                 CreatedBy = User.Identity.GetUserId(),
-                ModifierDate = DateTime.Now
-            });
+                ModifierDate = DateTime.Now,
+                Reply = Convert.ToInt32(TempData["id"])
+            }); 
             dbConect.SaveChanges();
             return Json(new { Success = true });
-
         }
+        
         public ActionResult Partial_ItemsByCateId(int id)
         {
             ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Find(id).Alias;

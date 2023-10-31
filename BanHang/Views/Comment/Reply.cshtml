@@ -1,0 +1,53 @@
+﻿@model BanHang.Models.EF.Comment
+
+<div id="reply">
+    @Html.AntiForgeryToken()
+    @if (Request.IsAuthenticated)
+    {
+        {
+            <div class="form-group" id="comment">
+
+                <label for="exampleInputEmail1">Bình luận</label>
+                @Html.TextBoxFor(x => x.comms, new { @class = "form-control", id = "textboxreply", @placeholder = "bình luận" })
+
+            </div>
+        }
+
+        <div class="col-3 text-left">
+            <input type="button" value="Add" id="btnclick" class="btnclick" onclick="ReplyComment();" />
+
+        </div>
+    }
+
+    else
+    {
+        <p>Đăng nhập để bình luận</p>
+    }
+</div>
+<script>
+
+    function ReplyComment() {
+        var id = @ViewBag.ID;
+        var productid = @ViewBag.proid;
+        var comment = document.getElementById("textboxreply").value;
+
+        $.ajax({
+            url: '/Comment/ReplyComment',
+            type: 'POST',
+            data: {
+                id: id,productid: productid, com: comment
+            },
+            success: function (rs) {
+                if (rs.Success) {
+                    window.location.reload();
+
+                }
+                else {
+                    alert("binh luan that bai");
+                }
+            }
+
+        })
+    }
+
+</script>
