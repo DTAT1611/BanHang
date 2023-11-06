@@ -7,13 +7,13 @@ namespace BanHang.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class rebuild : IMigrationMetadata
+    public sealed partial class newbuild : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(rebuild));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(newbuild));
         
         string IMigrationMetadata.Id
         {
-            get { return "202310220859502_rebuild"; }
+            get { return "202311060734336_newbuild"; }
         }
         
         string IMigrationMetadata.Source

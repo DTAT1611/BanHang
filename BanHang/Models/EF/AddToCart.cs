@@ -13,7 +13,6 @@ namespace BanHang.Models.EF
         private ApplicationDbContext dbConect = new ApplicationDbContext();
         public int iId { get; set; }
         public string stitle { get; set; }
-        
         public int isoluong { get; set; }
         public decimal dprice { get; set; }
         

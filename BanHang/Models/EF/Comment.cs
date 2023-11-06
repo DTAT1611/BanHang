@@ -19,6 +19,7 @@ namespace BanHang.Models.EF
         public virtual Product Product { get; set; }
         public virtual ApplicationUser ApplicationUsers { get; set; }
         public int Reply { get; set; }
+        public bool hide {  get; set; }
 
     }
 }
