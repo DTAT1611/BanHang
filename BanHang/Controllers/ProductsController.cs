@@ -1,10 +1,12 @@
 ﻿using BanHang.Models;
 using BanHang.Models.EF;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace BanHang.Controllers
 {
@@ -33,9 +35,30 @@ namespace BanHang.Controllers
         }
         public ActionResult Details(int id)
         {
+            
+            
             Product p = dbConect.Products.SingleOrDefault(n => n.Id == id);
+            ViewBag.id = id;
             ViewBag.DanhMuc = dbConect.ProductCategories.SingleOrDefault(n => n.Id == p.ProductCategoryId).Tiltle;
             return View(p);
+        }
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+
+        public ActionResult AddCommnet(int productid, string com)
+        {
+            dbConect.Comments.Add(new Comment
+            {
+                Product = dbConect.Products.Find(productid),
+                comms = com,
+                ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId()),
+                CreatedDate = DateTime.Now,
+                CreatedBy = User.Identity.GetUserId(),
+                ModifierDate = DateTime.Now
+            });
+            dbConect.SaveChanges();
+            return Json(new { Success = true });
+
         }
         public ActionResult Partial_ItemsByCateId(int id)
         {
