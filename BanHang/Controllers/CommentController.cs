@@ -43,7 +43,7 @@ namespace BanHang.Controllers
                 CreatedDate = DateTime.Now,
                 CreatedBy = User.Identity.GetUserId(),
                 ModifierDate = DateTime.Now,
-
+                hide = false
             });
             
             dbConect.SaveChanges();
@@ -75,7 +75,9 @@ namespace BanHang.Controllers
             var item = dbConect.Comments.Find(id);
             if (item != null)
             {
-                dbConect.Comments.Remove(item);
+                item.hide = true;
+                dbConect.Comments.Attach(item);
+                dbConect.Entry(item).State = System.Data.Entity.EntityState.Modified;
                 dbConect.SaveChanges();
                 return Json(new { success = true });
             }
@@ -104,8 +106,8 @@ namespace BanHang.Controllers
                 CreatedDate = DateTime.Now,
                 CreatedBy = User.Identity.GetUserId(),
                 ModifierDate = DateTime.Now,
-
-            }); ;
+                hide = false
+            }); 
 
             dbConect.SaveChanges();
 
