@@ -1,0 +1,29 @@
+﻿@model BanHang.Models.EF.Comment
+
+
+
+<div id="create">
+    @Html.AntiForgeryToken()
+    @if (Request.IsAuthenticated)
+    {
+        {
+            <div class="form-group" id="comment">
+
+                <label for="exampleInputEmail1">Bình luận</label>
+                @Html.TextBoxFor(x => x.comms, new { @class = "form-control" ,id= "textboxcomment", @placeholder = "bình luận" })
+
+            </div>
+        }
+
+        <div class="col-3 text-left" >
+            <input type="button" value="Add" id="btnclick" class="btnclick" onclick="AddCommnet();" />
+
+        </div>
+    }
+
+    else
+    {
+        <p>Đăng nhập để bình luận</p>
+    }
+</div>
+
