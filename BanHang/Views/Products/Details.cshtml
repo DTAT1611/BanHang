@@ -106,46 +106,22 @@
         </div>
 
         @Html.Action("Index", "Comment")
-        @*<div id="test">
+        <div id="test">
             @Html.Action("Create", "Comment")
-        </div>*@
-        <div id="create">
-            @Html.AntiForgeryToken()
-@if (Request.IsAuthenticated)
-{
-    {
-        <div class="form-group" id="comment">
-
-            <label for="exampleInputEmail1">Bình luận</label>
-            <input type="text" id="textboxcomment" class="textcommnet" />
-
         </div>
-    }
-
-    <div class="col-3 text-left">
-        <input type="button" value="Add" id="btnclick"class="btnclick" onclick="AddCommnet();" />
-
-    </div>
-}
-
-else
-{
-    <p>Đăng nhập để bình luận</p>
-}
-        </div>
+        
     </div>
 
 }
 <script>
-    
+
     function AddCommnet() {
-        
-        
+
         var id = @Model.Id;
         var comment = document.getElementById("textboxcomment").value;
-        
+
         $.ajax({
-            url: '/products/AddCommnet',
+            url: '/Comment/AddCommnet',
             type: 'POST',
             data: {
                 productid: id, com: comment
@@ -153,7 +129,7 @@ else
             success: function (rs) {
                 if (rs.Success) {
                     window.location.reload();
-                    
+
                 }
                 else {
                     alert("binh luan that bai");
@@ -162,5 +138,5 @@ else
 
         })
     }
-
+    
 </script>

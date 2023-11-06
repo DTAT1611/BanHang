@@ -1,0 +1,25 @@
+﻿@model BanHang.Models.EF.Comment
+<div id="create">
+    @Html.AntiForgeryToken()
+    @if (Request.IsAuthenticated)
+    {
+        var ava = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("Ava");
+        {
+            <div class="form-group" id="comment">
+
+                <label for="exampleInputEmail1"><image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@ava.Value" class="round-image" /></label>
+                <input type="text" data-textboxreplyid="@ViewBag.replytextboxid" value="" />
+
+            </div>
+        }
+
+        
+    }
+
+    else
+    {
+        <p>Đăng nhập để bình luận</p>
+    }
+</div>
+
+

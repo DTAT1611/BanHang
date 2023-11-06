@@ -1,6 +1,7 @@
 ﻿using BanHang.Models;
 using BanHang.Models.EF;
 using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using Microsoft.Owin.BuilderProperties;
 using System;
 using System.Collections.Generic;
@@ -75,85 +76,82 @@ namespace BanHang.Controllers
                 bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, vnp_HashSecret);
                 if (checkSignature)
                 {
-                    Order order = new Order();
-                    foreach (var i in LGH)
-                    {
-                        if (i != null)
-                        {
-                            Product p = dbConect.Products.Find(i.iId);
-                            int s = 0;
-                            s = p.Quantity - i.isoluong;
-                            p.Quantity = s;
-                            if (p.Quantity <= 0)
-                            {
-                                p.IsHome = false;
-                            }
-
-
-                            order.OrderDetails.Add(new OrderDetail
-                            {
-                                ProductId = i.iId,
-                                Quantity = i.isoluong,
-                                Price = i.dprice
-
-                            });
-
-                            
-                        }
-                    }
-                    order.CustomerName = Convert.ToString(TempData["CustomerName"]);
-                    order.Email = Convert.ToString(TempData["Email"]);
-                    order.Address = Convert.ToString(TempData["Address"]);
-                    order.Phone= Convert.ToString(TempData["Phone"]);
-                    order.TotalAmount = Convert.ToDecimal(TempData["TotalAmount"]);
-                    order.Code = orderCode;
-                    order.TypePayment = 2;
-                    order.Status = 2;
-                    order.CreatedDate= DateTime.Now;
-                    order.ModifierDate = DateTime.Now;
-                    order.CreatedBy =order.CustomerName;
-                    var strSanPham = "";
-                    var tongtien = decimal.Zero;
-                    foreach (var item in LGH)
-                    {
-                        strSanPham += "<tr>";
-                        strSanPham += "<td>" + item.stitle + "</td>";
-                        strSanPham += "<td>" + item.isoluong + "</td>";
-                        strSanPham += "<td>" + BanHang.Common.Common.FormatNumber(item.ThanhTien, 0) + "<td>";
-                        strSanPham += "</tr>";
-                        tongtien += item.dprice * item.isoluong;
-
-                    }
-                    dbConect.Orders.Add(order);
-
-                    dbConect.SaveChanges();
-                    string contentcus = System.IO.File.ReadAllText(Server.MapPath("~/Content/template/send2.html"));
-                    contentcus = contentcus.Replace("{{MaDon}}", orderCode);
-                    contentcus = contentcus.Replace("{{SanPham}}", strSanPham);
-                    contentcus = contentcus.Replace("{{NgayDat}}", DateTime.Now.ToString("dd/MM/yyyy"));
-                    contentcus = contentcus.Replace("{{TenKhachHang}}", order.CustomerName);
-                    contentcus = contentcus.Replace("{{Phone}}", order.Phone);
-                    contentcus = contentcus.Replace("{{Email}}", order.Email);
-                    contentcus = contentcus.Replace("{{DiaChiNhanHang}}", order.Address);
-                    contentcus = contentcus.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
-                    BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng #" + order.Code, contentcus.ToString(), order.Email);
-                    string contentad = System.IO.File.ReadAllText(Server.MapPath("~/Content/template/send1.html"));
-                    contentad = contentad.Replace("{{MaDon}}", order.Code);
-                    contentad = contentad.Replace("{{SanPham}}", strSanPham);
-                    contentad = contentad.Replace("{{NgayDat}}", DateTime.Now.ToString("dd/MM/yyyy"));
-                    contentad = contentad.Replace("{{TenKhachHang}}", order.CustomerName);
-                    contentad = contentad.Replace("{{Phone}}", order.Phone);
-                    contentad = contentad.Replace("{{Email}}", order.Email);
-                    contentad = contentad.Replace("{{DiaChiNhanHang}}", order.Address);
-                    contentad = contentad.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
-                    BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng mới #" + order.Code, contentad.ToString(), ConfigurationManager.AppSettings["Email"]);
-                    LGH.Clear();
-
-
-
+                    
                     if (vnp_ResponseCode == "00" && vnp_TransactionStatus == "00")
                     {
+                        Order order = new Order();
+                        foreach (var i in LGH)
+                        {
+                            if (i != null)
+                            {
+                                Product p = dbConect.Products.Find(i.iId);
+                                int s = p.Quantity - i.isoluong;
+                                p.Quantity = s;
+                                if (p.Quantity <= 0)
+                                {
+                                    p.IsHome = false;
+                                }
 
+
+                                order.OrderDetails.Add(new OrderDetail
+                                {
+                                    ProductId = i.iId,
+                                    Quantity = i.isoluong,
+                                    Price = i.dprice
+
+                                });
+
+
+                            }
+                        }
+                        order.CustomerName = Convert.ToString(TempData["CustomerName"]);
+                        order.Email = Convert.ToString(TempData["Email"]);
+                        order.Address = Convert.ToString(TempData["Address"]);
+                        order.Phone = Convert.ToString(TempData["Phone"]);
+                        order.TotalAmount = Convert.ToDecimal(TempData["TotalAmount"]);
+                        order.Code = orderCode;
+                        order.TypePayment = 2;
+                        order.Status = 2;
+                        order.CreatedDate = DateTime.Now;
+                        order.ModifierDate = DateTime.Now;
+                        order.CreatedBy = order.CustomerName;
+                        order.ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId());
+                        var strSanPham = "";
+                        var tongtien = decimal.Zero;
+                        foreach (var item in LGH)
+                        {
+                            strSanPham += "<tr>";
+                            strSanPham += "<td>" + item.stitle + "</td>";
+                            strSanPham += "<td>" + item.isoluong + "</td>";
+                            strSanPham += "<td>" + BanHang.Common.Common.FormatNumber(item.ThanhTien, 0) + "<td>";
+                            strSanPham += "</tr>";
+                            tongtien += item.dprice * item.isoluong;
+
+                        }
+                        dbConect.Orders.Add(order);
+
+                        dbConect.SaveChanges();
+                        string contentcus = System.IO.File.ReadAllText(Server.MapPath("~/Content/template/send2.html"));
+                        contentcus = contentcus.Replace("{{MaDon}}", orderCode);
+                        contentcus = contentcus.Replace("{{SanPham}}", strSanPham);
+                        contentcus = contentcus.Replace("{{NgayDat}}", DateTime.Now.ToString("dd/MM/yyyy"));
+                        contentcus = contentcus.Replace("{{TenKhachHang}}", order.CustomerName);
+                        contentcus = contentcus.Replace("{{Phone}}", order.Phone);
+                        contentcus = contentcus.Replace("{{Email}}", order.Email);
+                        contentcus = contentcus.Replace("{{DiaChiNhanHang}}", order.Address);
+                        contentcus = contentcus.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
+                        BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng #" + order.Code, contentcus.ToString(), order.Email);
+                        string contentad = System.IO.File.ReadAllText(Server.MapPath("~/Content/template/send1.html"));
+                        contentad = contentad.Replace("{{MaDon}}", order.Code);
+                        contentad = contentad.Replace("{{SanPham}}", strSanPham);
+                        contentad = contentad.Replace("{{NgayDat}}", DateTime.Now.ToString("dd/MM/yyyy"));
+                        contentad = contentad.Replace("{{TenKhachHang}}", order.CustomerName);
+                        contentad = contentad.Replace("{{Phone}}", order.Phone);
+                        contentad = contentad.Replace("{{Email}}", order.Email);
+                        contentad = contentad.Replace("{{DiaChiNhanHang}}", order.Address);
+                        contentad = contentad.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
+                        BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng mới #" + order.Code, contentad.ToString(), ConfigurationManager.AppSettings["Email"]);
+                        LGH.Clear();
                         ViewBag.InnerText = "Giao dịch được thực hiện thành công. Cảm ơn quý khách đã sử dụng dịch vụ";
 
                     }
@@ -161,6 +159,7 @@ namespace BanHang.Controllers
                     {
 
                         ViewBag.InnerText = "Có lỗi xảy ra trong quá trình xử lý.Mã lỗi: " + vnp_ResponseCode;
+                        return View();
 
                     }
 
@@ -252,17 +251,14 @@ namespace BanHang.Controllers
                     }
  
                 }
-                
-                
                 order.TypePayment = o.TypePayment;
                 order.CreatedDate = DateTime.Now;
                 order.ModifierDate = DateTime.Now;
                 order.Status=1;
                 order.CreatedBy = o.CustomerName;
-                
+                order.ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId());
                 order.Code = "Đơn Hàng " + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                 dbConect.Orders.Add(order);
-                
                 dbConect.SaveChanges();
 
                 var strSanPham = "";
