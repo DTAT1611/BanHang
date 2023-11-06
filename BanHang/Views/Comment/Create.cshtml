@@ -10,12 +10,12 @@
             <div class="form-group" id="comment">
 
                 <label for="exampleInputEmail1">Bình luận</label>
-                @Html.TextBoxFor(x => x.comms, new { @class = "form-control",id= "textboxcomment", @placeholder = "bình luận" })
+                @Html.TextBoxFor(x => x.comms, new { @class = "form-control" ,id= "textboxcomment", @placeholder = "bình luận" })
 
             </div>
         }
 
-        <div class="col-3 text-left">
+        <div class="col-3 text-left" >
             <input type="button" value="Add" id="btnclick" class="btnclick" onclick="AddCommnet();" />
 
         </div>

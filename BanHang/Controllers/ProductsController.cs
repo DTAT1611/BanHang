@@ -43,22 +43,8 @@ namespace BanHang.Controllers
             return View(p);
         }
         
-        [HttpPost]
-        public ActionResult AddReply(int productid, string com)
-        {
-            dbConect.Comments.Add(new Comment
-            {
-                Product = dbConect.Products.Find(productid),
-                comms = com,
-                ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId()),
-                CreatedDate = DateTime.Now,
-                CreatedBy = User.Identity.GetUserId(),
-                ModifierDate = DateTime.Now,
-                Reply = Convert.ToInt32(TempData["id"])
-            }); 
-            dbConect.SaveChanges();
-            return Json(new { Success = true });
-        }
+        
+        
         
         public ActionResult Partial_ItemsByCateId(int id)
         {

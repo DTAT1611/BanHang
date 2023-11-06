@@ -1,22 +1,19 @@
 ﻿@model BanHang.Models.EF.Comment
-
-<div id="reply">
+<div id="create">
     @Html.AntiForgeryToken()
     @if (Request.IsAuthenticated)
     {
+        var ava = ((System.Security.Claims.ClaimsIdentity)User.Identity).FindFirst("Ava");
         {
             <div class="form-group" id="comment">
 
-                <label for="exampleInputEmail1">Bình luận</label>
-                @Html.TextBoxFor(x => x.comms, new { @class = "form-control", id = "textboxreply", @placeholder = "bình luận" })
+                <label for="exampleInputEmail1"><image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@ava.Value" class="round-image" /></label>
+                <input type="text" data-textboxreplyid="@ViewBag.replytextboxid" value="" />
 
             </div>
         }
 
-        <div class="col-3 text-left">
-            <input type="button" value="Add" id="btnclick" class="btnclick" onclick="ReplyComment();" />
-
-        </div>
+        
     }
 
     else
@@ -24,30 +21,5 @@
         <p>Đăng nhập để bình luận</p>
     }
 </div>
-<script>
 
-    function ReplyComment() {
-        var id = @ViewBag.ID;
-        var productid = @ViewBag.proid;
-        var comment = document.getElementById("textboxreply").value;
 
-        $.ajax({
-            url: '/Comment/ReplyComment',
-            type: 'POST',
-            data: {
-                id: id,productid: productid, com: comment
-            },
-            success: function (rs) {
-                if (rs.Success) {
-                    window.location.reload();
-
-                }
-                else {
-                    alert("binh luan that bai");
-                }
-            }
-
-        })
-    }
-
-</script>

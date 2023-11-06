@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<BanHang.Models.EF.Comment>
-
+@using Microsoft.AspNet.Identity
 <h3>Bình luận</h3>
 <div class="">
 
@@ -13,21 +13,30 @@
                 @Html.HiddenFor(x => item.CreatedBy)
                 @Html.HiddenFor(x => item.ModifierDate)
                 @Html.HiddenFor(x => item.ModifierBy)
-                <div>
-                    <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@(item.ApplicationUsers.Ava)" class="round-image" />
-                    <h4>@(item.ApplicationUsers.UserName):</h4>
-                    <div data-currentcommentid="@item.Id" style="display:block;" id="current">
-                        <h4>@item.comms</h4>
-                    </div>
-                    <div id="edit">
-                        <h4><input style="display:none;" type="text" data-commentid="@item.Id" id="textedit" value="@item.comms" /></h4>
-                    </div>
-                    <button onclick="openedit(@item.Id);" class="btn btn-primary">chỉnh sửa</button>
-                    <input type="button" value="Save" id="btnclick" class="btnclick" onclick="EditComment(@item.Id);" />
-                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
-                    @Html.Action("IndexReply", "Comment", new {id=item.Id})
-                    @Html.Action("Reply", "Comment")
-                </div>
+    <div>
+        <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@(item.ApplicationUsers.Ava)" class="round-image" />
+        <h4>@(item.ApplicationUsers.UserName):</h4>
+        <div data-currentcommentid="@item.Id" style="display:block;" id="current">
+            <h4>@item.comms</h4>
+        </div>
+        <div id="edit">
+            <h4><input style="display:none;" type="text" data-commentid="@item.Id" id="textedit" value="@item.comms" /></h4>
+        </div>
+        @if (item.ApplicationUsers.Id == User.Identity.GetUserId())
+        {
+            <button onclick="openedit(@item.Id);" class="btn btn-primary">chỉnh sửa</button>
+            <input type="button" value="Save" id="btnclick" class="btnclick" onclick="EditComment(@item.Id);" />
+            <a href="javascript:void(0);" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+        }
+        <a href="javascript:void(0);" onclick="openreply(@item.Id)" class="btn btn-success">phản hồi</a>
+        <div style="display:none" data-replyid="@item.Id">
+            @Html.Action("Reply", "Comment",new {id=item.Id})
+            <a href="javascript:void(0);" onclick="ReplyComment(@item.Id)" class="btn btn-success">trả lời</a>
+        </div>
+        @Html.Action("IndexReply", "Comment", new { id = item.Id })
+
+
+    </div>
             }
 
 
@@ -39,7 +48,7 @@
     }
 </div>
 <script>
-    
+
     function openedit(id) {
         let commentID = id;
         var div = document.querySelector(`[data-currentcommentid="${commentID}"]`);
@@ -59,6 +68,7 @@
             url: '/Comment/EditComment',
             type: 'POST',
             data: {
+
                 id: id, com: textbox
             },
             success: function (rs) {
@@ -93,5 +103,35 @@
             }
         });
     });
+    function openreply(id) {
+        let commentID = id;
+        var div = document.querySelector(`[data-replyid="${commentID}"]`);
+        div.style.display = "block";
+        alert("test");
+    }
+    function ReplyComment(idr) {
+        let commentID = idr;
+        var id = idr;
+        let textboxreply = document.querySelector(`[data-textboxreplyid="${commentID}"]`);
+        var comment = textboxreply.value;
+        $.ajax({
+            url: '/Comment/ReplyComment',
+            type: 'POST',
+            data: {
+                id: id, com: comment
+            },
+            success: function (rs) {
+                if (rs.Success) {
+                    window.location.reload();
+
+                }
+                else {
+                    alert("binh luan that bai");
+                }
+            }
+
+        })
+    }
+
 </script>
 

@@ -83,20 +83,22 @@ namespace BanHang.Controllers
         }
         public PartialViewResult IndexReply(int id)
         {
+            
             var item = dbConect.Comments.Where(x => x.Reply == id).ToList();
             return PartialView(item);
         }
         public PartialViewResult Reply(int id)
         {
+            ViewBag.replytextboxid = id;
             return PartialView("Reply");
         }
         [HttpPost]
-        public ActionResult ReplyComment(int id,int productid,string com)
+        public ActionResult ReplyComment(int id, string com)
         {
             dbConect.Comments.Add(new Comment
             {
                 Reply = id,
-                Product = dbConect.Products.Find(productid),
+                Product = dbConect.Comments.Find(id).Product,
                 comms = com,
                 ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId()),
                 CreatedDate = DateTime.Now,
