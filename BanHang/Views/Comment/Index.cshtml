@@ -1,5 +1,23 @@
 ﻿@model IEnumerable<BanHang.Models.EF.Comment>
 @using Microsoft.AspNet.Identity
+<style>
+    .cmt {
+        word-break: break-all;
+        display: inline;
+    }
+
+    .div_left {
+    }
+
+    .div_right {
+        background-color: #DCDCDC;
+        border: 3px #856073;
+        border-radius: 20px;
+        max-width: 200px;
+        margin-left: 60px;
+        margin-top: -50px;
+    }
+</style>
 <h3>Bình luận</h3>
 <div class="">
 
@@ -15,36 +33,41 @@
                     @Html.HiddenFor(x => item.CreatedBy)
                     @Html.HiddenFor(x => item.ModifierDate)
                     @Html.HiddenFor(x => item.ModifierBy)
-                    <div>
-                        <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@(item.ApplicationUsers.Ava)" class="round-image" />
-                        <h4>@(item.ApplicationUsers.UserName):</h4>
-                        <div data-currentcommentid="@item.Id" style="display:block;" id="current">
-                            <h4>@item.comms</h4>
+                    <div class="cmt">
+                        <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@(item.ApplicationUsers.Ava)" class="div_left round-image" />
+                        <div class="div_right">
+                            <h4 style="margin-left: 10px; opacity: 0.7;">@(item.ApplicationUsers.UserName):</h4>
+                            <div data-currentcommentid="@item.Id" style="display:block;" id="current">
+                                <h4 style="margin-left: 10px; color: #000011; ">@item.comms</h4>
+                            </div>
                         </div>
-
                         <div id="edit">
-                            <h4><input style="display:none;" type="text" data-commentid="@item.Id" id="textedit" value="@item.comms" /></h4>
+                            <h4><input style="display: none; margin-left: 10px; width: auto; max-width: 200px" type="text" data-commentid="@item.Id" id="textedit" value="@item.comms" /></h4>
                         </div>
                         @if (item.ApplicationUsers.Id == User.Identity.GetUserId())
                         {
-                            <button onclick="openedit(@item.Id);" class="btn btn-primary">chỉnh sửa</button>
-                            <input type="button" value="Save" id="btnclick" class="btnclick" onclick="EditComment(@item.Id);" />
-                            <a href="javascript:void(0);" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
+                            @*<button onclick="openedit(@item.Id);" class="btn btn-primary">chỉnh sửa</button>*@
+                            <a href="javascript:void(0);" onclick="openedit(@item.Id);" class="btnclick"> Chỉnh sửa</a>
+                            @*<input type="button" value="Save" id="btnclick" class="btnclick" onclick="EditComment(@item.Id);" />*@
+                            <a href="javascript:void(0);" style="margin-left: 5px" class="btnclick" onclick="EditComment(@item.Id);"> Save</a>
+                            <a href="#" style="color: red; margin-left: 5px" data-id="@item.Id" class="btnclick"> Xóa</a>
                         }
                     </div>
                 }
                 else
                 {
-                    <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@(item.ApplicationUsers.Ava)" class="round-image" />
-                    <h4>@(item.ApplicationUsers.UserName):</h4>
-                    <h4>Bình luận này đã xóa</h4>
+                    <image style=" width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@(item.ApplicationUsers.Ava)" class="div_left round-image" />
+                    <div class="div_right">
+                        <h4 style="margin-left: 10px; opacity: 0.7;">@(item.ApplicationUsers.UserName):</h4>
+                            <h4 style="margin-left: 10px; color: #000011; ">Bình luận này đã xóa</h4>
+                    </div>
                 }
                 if (item.ApplicationUsers.Id == User.Identity.GetUserId())
                 {
-                    <a href="javascript:void(0);" onclick="openreply(@item.Id)" class="btn btn-success">phản hồi</a>
+                    <a href="javascript:void(0);" onclick="openreply(@item.Id)" class="btnclick">phản hồi</a>
                     <div style="display:none" data-replyid="@item.Id">
                         @Html.Action("Reply", "Comment", new { id = item.Id })
-                        <a href="javascript:void(0);" onclick="ReplyComment(@item.Id)" class="btn btn-success">trả lời</a>
+                        <a href="javascript:void(0);" onclick="ReplyComment(@item.Id)" class="btnclick">trả lời</a>
                     </div>
                     @Html.Action("IndexReply", "Comment", new { id = item.Id })
                 }
