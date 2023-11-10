@@ -9,40 +9,28 @@
 
 }, new { @Id = "myForm" }))
 {
-    
+
     @Html.AntiForgeryToken()
 
-    <div class="form-group" style=" left:50px; top:70px">
-        <label>Họ tên khách hàng</label>
-        <input type="text" name="CustomerName" required class="form-control" autocomplete="off" />
-    </div>
-    <div class="form-group" style=" left:50px; top:70px">
-        <label>Số điện thoại</label>
-        <input type="text" name="Phone" class="form-control" autocomplete="off" />
-    </div>
+
     <div class="form-group" style=" left:50px; top:70px">
         <label>Địa chỉ</label>
         <input type="text" name="Address" class="form-control" autocomplete="off" />
     </div>
-    <div class="form-group" style=" left:50px; top:70px">
-        <label>Email</label>
-        <input type="text" name="Email" class="form-control" autocomplete="off" />
-    </div>
+
     <div class="form-group" style=" left:50px; top:70px">
         <label>Hình thức thanh toán</label>
         <select class="form-control" name="TypePayment" id="drTypePayment">
             <option value="1" selected>COD</option>
-            <option value="2" >Chuyển khoản</option>
+            <option value="2">Chuyển khoản</option>
         </select>
     </div>
-    <br>
-    <div class="form-group" id="load_form_payment" style="display:none;">
-        
+    <div class="form-group" id="load_form_payment" style="display:none;left:50px; top:70px">
         <label name="TypePaymentVN" value="0" checked> Cổng thanh toán VNPAYQR </label>
-        
+
     </div>
-    
-    <div class="form-group"style=" left:50px; top:70px">
+    <br>
+    <div class="form-group" style=" left:50px; top:70px">
         <button type="submit" class="btn btn-block btn-success" id="btnCheckOut">Đặt hàng</button>
     </div>
 }
