@@ -63,10 +63,30 @@ namespace BanHang.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var item = dbConect.ProductCategories.Find(id);
-            if (item != null)
+            var category = dbConect.ProductCategories.Find(id);
+            if (category != null)
             {
-                dbConect.ProductCategories.Remove(item);
+                // Tìm và lấy tất cả các sản phẩm thuộc danh mục này
+                var productsToDelete = dbConect.Products.Where(p => p.ProductCategoryId == id).ToList();
+
+                // Xóa từng sản phẩm
+                foreach (var product in productsToDelete)
+                {
+                    // Tìm và lấy tất cả bình luận thuộc sản phẩm
+                    var commentsToDelete = dbConect.Comments.Where(c => c.Product.Id == product.Id).ToList();
+
+                    // Xóa từng bình luận
+                    foreach (var comment in commentsToDelete)
+                    {
+                        dbConect.Comments.Remove(comment);
+                    }
+
+                    dbConect.Products.Remove(product);
+                }
+
+                // Xóa danh mục sản phẩm
+                dbConect.ProductCategories.Remove(category);
+
                 dbConect.SaveChanges();
                 return Json(new { success = true });
             }

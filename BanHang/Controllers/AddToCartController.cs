@@ -79,6 +79,7 @@ namespace BanHang.Controllers
                     
                     if (vnp_ResponseCode == "00" && vnp_TransactionStatus == "00")
                     {
+                        int sl = 0;
                         Order order = new Order();
                         foreach (var i in LGH)
                         {
@@ -100,7 +101,7 @@ namespace BanHang.Controllers
                                     Price = i.dprice
 
                                 });
-
+                                sl = sl + i.isoluong;
 
                             }
                         }
@@ -116,6 +117,7 @@ namespace BanHang.Controllers
                         order.ModifierDate = DateTime.Now;
                         order.CreatedBy = order.CustomerName;
                         order.ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId());
+                        order.Quantity = sl;
                         var strSanPham = "";
                         var tongtien = decimal.Zero;
                         foreach (var item in LGH)
@@ -157,7 +159,6 @@ namespace BanHang.Controllers
                     }
                     else
                     {
-
                         ViewBag.InnerText = "Có lỗi xảy ra trong quá trình xử lý.Mã lỗi: " + vnp_ResponseCode;
                         return View();
 
@@ -199,7 +200,7 @@ namespace BanHang.Controllers
             if (ModelState.IsValid)
             {
                 decimal sum = 0;
-
+                int sl = 0;
                 List<AddToCart> LGH = TakeAddToCart();
                 Order order = new Order();
                 Random rd = new Random();
@@ -224,7 +225,7 @@ namespace BanHang.Controllers
                             Price = i.dprice
 
                         });
-
+                        sl = sl+i.isoluong;
                         sum = sum + (i.dprice * i.isoluong);
                     }
                 }
@@ -251,6 +252,7 @@ namespace BanHang.Controllers
                     }
  
                 }
+                order.Quantity = sl;
                 order.TypePayment = o.TypePayment;
                 order.CreatedDate = DateTime.Now;
                 order.ModifierDate = DateTime.Now;
