@@ -3,15 +3,18 @@
 
 @{
     ViewBag.Title = "Error";
-    Layout = "~/Views/Shared/View.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_styles.css">
 <style>
     .error {
         display: grid;
         place-items: center;
     }
 </style>
-<div class="error">
+<div class="error" style="margin-top: 200px; margin-left: 200px; width: 50%; position: relative;">
     <h1 class="text-danger">Error.</h1>
     <h2 class="text-danger">An error occurred while processing your request.</h2>
 </div>

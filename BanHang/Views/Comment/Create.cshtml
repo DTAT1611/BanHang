@@ -2,11 +2,12 @@
 
 <style>
     .addcmt::before {
-        content: "\1F4E9"; /* Đây là mã Unicode của biểu tượng 📩 */
-        font-size: 20px; /* Kích thước biểu tượng */
+        content: "bình luận"; /* Đây là mã Unicode của biểu tượng 📩 */
+        font-size: 15px; /* Kích thước biểu tượng */
 
     }
     .addcmt {
+
         margin-top:70px;
         display:inline;
     }
@@ -20,7 +21,7 @@
             <div class="form-group col-6" style="display:inline-block" id="comment">
 
                 <label for="exampleInputEmail1" style="display: inline; margin-right: 10px;">Bình luận</label>
-                @Html.TextBoxFor(x => x.comms, new { @class = "form-control", id = "textboxcomment", @placeholder = "bình luận" })
+                @Html.TextBoxFor(x => x.comms, new { @class = "form-control", id = "textboxcomment"})
                
             </div>
         }
