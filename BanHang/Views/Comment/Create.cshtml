@@ -1,23 +1,36 @@
 ﻿@model BanHang.Models.EF.Comment
 
+<style>
+    .addcmt::before {
+        content: "\1F4E9"; /* Đây là mã Unicode của biểu tượng 📩 */
+        font-size: 20px; /* Kích thước biểu tượng */
 
+    }
+    .addcmt {
+        margin-top:70px;
+        display:inline;
+    }
+</style>
 
 <div id="create">
     @Html.AntiForgeryToken()
     @if (Request.IsAuthenticated)
     {
         {
-            <div class="form-group" id="comment">
+            <div class="form-group col-6" style="display:inline-block" id="comment">
 
-                <label for="exampleInputEmail1">Bình luận</label>
-                @Html.TextBoxFor(x => x.comms, new { @class = "form-control" ,id= "textboxcomment", @placeholder = "bình luận" })
-
+                <label for="exampleInputEmail1" style="display: inline; margin-right: 10px;">Bình luận</label>
+                @Html.TextBoxFor(x => x.comms, new { @class = "form-control", id = "textboxcomment", @placeholder = "bình luận" })
+               
             </div>
         }
 
-        <div class="col-3 text-left" >
-            <input type="button" value="Add" id="btnclick" class="btnclick" onclick="AddCommnet();" />
-        </div>
+
+<div class="col-3 text-left" style="display:inline-block;margin-top:50px">
+    <a href="javascript:void(0);" id="btnclick" class="btnclick addcmt" onclick="AddCommnet();"></a>
+
+</div>
+
     }
 
     else
