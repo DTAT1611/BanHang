@@ -154,8 +154,7 @@ namespace BanHang.Controllers
                         contentad = contentad.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
                         BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng mới #" + order.Code, contentad.ToString(), ConfigurationManager.AppSettings["Email"]);
                         LGH.Clear();
-                        ViewBag.InnerText = "Giao dịch được thực hiện thành công. Cảm ơn quý khách đã sử dụng dịch vụ";
-
+                        
                     }
                     else
                     {
@@ -164,7 +163,7 @@ namespace BanHang.Controllers
 
                     }
 
-
+                    ViewBag.InnerText = "Giao dịch được thực hiện thành công. Cảm ơn quý khách đã sử dụng dịch vụ";
                     ViewBag.ThanhToanThanhCong = "Số tiền thanh toán (VND):" + vnp_Amount.ToString();
                     
                 }
@@ -194,8 +193,6 @@ namespace BanHang.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CheckOut(OrderViewModel o)
         {
-
-
             
             if (ModelState.IsValid)
             {
@@ -229,10 +226,11 @@ namespace BanHang.Controllers
                         sum = sum + (i.dprice * i.isoluong);
                     }
                 }
-                order.CustomerName = o.CustomerName;
+                var userid = User.Identity.GetUserId();
+                order.CustomerName = dbConect.Users.FirstOrDefault(x => x.Id == userid).FullName;
                 order.Address = o.Address;
-                order.Phone = o.Phone;
-                order.Email = o.Email;
+                order.Phone = dbConect.Users.FirstOrDefault(x => x.Id == userid).Phone;
+                order.Email = dbConect.Users.FirstOrDefault(x => x.Id == userid).Email;
                 order.TotalAmount = sum;
                 if (o.TypePayment == 2)
                 {
@@ -257,12 +255,13 @@ namespace BanHang.Controllers
                 order.CreatedDate = DateTime.Now;
                 order.ModifierDate = DateTime.Now;
                 order.Status=1;
-                order.CreatedBy = o.CustomerName;
+                order.CreatedBy = order.CustomerName;
                 order.ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId());
                 order.Code = "Đơn Hàng " + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                 dbConect.Orders.Add(order);
+                
                 dbConect.SaveChanges();
-
+                
                 var strSanPham = "";
                 var tongtien = decimal.Zero;
                 foreach (var item in LGH)
@@ -282,17 +281,17 @@ namespace BanHang.Controllers
                 contentcus = contentcus.Replace("{{NgayDat}}", DateTime.Now.ToString("dd/MM/yyyy"));
                 contentcus = contentcus.Replace("{{TenKhachHang}}", order.CustomerName);
                 contentcus = contentcus.Replace("{{Phone}}", order.Phone);
-                contentcus = contentcus.Replace("{{Email}}", o.Email);
+                contentcus = contentcus.Replace("{{Email}}", order.Email);
                 contentcus = contentcus.Replace("{{DiaChiNhanHang}}", order.Address);
                 contentcus = contentcus.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
-                BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng #" + order.Code, contentcus.ToString(), o.Email);
+                BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng #" + order.Code, contentcus.ToString(), order.Email);
                 string contentad = System.IO.File.ReadAllText(Server.MapPath("~/Content/template/send1.html"));
                 contentad = contentad.Replace("{{MaDon}}", order.Code);
                 contentad = contentad.Replace("{{SanPham}}", strSanPham);
                 contentad = contentad.Replace("{{NgayDat}}", DateTime.Now.ToString("dd/MM/yyyy"));
                 contentad = contentad.Replace("{{TenKhachHang}}", order.CustomerName);
                 contentad = contentad.Replace("{{Phone}}", order.Phone);
-                contentad = contentad.Replace("{{Email}}", o.Email);
+                contentad = contentad.Replace("{{Email}}", order.Email);
                 contentad = contentad.Replace("{{DiaChiNhanHang}}", order.Address);
                 contentad = contentad.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
                 BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng mới #" + order.Code, contentad.ToString(), ConfigurationManager.AppSettings["Email"]);

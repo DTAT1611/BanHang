@@ -1,0 +1,6 @@
+﻿@model BanHang.Models.EF.Order
+<div class="form-group">
+
+    @Html.DropDownListFor(x => x.idship, ViewBag.ship as SelectList, "-id-đơn giao hàng", new { @class = "form-control", id = "idship" })
+
+</div>

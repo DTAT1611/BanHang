@@ -32,6 +32,7 @@ namespace BanHang.Models.EF
         public int Quantity { get; set; }
         public int TypePayment { get; set; }
         public int Status { get; set; }
+        public int idship { get; set; }
         public virtual ApplicationUser ApplicationUsers { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
     }

@@ -35,17 +35,11 @@ namespace BanHang.Controllers
         }
         public ActionResult Details(int id)
         {
-            
-            
             Product p = dbConect.Products.SingleOrDefault(n => n.Id == id);
             TempData["id"]=id;
             ViewBag.DanhMuc = dbConect.ProductCategories.SingleOrDefault(n => n.Id == p.ProductCategoryId).Tiltle;
             return View(p);
         }
-        
-        
-        
-        
         public ActionResult Partial_ItemsByCateId(int id)
         {
             ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Find(id).Alias;

@@ -1,4 +1,5 @@
 ﻿using BanHang.Models;
+using BanHang.Models.EF;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNetCore.Identity;
@@ -75,6 +76,55 @@ namespace BanHang.Controllers
             ViewBag.Role = new SelectList(dbConect.Roles.ToList(), "Name", "Name");
             return View(model);
 
+        }
+        public PartialViewResult Ship(string id)
+        {
+            return PartialView(dbConect.Ships.Where(x=>x.userid==id));
+        }
+        public PartialViewResult Order(int id)
+        {
+            
+            return PartialView(dbConect.Orders.Where(x => x.idship == id).ToList());
+        }
+        public PartialViewResult Orderd(int id)
+        {
+
+            return PartialView(dbConect.OrderDetails.Where(x => x.OrderId == id).ToList());
+        }
+        public PartialViewResult NameProduct(int id)
+        {
+            var n = dbConect.Products.Find(id);
+            return PartialView(n);
+        }
+        public ActionResult Shipped(int id, int trangthai)
+        {
+            var item = dbConect.Ships.Find(id);
+            if (item != null)
+            {
+                dbConect.Ships.Attach(item);
+                item.StatusShip = trangthai;
+                dbConect.Entry(item).Property(x => x.StatusShip).IsModified = true;
+                dbConect.SaveChanges();
+                return Json(new { message = "Success", Success = true });
+            }
+            return Json(new { message = "Unsuccess", Success = false });
+        }
+        public ActionResult UpdateTT(int id,int trangthai)
+        {
+            var item=dbConect.Orders.Find(id);
+            if (item != null)
+            {
+                dbConect.Orders.Attach(item);
+                item.Status = trangthai;
+                dbConect.Entry(item).Property(x => x.Status).IsModified = true;
+                dbConect.SaveChanges();
+                return Json(new { message = "Success", Success = true });
+            }
+            return Json(new { message = "Unsuccess", Success = false });
+        }
+        public PartialViewResult OrderHistory(string id)
+        {
+            return PartialView(dbConect.Orders.Where(x=>x.ApplicationUsers.Id==id).ToList());
         }
     }
 }
