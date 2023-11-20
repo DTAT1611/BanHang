@@ -193,8 +193,6 @@ namespace BanHang.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CheckOut(OrderViewModel o)
         {
-
-
             
             if (ModelState.IsValid)
             {
@@ -261,8 +259,9 @@ namespace BanHang.Controllers
                 order.ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId());
                 order.Code = "Đơn Hàng " + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                 dbConect.Orders.Add(order);
+                
                 dbConect.SaveChanges();
-
+                
                 var strSanPham = "";
                 var tongtien = decimal.Zero;
                 foreach (var item in LGH)

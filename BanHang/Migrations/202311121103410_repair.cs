@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class newbuild : DbMigration
+    public partial class repair : DbMigration
     {
         public override void Up()
         {
@@ -160,6 +160,7 @@
                         Quantity = c.Int(nullable: false),
                         TypePayment = c.Int(nullable: false),
                         Status = c.Int(nullable: false),
+                        idship = c.Int(nullable: false),
                         CreatedBy = c.String(),
                         CreatedDate = c.DateTime(nullable: false),
                         ModifierDate = c.DateTime(nullable: false),
@@ -277,6 +278,20 @@
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
             
             CreateTable(
+                "dbo.Ships",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        StatusShip = c.Int(nullable: false),
+                        userid = c.String(),
+                        CreatedBy = c.String(),
+                        CreatedDate = c.DateTime(nullable: false),
+                        ModifierDate = c.DateTime(nullable: false),
+                        ModifierBy = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.tb_SystemSetting",
                 c => new
                     {
@@ -321,6 +336,7 @@
             DropIndex("dbo.tb_post", new[] { "CategoryID" });
             DropIndex("dbo.tb_New", new[] { "CategoryID" });
             DropTable("dbo.tb_SystemSetting");
+            DropTable("dbo.Ships");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.tb_ProductImage");

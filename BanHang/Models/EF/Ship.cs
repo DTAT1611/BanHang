@@ -12,8 +12,7 @@ namespace BanHang.Models.EF
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public int StatusShip { get; set; }
-        public ICollection<Order> Orders { get; set; }
-        public virtual ApplicationUser ApplicationUsers { get; set; } = null;
+        public int StatusShip { get; set; } = 1;
+        public string userid { get; set; } = null;
     }
 }
