@@ -14,10 +14,10 @@ namespace BanHang.Models
         public string FullName { get; set; }
         public string Phone { get; set; }
         public string Role { get; set; }
-
         public string Ava { get; set; } = "/Uploads/files/93a.png";
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -38,6 +38,7 @@ namespace BanHang.Models
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Ship> Ships { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<New> News { get; set; }
         public DbSet<SystemSetting> SystemSettings { get; set; }

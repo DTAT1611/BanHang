@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BanHang.Models.EF.OrderDetail>
+
+
+        
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        ID sản phẩm
+                    </th>
+                    <th class="text-center">
+                        tên sản phẩm
+                    </th>
+                    <th class="text-center">
+                        số lượng
+                    </th>
+                    <th class="text-center">
+                        giá/kg
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @item.ProductId
+                            </td>
+                            <td class="text-center">@Html.Action("NameProduct", "Profile", new { id = item.ProductId })</td>
+                            <td class="text-center">@item.Quantity</td>
+                            <td class="text-center">@item.Price / kg</td>
+
+                        </tr>
+                    }
+                }
+                    </tbody>
+        </table>
