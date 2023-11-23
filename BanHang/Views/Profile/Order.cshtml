@@ -1,0 +1,81 @@
+﻿@model IEnumerable<BanHang.Models.EF.Order>
+<section>
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">mã hóa đơn</th>
+                        <th class="text-center">tên khách hàng</th>
+                        <th class="text-center">địa chỉ</th>
+                        <th class="text-center">hình thức thanh toán</th>
+                        <th class="text-center">tình trạng thanh toán</th>
+                        <th class="text-center">tổng tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-center">@item.Code</td>
+                        <td class="text-center">@item.CustomerName</td>
+                        <td class="text-center">@item.Address</td>
+                        <td class="text-center">@(item.TypePayment==1?"COD":"Chuyển khoản")</td>
+                        <td class="text-center">
+                            @if (item.Status == 1)
+                            {
+                                <span>chưa thanh toán</span>
+                            }
+                            else
+                            {
+                                <span>đã thanh toán</span>
+                            }
+                        </td>
+                        <td class="text-center">@item.TotalAmount đ</td>
+                        
+                        @Html.Action("Orderd", "Profile", new { id = item.Id })
+                        <td><a href="javascript:void(0);" class="btn btn-sm btn-danger btnCapNhat" onclick="UpdateTT(@item.Id)">Cập nhật</a></td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+            
+        }
+    }
+</section>
+
+    <script>
+        function UpdateTT(id) {
+            var id = id;
+            var tt = 2;
+            var conf = confirm('thanh toán?');
+            if (conf == true) {
+                $.ajax({
+                    url: '/profile/UpdateTT',
+                    type: 'POST',
+                    data: { id: id, trangthai: tt },
+                    success: function (res) {
+                        if (res.Success) {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+            else {
+                var tt = 1;
+                $.ajax({
+                    url: '/profile/UpdateTT',
+                    type: 'POST',
+                    data: { id: id, trangthai: tt },
+                    success: function (res) {
+                        if (res.Success) {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+            
+        }
+        
+    </script>
+

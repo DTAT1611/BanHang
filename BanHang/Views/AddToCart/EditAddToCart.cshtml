@@ -4,12 +4,19 @@
     ViewBag.Title = "EditAddToCart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<style>
+    .quantity {
+        box-sizing: border-box;
+        border: 0px;
+        width: 50px;
+        margin-left: 50px;
+    }
+</style>
 <link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
 <link rel="stylesheet" type="text/css" href="~/Content/asets/styles/single_styles.css">
 
 
-<table style="margin-top:200px;margin-left:200px;">
+<table style="margin-top: 200px; margin-left: 200px; width: 50%; position: relative;">
     <tr>
         <td style="border: 1px solid black; text-align: center">Mã  </td>
 
@@ -35,11 +42,11 @@
             <td style="border: 1px solid black; text-align: center">@item.dprice VND</td>
             @using (Html.BeginForm("UpdateAddToCart", "AddToCart", new { @ip = item.iId, @strURL = Request.Url.ToString() }))
             {
-                <td style="border: 1px solid black; text-align: center">@Html.TextBox("txtsoluong", item.isoluong)</td>
+                <td style="border: 1px solid black; text-align: center">@Html.TextBox("txtsoluong", item.isoluong, new {@class="quantity" })</td>
 
 
                 <td style="border: 1px solid black; text-align: center">@item.ThanhTien VND</td>
-                <td><input type="submit" value="Cập nhật" /></td>
+                <td><input  type="submit" value="Cập nhật" /></td>
 
                 <td>@Html.ActionLink("Delete", "DeleteAddToCart", new { ip = item.iId })</td>
             }

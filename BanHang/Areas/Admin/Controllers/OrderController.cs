@@ -20,6 +20,11 @@ namespace BanHang.Areas.Admin.Controllers
             var items = dbConect.Orders;
             return View(items);
         }
+        public PartialViewResult IDShip()
+        {
+            ViewBag.ship = new SelectList(dbConect.Ships.ToList(), "Id", "Id");
+            return PartialView();
+        }
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -58,13 +63,14 @@ namespace BanHang.Areas.Admin.Controllers
             return View(items);
         }
         [HttpPost]
-        public ActionResult UpdateTT(int id, int trangthai)
+        public ActionResult UpdateTT(int id, int trangthai,int ids)
         {
             var item = dbConect.Orders.Find(id);
             if (item != null)
             {
                 dbConect.Orders.Attach(item);
                 item.Status = trangthai;
+                item.idship = ids;
                 dbConect.Entry(item).Property(x => x.Status).IsModified = true;
                 dbConect.SaveChanges();
                 return Json(new { message = "Success", Success = true });

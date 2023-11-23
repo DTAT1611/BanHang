@@ -58,7 +58,7 @@
                         <th class="text-center">Ngày chỉnh sửa</th>
                         <th class="text-center">Hình thức trả tiền</th>
                         <th class="text-center">tình trạng</th>
-                        <th class="text-center"></th>
+                        <th class="text-center">ID đơn giao hàng</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -90,8 +90,8 @@
                                     {
                                         <span>đã thanh toán</span>
                                     }
-                                    
                                 </td>
+                                <td class="text-center">@item.idship</td>
                                 <td>
                                     <a href="/admin/Order/Details/@item.Id" class="btn btn-sm btn-primary">Chi tiết</a>
                                     <a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.Id">Cập nhật</a>
@@ -104,11 +104,11 @@
                                         }
                                     }
                                     @*else
-                if (User.IsInRole("SHIP"))
-        {
-            <a href="#" data-id="@item.Id" class="btn btn-sm btn-success">Nhận hàng</a>
-        }
-        }*@
+                    if (User.IsInRole("SHIP"))
+            {
+                <a href="#" data-id="@item.Id" class="btn btn-sm btn-success">Nhận hàng</a>
+            }
+            }*@
                                 </td>
                             </tr>
                             i++;
@@ -147,10 +147,15 @@
             <div class="form-group">
                 <label>Trạng thái</label>
                 <select class="form-control" id="ddTrangThai">
+                    <option value="1">
+                        chưa thanh toán
+                    </option>
                     <option value="2">
                         Đã thanh toán
                     </option>
                 </select>
+                <label>ID dơn hàng</label>
+                @Html.Action("IDShip","Order")
             </div>
         </div>
         <div class="modal-footer justify-content-between">
@@ -267,10 +272,11 @@
             $('body').on('click', '#btnLuu', function () {
                 var id = $('#txtOrderId').val();
                 var tt = $('#ddTrangThai').val();
+                var i = $('#idship').val();
                 $.ajax({
                     url: '/admin/order/UpdateTT',
                     type: 'POST',
-                    data: { id: id, trangthai: tt },
+                    data: { id: id, trangthai: tt, ids: i },
                     success: function (res) {
                         if (res.Success) {
                             location.reload();
