@@ -1,65 +1,68 @@
-﻿using BanHang.Models;
-using BanHang.Models.EF;
+﻿using BanHang.Models.EF;
+using BanHang.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace BanHang.Areas.Admin.Controllers
 {
-    public class ShipController : Controller
+    public class SaleController : Controller
     {
+        // GET: Admin/Sale
         private ApplicationDbContext dbConect = new ApplicationDbContext();
         // GET: Admin/Ship
         public ActionResult Index()
         {
-            return View(dbConect.Ships);
+            return View(dbConect.Sales);
         }
-        public PartialViewResult UserShip()
+        public PartialViewResult UserSale()
         {
-            ViewBag.user = new SelectList(dbConect.Users.Where(x=>x.Role=="Shipper").ToList(), "Id", "FullName");
+            ViewBag.user = new SelectList(dbConect.Users.Where(x => x.Role == "CUS").ToList(), "Id", "FullName");
             return PartialView();
         }
         [HttpPost]
-        public ActionResult UpdateTT(int id, int trangthai,string userid)
+        public ActionResult UpdateTT(int id,int percent, string userid)
         {
-            var item = dbConect.Ships.Find(id);
+            var item = dbConect.Sales.Find(id);
             if (item != null)
             {
-                dbConect.Ships.Attach(item);
-                item.StatusShip = trangthai;
+                dbConect.Sales.Attach(item);
                 item.userid = userid;
-                dbConect.Entry(item).Property(x => x.StatusShip).IsModified = true;
+                item.percent = percent;
                 dbConect.SaveChanges();
                 return Json(new { message = "Success", Success = true });
             }
             return Json(new { message = "Unsuccess", Success = false });
         }
-        public ActionResult AddShip()
+        public ActionResult AddSale()
         {
-            dbConect.Ships.Add(new Ship
+            dbConect.Sales.Add(new Sale
             {
-                StatusShip = 1,
                 userid = null,
-                CreatedDate=DateTime.Now,
-                ModifierDate= DateTime.Now,
-                CreatedBy=User.Identity.GetUserId(),
+                percent=0,
+                CreatedDate = DateTime.Now,
+                ModifierDate = DateTime.Now,
+                CreatedBy = User.Identity.GetUserId(),
             });
             dbConect.SaveChanges();
+            return Json(new { Success = true });
+        }
+        
+        public ActionResult Api()
+        {
             return Json(new { Success = true });
         }
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            var item = dbConect.Ships.Find(id);
+            var item = dbConect.Sales.Find(id);
             
             if (item != null)
             {
-                dbConect.Orders.FirstOrDefault(x => x.idship == id).idship = 0;
-                dbConect.Ships.Remove(item);
+                dbConect.Sales.Remove(item);
                 dbConect.SaveChanges();
                 return Json(new { success = true });
             }

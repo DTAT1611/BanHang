@@ -2,14 +2,14 @@
 <div>
     @if (Model != null && Model.Any()) {
         foreach(var item in Model) { 
-            <h4>ID đơn hàng: @item.Id</h4>
+            <h4>ID đơn giao hàng: @item.Id</h4>
             @Html.Action("Order", "Profile",new {id= item.Id})
             if(item.StatusShip == 1) { 
-                <h4><span>Hàng: chưa giao</span></h4>
+                <h4><span>Tình trạng hàng: chưa giao</span></h4>
                 <a href="javascript:void(0);" class="btn btn-success" onclick="Shipped(@item.Id)">Cập nhật</a>
             }
             else{
-                <h4><span>Hàng: đã giao</span></h4>
+                <h4><span>Tình trạng hàng: đã giao</span></h4>
             }
         }
     }
