@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace BanHang.Areas.Admin.Controllers
 {
@@ -50,10 +52,33 @@ namespace BanHang.Areas.Admin.Controllers
             dbConect.SaveChanges();
             return Json(new { Success = true });
         }
-        
-        public ActionResult Api()
+
+        public async Task<ActionResult> Api()
         {
-            return Json(new { Success = true });
+            using (var client = new HttpClient()) {
+                try
+                {
+                    client.BaseAddress = new Uri("http://127.0.0.1:5000/");
+                    //UserInput
+                    var UserInput = new[] { new[] { 1002, 4 } };
+                    //Make a POST request
+                    HttpResponseMessage response = await client.PostAsJsonAsync("GetDiscountVouchers", UserInput);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseData = await response.Content.ReadAsStringAsync();
+                        if (responseData != null)
+                            return Json(new { Success = true });
+                    }
+                    else
+                    {
+                        return Json(new { Success = false });
+                    }
+                }
+                catch (Exception ex) {
+                    return Json(new { Success = false });
+                }
+            }
+            return Json(new { Success = false });
         }
         [HttpPost]
         public ActionResult Delete(int id)
