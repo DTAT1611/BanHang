@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace BanHang.Areas.Admin.Controllers
 {
@@ -65,9 +66,24 @@ namespace BanHang.Areas.Admin.Controllers
                     HttpResponseMessage response = await client.PostAsJsonAsync("GetDiscountVouchers", UserInput);
                     if (response.IsSuccessStatusCode)
                     {
-                        string responseData = await response.Content.ReadAsStringAsync();
+                        var responseData = await response.Content.ReadAsAsync<JObject>();
                         if (responseData != null)
+                        {
+                            var ProductID = responseData["ProductID"].Value<int>();
+                            dbConect.Sales.Add(new Sale
+                            {
+                                userid = User.Identity.GetUserId(),
+                                productid = ProductID,
+                                percent = 85,
+                                CreatedDate = DateTime.Now,
+                                ModifierDate = DateTime.Now,
+                                CreatedBy = User.Identity.GetUserId(),
+                            });
+                            dbConect.SaveChanges();
                             return Json(new { Success = true });
+                        }
+                        else
+                            return Json(new { Success = false });
                     }
                     else
                     {
