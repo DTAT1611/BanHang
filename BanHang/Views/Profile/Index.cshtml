@@ -20,15 +20,18 @@
         <img style=" width: 168px; height: 168px; border-radius: 50%; object-fit: cover;" x="0" y="0" src="@Model.Ava" class="round-image" alt="Avatar" />
 
     </div>
-    <div style="display: inline-block" class="user_details">
-        <div class="user_details_title" style="margin-top:20px;">
+    <div style="display: inline-block; top: 15px; right: 170px" class="user_details">
+        <div class="user_details_title" >
 
             <h4>Tên: @Model.FullName</h4>
             <h4>Email: @Model.Email</h4>
             <h4>Sdt: @Model.Phone</h4>
         </div>
     </div>
-    <a href="~/Profile/Edit/@Model.Id" class="btn btn-sm btn-primary">sửa</a>
+    <div style="left:200px;bottom:50px">
+        <a href="~/Profile/Edit/@Model.Id" class="btn btn-sm btn-primary">sửa</a>
+    </div>
+   
     @if (Model.Role == "Shipper")
     {
         @Html.Action("Ship", "Profile")
