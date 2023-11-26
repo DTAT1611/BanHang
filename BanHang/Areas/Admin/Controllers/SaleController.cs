@@ -16,6 +16,7 @@ namespace BanHang.Areas.Admin.Controllers
         // GET: Admin/Ship
         public ActionResult Index()
         {
+            int i = 0;
             return View(dbConect.Sales);
         }
         public PartialViewResult UserSale()
