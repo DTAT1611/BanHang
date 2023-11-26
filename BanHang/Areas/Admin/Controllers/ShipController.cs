@@ -3,6 +3,7 @@ using BanHang.Models.EF;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -54,8 +55,10 @@ namespace BanHang.Areas.Admin.Controllers
         public ActionResult Delete(int id)
         {
             var item = dbConect.Ships.Find(id);
+            
             if (item != null)
             {
+                dbConect.Orders.FirstOrDefault(x => x.idship == id).idship = 0;
                 dbConect.Ships.Remove(item);
                 dbConect.SaveChanges();
                 return Json(new { success = true });

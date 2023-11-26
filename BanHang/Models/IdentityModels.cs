@@ -38,6 +38,7 @@ namespace BanHang.Models
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Sale> Sales { get; set; }
         public DbSet<Ship> Ships { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<New> News { get; set; }
