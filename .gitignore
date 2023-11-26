@@ -4,7 +4,6 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 #IGNORE FILE BIN
-BanHang/bin/
 
 # User-specific files
 *.rsuser
