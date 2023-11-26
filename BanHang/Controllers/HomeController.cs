@@ -10,7 +10,6 @@ namespace BanHang.Controllers
     {
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -20,7 +19,6 @@ namespace BanHang.Controllers
 
             return View();
         }
-
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
