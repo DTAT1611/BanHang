@@ -94,7 +94,6 @@ namespace BanHang.Areas.Admin.Controllers
                     return Json(new { Success = false });
                 }
             }
-            return Json(new { Success = false });
         }
         [HttpPost]
         public ActionResult Delete(int id)
