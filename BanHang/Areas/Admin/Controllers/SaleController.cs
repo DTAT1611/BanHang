@@ -54,47 +54,47 @@ namespace BanHang.Areas.Admin.Controllers
             return Json(new { Success = true });
         }
 
-        public async Task<ActionResult> Api()
-        {
-            using (var client = new HttpClient()) {
-                try
-                {
-                    client.BaseAddress = new Uri("http://127.0.0.1:5000/");
-                    //UserInput
-                    var UserInput = new[] { new[] { 1002, 4 } };
-                    //Make a POST request
-                    HttpResponseMessage response = await client.PostAsJsonAsync("GetDiscountVouchers", UserInput);
-                    if (response.IsSuccessStatusCode)
+            public async Task<ActionResult> Api()
+            {
+                using (var client = new HttpClient()) {
+                    try
                     {
-                        var responseData = await response.Content.ReadAsAsync<JObject>();
-                        if (responseData != null)
+                        client.BaseAddress = new Uri("http://127.0.0.1:5000/");
+                        //UserInput
+                        var UserInput = new[] { new[] { 1002, 4 } };
+                        //Make a POST request
+                        HttpResponseMessage response = await client.PostAsJsonAsync("GetDiscountVouchers", UserInput);
+                        if (response.IsSuccessStatusCode)
                         {
-                            var ProductID = responseData["ProductID"].Value<int>();
-                            dbConect.Sales.Add(new Sale
+                            var responseData = await response.Content.ReadAsAsync<JObject>();
+                            if (responseData != null)
                             {
-                                userid = User.Identity.GetUserId(),
-                                productid = ProductID,
-                                percent = 85,
-                                CreatedDate = DateTime.Now,
-                                ModifierDate = DateTime.Now,
-                                CreatedBy = User.Identity.GetUserId(),
-                            });
-                            dbConect.SaveChanges();
-                            return Json(new { Success = true });
+                                var ProductID = responseData["ProductID"].Value<int>();
+                                dbConect.Sales.Add(new Sale
+                                {
+                                    userid = User.Identity.GetUserId(),
+                                    productid = ProductID,
+                                    percent = 85,
+                                    CreatedDate = DateTime.Now,
+                                    ModifierDate = DateTime.Now,
+                                    CreatedBy = User.Identity.GetUserId(),
+                                });
+                                dbConect.SaveChanges();
+                                return Json(new { Success = true });
+                            }
+                            else
+                                return Json(new { Success = false });
                         }
                         else
+                        {
                             return Json(new { Success = false });
+                        }
                     }
-                    else
-                    {
+                    catch (Exception ex) {
                         return Json(new { Success = false });
                     }
                 }
-                catch (Exception ex) {
-                    return Json(new { Success = false });
-                }
             }
-        }
         [HttpPost]
         public ActionResult Delete(int id)
         {
