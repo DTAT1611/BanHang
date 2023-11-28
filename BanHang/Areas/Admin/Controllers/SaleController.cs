@@ -9,13 +9,48 @@ using System.Web.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace BanHang.Areas.Admin.Controllers
 {
     public class SaleController : Controller
     {
+        public async Task<int> SaleAPIGetAndApply(int POSTProductID, int Amount)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://127.0.0.1:5000/");
+
+                    var UserInput = new[] { new[] { 1002, 4 } };
+
+                    HttpResponseMessage response = await client.PostAsJsonAsync("GetDiscountVouchers", UserInput);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseData = await response.Content.ReadAsAsync<JObject>();
+
+                        if (responseData != null && responseData.TryGetValue("ProductID", out JToken ProductIDToken))
+                        {
+                            if (int.TryParse(ProductIDToken.ToString(), out int ProductID))
+                            {
+                                return ProductID;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+
+            return -1;
+        }
+
         // GET: Admin/Sale
-        private ApplicationDbContext dbConect = new ApplicationDbContext();
+        protected ApplicationDbContext dbConect = new ApplicationDbContext();
         // GET: Admin/Ship
         public ActionResult Index()
         {
@@ -54,47 +89,77 @@ namespace BanHang.Areas.Admin.Controllers
             return Json(new { Success = true });
         }
 
-            public async Task<ActionResult> Api()
+        public async Task<ActionResult> Api()
+        {
+            var CurrentUserID = User.Identity.GetUserId();
+            try
             {
-                using (var client = new HttpClient()) {
-                    try
+                if (CurrentUserID != null)
+                {
+                    var FindUserSale = dbConect.Sales.Where(x => x.userid == CurrentUserID)
+                                 .OrderByDescending(x => x.CreatedDate)
+                                 .FirstOrDefault();
+                    if (FindUserSale == null)
                     {
-                        client.BaseAddress = new Uri("http://127.0.0.1:5000/");
-                        //UserInput
-                        var UserInput = new[] { new[] { 1002, 4 } };
-                        //Make a POST request
-                        HttpResponseMessage response = await client.PostAsJsonAsync("GetDiscountVouchers", UserInput);
-                        if (response.IsSuccessStatusCode)
+                        var GETProductID = await SaleAPIGetAndApply(0, 0); // Asynchronously wait for the completion of SaleAPIGetAndApply
+                        dbConect.Sales.Add(new Sale
                         {
-                            var responseData = await response.Content.ReadAsAsync<JObject>();
-                            if (responseData != null)
+                            userid = User.Identity.GetUserId(),
+                            productid = GETProductID,
+                            percent = 80,
+                            CreatedDate = DateTime.Now,
+                            ModifierDate = DateTime.Now,
+                            CreatedBy = User.Identity.GetUserId(),
+                        });
+                        dbConect.SaveChanges();
+                        return Json(new { Success = true });
+                    }
+                    else
+                    {
+                        var DeltaTime = Convert.ToDateTime(DateTime.Now - dbConect.Sales.Where(x => x.userid == User.Identity.GetUserId()).LastOrDefault().CreatedDate).Day;
+                        if (DeltaTime >= 7)
+                        {
+                            var GETProductID = await SaleAPIGetAndApply(0, 0); // Asynchronously wait for the completion of SaleAPIGetAndApply
+                            dbConect.Sales.Add(new Sale
                             {
-                                var ProductID = responseData["ProductID"].Value<int>();
-                                dbConect.Sales.Add(new Sale
-                                {
-                                    userid = User.Identity.GetUserId(),
-                                    productid = ProductID,
-                                    percent = 85,
-                                    CreatedDate = DateTime.Now,
-                                    ModifierDate = DateTime.Now,
-                                    CreatedBy = User.Identity.GetUserId(),
-                                });
-                                dbConect.SaveChanges();
-                                return Json(new { Success = true });
-                            }
-                            else
-                                return Json(new { Success = false });
+                                userid = User.Identity.GetUserId(),
+                                productid = GETProductID,
+                                percent = 85,
+                            });
+                            dbConect.SaveChanges();
+                            return Json(new { Success = true });
+                        }
+                        else if (DeltaTime >= 4)
+                        {
+                            var GETProductID = await SaleAPIGetAndApply(0, 0); // Asynchronously wait for the completion of SaleAPIGetAndApply
+                            dbConect.Sales.Add(new Sale
+                            {
+                                userid = User.Identity.GetUserId(),
+                                productid = GETProductID,
+                                percent = 90,
+                                CreatedDate = DateTime.Now,
+                            });
+                            dbConect.SaveChanges();
+                            return Json(new { Success = true });
                         }
                         else
                         {
                             return Json(new { Success = false });
                         }
                     }
-                    catch (Exception ex) {
-                        return Json(new { Success = false });
-                    }
                 }
+                else
+                {
+                    return Json(new { Success = false });
+                }
+
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return Json(new { Success = false });
             }
+        }
+
         [HttpPost]
         public ActionResult Delete(int id)
         {
