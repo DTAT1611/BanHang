@@ -45,6 +45,12 @@ namespace BanHang.Controllers
             }
             return View(LGH);
         }
+        public PartialViewResult BtnSale()
+        {
+            var user = User.Identity.GetUserId();
+            var item = dbConect.Sales.Where(x=>x.userid==user);
+            return PartialView(item);
+        }
         public ActionResult VnpayReturn()
         {
             List<AddToCart> LGH = TakeAddToCart();
