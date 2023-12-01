@@ -3,22 +3,154 @@ using BanHang.Models.EF;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.BuilderProperties;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Policy;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using System.Xml.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using DocumentFormat.OpenXml.Wordprocessing;
+using System.Threading;
 
 namespace BanHang.Controllers
 {
     public class AddToCartController : Controller
     {
         private ApplicationDbContext dbConect = new ApplicationDbContext();
+        public async Task<int> SaleAPIGetAndApply(int POSTProductID, int Amount)
+        {
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("http://127.0.0.1:5000/");
+
+                    var UserInput = new[] { new[] { POSTProductID, Amount } };
+
+                    var CancellationTokenSource = new CancellationTokenSource();
+                    var timeoutTask = Task.Delay(TimeSpan.FromSeconds(5), CancellationTokenSource.Token);
+
+                    var apiTask = client.PostAsJsonAsync("GetDiscountVouchers", UserInput);
+
+                    var completedTask = await Task.WhenAny(apiTask, timeoutTask);
+
+                    if (completedTask == apiTask)
+                    {
+                        HttpResponseMessage response = await apiTask;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var responseData = await response.Content.ReadAsAsync<JObject>();
+
+                            if (responseData != null && responseData.TryGetValue("ProductID", out JToken ProductIDToken))
+                            {
+                                if (int.TryParse(ProductIDToken.ToString(), out int ProductID))
+                                {
+                                    return ProductID;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        CancellationTokenSource.Cancel();
+                        return -1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                return -1;
+            }
+
+            return -1;
+        }
+        public async Task<int> DiscountApi(int ProductID, int Amount)
+        {
+            var CurrentUserID = User.Identity.GetUserId();
+            try
+            {
+                if (CurrentUserID != null)
+                {
+                    var FindUserSale = dbConect.Sales.Where(x => x.userid == CurrentUserID)
+                                 .OrderByDescending(x => x.CreatedDate)
+                                 .FirstOrDefault();
+                    var GETProductID = await SaleAPIGetAndApply(ProductID, Amount);
+                    if (GETProductID == -1)
+                    {
+                        return -1;
+                    }
+                    else
+                    {
+                        if (FindUserSale == null)
+                        {
+
+                            dbConect.Sales.Add(new Sale
+                            {
+                                userid = User.Identity.GetUserId(),
+                                productid = GETProductID,
+                                percent = 80,
+                                CreatedDate = DateTime.Now,
+                                ModifierDate = DateTime.Now,
+                                CreatedBy = User.Identity.GetUserId(),
+                            });
+                            dbConect.SaveChanges();
+                            return 1;
+                        }
+                        else
+                        {
+                            var DeltaTime = Convert.ToDateTime(DateTime.Now - dbConect.Sales.Where(x => x.userid == User.Identity.GetUserId()).LastOrDefault().CreatedDate).Day;
+                            if (DeltaTime >= 7)
+                            {
+                                dbConect.Sales.Add(new Sale
+                                {
+                                    userid = User.Identity.GetUserId(),
+                                    productid = GETProductID,
+                                    percent = 85,
+                                });
+                                dbConect.SaveChanges();
+                                return 1;
+                            }
+                            else if (DeltaTime >= 4)
+                            {
+                                dbConect.Sales.Add(new Sale
+                                {
+                                    userid = User.Identity.GetUserId(),
+                                    productid = GETProductID,
+                                    percent = 90,
+                                    CreatedDate = DateTime.Now,
+                                });
+                                dbConect.SaveChanges();
+                                return 1;
+                            }
+                            else
+                            {
+                                return -1;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    return -1;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return -1;
+            }
+        }
         public List<AddToCart> TakeAddToCart()
         {
 
@@ -45,11 +177,9 @@ namespace BanHang.Controllers
             }
             return View(LGH);
         }
-        public ActionResult VnpayReturn()
+        public async Task<ActionResult> VnpayReturn()
         {
             List<AddToCart> LGH = TakeAddToCart();
-
-            
             if (Request.QueryString.Count > 0)
             {
                 string vnp_HashSecret = ConfigurationManager.AppSettings["vnp_HashSecret"];
@@ -154,7 +284,26 @@ namespace BanHang.Controllers
                         contentad = contentad.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
                         BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng mới #" + order.Code, contentad.ToString(), ConfigurationManager.AppSettings["Email"]);
                         LGH.Clear();
-                        
+                        //Starting Discount Api
+                        var FindOrderID = dbConect.Orders.Where(x => x.Code == order.Code).FirstOrDefault().Id;
+                        var ListOrderDetails = dbConect.OrderDetails.Where(x => x.OrderId == FindOrderID).ToList();
+                        OrderDetail ItemForDiscount = null;
+                        int MaxAmount = 4;
+                        foreach(var item in ListOrderDetails)
+                        {
+                            if (ItemForDiscount != null && item.Quantity > MaxAmount)
+                            {
+                                MaxAmount = item.Quantity;
+                                ItemForDiscount = item;
+                            }
+                            else
+                            {
+                                MaxAmount = item.Quantity;
+                                ItemForDiscount = item;
+                            }
+                        }
+                        var result = await DiscountApi(ItemForDiscount.ProductId, MaxAmount);
+                        //End Discount Api
                     }
                     else
                     {
@@ -191,7 +340,7 @@ namespace BanHang.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CheckOut(OrderViewModel o)
+        public async Task<ActionResult> CheckOut(OrderViewModel o)
         {
             
             if (ModelState.IsValid)
@@ -259,7 +408,7 @@ namespace BanHang.Controllers
                 order.ApplicationUsers = dbConect.Users.Find(User.Identity.GetUserId());
                 order.Code = "Đơn Hàng " + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9) + rd.Next(0, 9);
                 dbConect.Orders.Add(order);
-                
+
                 dbConect.SaveChanges();
                 
                 var strSanPham = "";
@@ -296,9 +445,28 @@ namespace BanHang.Controllers
                 contentad = contentad.Replace("{{TongTien}}", BanHang.Common.Common.FormatNumber(tongtien, 0));
                 BanHang.Common.Common.SendMail("ShopOnline", "Đơn hàng mới #" + order.Code, contentad.ToString(), ConfigurationManager.AppSettings["Email"]);
                 LGH.Clear();
+                //Starting Discount Api
+                var FindOrderID = dbConect.Orders.Where(x=>x.Code == order.Code).FirstOrDefault().Id;
+                var ListOrderDetails = dbConect.OrderDetails.Where(x => x.OrderId == FindOrderID).ToList();
+                OrderDetail ItemForDiscount = null;
+                int MaxAmount = 4;
+                foreach (var item in ListOrderDetails)
+                {
+                    if (ItemForDiscount != null && item.Quantity > MaxAmount)
+                    {
+                        MaxAmount = item.Quantity;
+                        ItemForDiscount = item;
+                    }
+                    else
+                    {
+                        MaxAmount = item.Quantity;
+                        ItemForDiscount = item;
+                    }
+                }
+                var result = await DiscountApi(ItemForDiscount.ProductId, MaxAmount);
+                //End Discount Api
             }
             return RedirectToAction("CheckOutSuccess");
-
             }
         public ActionResult CheckOutPartial()
         {
