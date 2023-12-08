@@ -56,19 +56,20 @@
     </table>
     <table style="position: relative; left: 80px ">
         <tr>
-            <td style="text-align: right " colspan="6">
-                @Html.ActionLink("Edit Gio Hang", "EditAddToCart")
+            <td style="text-align: right " colspan="6" class="btn btn-default">
+                @Html.ActionLink("Chỉnh sửa giỏ hàng ","EditAddToCart")
             </td>
             <td colspan="6">
-                <a href="@Url.Action("CheckOut","AddToCart")"><input type="submit" value="Đặt hàng" /></a>
+                <a href="@Url.Action("CheckOut","AddToCart")"><input type="submit" class="btn btn-sm" value="Đặt hàng" /></a>
 
+            </td>
+            <td colspan="6">
+               @Html.Action("BtnSale","AddToCart")
             </td>
         </tr>
 
     </table>
+    
 </div>
 
-    @section scripts{
-        <script src="~/Content/assets/js/single_custom.js"></script>
 
-    }

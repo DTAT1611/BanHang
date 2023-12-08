@@ -122,6 +122,19 @@ namespace BanHang.Controllers
             }
             return Json(new { message = "Unsuccess", Success = false });
         }
+        public ActionResult Cancle(int id, int trangthai)
+        {
+            var item = dbConect.Orders.Find(id);
+            if (item != null)
+            {
+                dbConect.Orders.Attach(item);
+                item.Status = trangthai;
+                dbConect.Entry(item).Property(x => x.Status).IsModified = true;
+                dbConect.SaveChanges();
+                return Json(new { message = "Success", Success = true });
+            }
+            return Json(new { message = "Unsuccess", Success = false });
+        }
         public PartialViewResult OrderHistory(string id)
         {
             return PartialView(dbConect.Orders.Where(x=>x.ApplicationUsers.Id==id).ToList());
