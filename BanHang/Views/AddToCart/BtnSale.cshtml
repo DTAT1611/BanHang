@@ -1,11 +1,10 @@
-﻿@model IEnumerable<BanHang.Models.EF.Sale>
+﻿@model BanHang.Models.EF.Sale
 @using Microsoft.AspNet.Identity
 
-@if (Model != null && Model.Any())
+@if (Model != null )
 {
-    foreach (var item in Model)
-    {
-        <a href="#" class="btn btn-success btnApDung" data-id="@item.userid">áp dụng phiếu giảm giá </a>
+   
+        <a href="javascript:void(0);" class="btn btn-success btnApDung" data-id="@Model.userid">áp dụng phiếu giảm giá </a>
         <div class="modal fade" id="modal-s">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -18,57 +17,20 @@
                     <div class="modal-body">
                         <input type="hidden" id="txtSId" value="0" />
                         <div class="form-group">
-                            <table>
-                                
-                                <tbody>
-                                    <tr id="trow_@item.id">
-                                        <td class="text-center"><input type="checkbox" class="cbkItem" value="@item.id" /></td>
-                                        
-                                        <td class="text-center">@item.productid</td>
-                                        
-                                        <td class="text-center">@item.percent%</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
+                            @Html.Action("CTSales", "AddToCart")
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                        <button type="button" class="btn btn-primary" id="btnLuu">Lưu</button>
+                        <a href="javascript:void(0);" class="btn btn-primary" id="btnLuu">Áp dụng</a>
                     </div>
+
                 </div>
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
         </div>
-    }
-
+    
+    
 }
-<script>
-    $(document).ready(function () {
-        $('body').on('click', '.btnApDung', function () {
 
-            var id = $(this).data("id");
-            $('#txtSId').val(id);
-            $('#modal-s').modal('show');
-           
-        });
-
-        $('body').on('click', '#btnLuu', function () {
-            var id = $('#txtSaleId').val();
-            var tt = $('#txtpercent').val();
-            var u = $('#usersale').val();
-            $.ajax({
-                url: '/admin/sale/UpdateTT',
-                type: 'POST',
-                data: { id: id, percent: tt, userid: u },
-                success: function (res) {
-                    if (res.Success) {
-                        location.reload();
-                    }
-                }
-            });
-        });
-    });
-</script>

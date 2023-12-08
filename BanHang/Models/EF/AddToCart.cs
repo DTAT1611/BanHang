@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using Microsoft.AspNet.Identity;
+using Microsoft.VisualBasic.ApplicationServices;
 namespace BanHang.Models.EF
 {
     public class AddToCart
 
     {
-        
         private ApplicationDbContext dbConect = new ApplicationDbContext();
         public int iId { get; set; }
         public string stitle { get; set; }
         public int isoluong { get; set; }
         public decimal dprice { get; set; }
-        
+        public string userid { get; set; } 
+
         public decimal ThanhTien
         {
             get { return dprice * isoluong; }
@@ -23,8 +24,10 @@ namespace BanHang.Models.EF
         public AddToCart(int id, FormCollection f)
         {
             iId = id;
+
             Product p = dbConect.Products.Single(n => n.Id == iId);
             stitle = p.Title;
+
             isoluong = int.Parse(f["txtsoluong"].ToString());
             if (p.IsSale == true)
             {
@@ -34,8 +37,10 @@ namespace BanHang.Models.EF
             {
                 dprice = decimal.Parse(p.Price.ToString());
             }
+
+            
         }
-       
-        
+
+
     }
 }

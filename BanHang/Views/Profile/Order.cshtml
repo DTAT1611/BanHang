@@ -32,10 +32,17 @@
                             }
                         </td>
                         <td class="text-center">@item.TotalAmount đ</td>
-                        
                         @Html.Action("Orderd", "Profile", new { id = item.Id })
-                        <td><a href="javascript:void(0);" class="btn btn-sm btn-danger btnCapNhat" onclick="UpdateTT(@item.Id)">Cập nhật</a></td>
-                        
+                        @if (item.Status == 1)
+                        {
+
+                            <td><a href="javascript:void(0);" class="btn btn-sm btn-danger btnCapNhat" onclick="UpdateTT(@item.Id)">Cập nhật</a></td>
+                        }
+                        else
+                        {
+                            <td><a href="javascript:void(0);" class="btn btn-sm btn-danger btnCapNhat" onclick="Cancle(@item.Id)">Hủy</a></td>
+                        }
+
                     </tr>
                 </tbody>
             </table>
@@ -61,10 +68,16 @@
                     }
                 });
             }
-            else {
-                var tt = 1;
+            
+            
+        }
+        function Cancle(id) {
+            var id = id;
+            var tt = 1;
+            var conf = confirm('hủy thanh toán?');
+            if (conf == true) {
                 $.ajax({
-                    url: '/profile/UpdateTT',
+                    url: '/profile/Cancle',
                     type: 'POST',
                     data: { id: id, trangthai: tt },
                     success: function (res) {
@@ -74,7 +87,8 @@
                     }
                 });
             }
-            
+
+
         }
         
     </script>

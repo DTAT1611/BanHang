@@ -6,11 +6,13 @@ using Microsoft.Owin.BuilderProperties;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Policy;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml.Linq;
 
@@ -31,25 +33,52 @@ namespace BanHang.Controllers
             return LGH;
 
         }
+        
         // GET: AddToCart
         public ActionResult AddToCart()
         {
-            if (Session["AddToCart"] == null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            
             List<AddToCart> LGH = TakeAddToCart();
-            if(LGH.Count==0)
+            
+            if (LGH.Count == 0)
             {
                 return RedirectToAction("Index", "Home");
             }
+            
+           
             return View(LGH);
         }
         public PartialViewResult BtnSale()
         {
             var user = User.Identity.GetUserId();
-            var item = dbConect.Sales.Where(x=>x.userid==user);
+            var item = dbConect.Sales.FirstOrDefault(x=>x.userid==user);
+            
+            dbConect.SaveChanges();
             return PartialView(item);
+        }
+        public PartialViewResult CTSales()
+        {
+            
+            List<Sale> hh = new List<Sale>();
+            List<AddToCart> LGH = TakeAddToCart();
+            
+            foreach(var i in LGH)
+            {
+                var find = dbConect.Sales.Where(x => x.userid == i.userid && x.productid == i.iId).ToList();
+                foreach(var item in find)
+                {
+                    hh.Add(item);
+                }
+            }
+            return PartialView(hh);
+
+        }
+        public PartialViewResult IdP()
+        {
+            int id = Convert.ToInt32(TempData["id"]);
+            List<AddToCart> LGH = TakeAddToCart();
+            var gh = LGH.Find(x => x.iId == id);
+            return PartialView(gh);
         }
         public ActionResult VnpayReturn()
         {
@@ -98,7 +127,11 @@ namespace BanHang.Controllers
                                 {
                                     p.IsHome = false;
                                 }
-
+                                var find = dbConect.Sales.Where(h=>h.productid==i.iId&&h.status==1).ToList();
+                                foreach(var item in find)
+                                {
+                                    item.status = 2;
+                                }
 
                                 order.OrderDetails.Add(new OrderDetail
                                 {
@@ -190,9 +223,7 @@ namespace BanHang.Controllers
         }
         public ActionResult CheckOutSuccess()
         {
-
             return View();
-
         }
 
         [HttpPost]
@@ -219,7 +250,11 @@ namespace BanHang.Controllers
                         {
                             p.IsHome = false;
                         }
-
+                        var find = dbConect.Sales.Where(h => h.productid == i.iId && h.status == 1).ToList();
+                        foreach (var item in find)
+                        {
+                            item.status = 2;
+                        }
 
                         order.OrderDetails.Add(new OrderDetail
                         {
@@ -278,9 +313,7 @@ namespace BanHang.Controllers
                     strSanPham += "<td>" + BanHang.Common.Common.FormatNumber(item.ThanhTien, 0) + "<td>";
                     strSanPham += "</tr>";
                     tongtien += item.dprice * item.isoluong;
-
                 }
-
                 string contentcus = System.IO.File.ReadAllText(Server.MapPath("~/Content/template/send2.html"));
                 contentcus = contentcus.Replace("{{MaDon}}", order.Code);
                 contentcus = contentcus.Replace("{{SanPham}}", strSanPham);
@@ -355,12 +388,16 @@ namespace BanHang.Controllers
                 
                 if(gh.isoluong > 0 &&gh.isoluong <= p.Quantity)
                 {
+                    gh.userid = User.Identity.GetUserId();
+                    var find = dbConect.Sales.Where(n => n.productid==gh.iId&&n.status==1).ToList();
+                    foreach(var i in find)
+                    {
+                        i.status = 0;
+                    }
+                    dbConect.SaveChanges();
                     LGH.Add(gh);
                 }
                 return Redirect(strURL);
-
-
-
             }
 
 
@@ -437,6 +474,12 @@ namespace BanHang.Controllers
             AddToCart gh = LGH.SingleOrDefault(n => n.iId == ip);
             if (gh != null)
             {
+                var find = dbConect.Sales.Where(s => s.productid==gh.iId&&s.status==1).ToList();
+                foreach(var item in find)
+                {
+                    item.status = 0;
+                }
+                dbConect.SaveChanges();
                 LGH.RemoveAll(n => n.iId == gh.iId);
                 return RedirectToAction("Index", "Home");
 
@@ -446,6 +489,60 @@ namespace BanHang.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return RedirectToAction("AddToCart");
+        }
+        public ActionResult UseSale(string ids)
+        {
+            List<AddToCart> LGH = TakeAddToCart();
+           
+            if (!string.IsNullOrEmpty(ids))
+            {
+                var items = ids.Split(',');
+                if (items != null && items.Any())
+                {
+                    foreach (var item in items)
+                    {
+                        var obj = dbConect.Sales.Find(Convert.ToInt32(item));
+                        
+                        var p = dbConect.Products.Find(obj.productid);
+
+                        AddToCart gh = LGH.SingleOrDefault(n=>n.iId==obj.productid);
+
+                        if (obj.status==0)
+                        {
+                            decimal newprice = 0;
+                            newprice = gh.dprice - ((gh.dprice*obj.percent)/100);
+                            gh.dprice = newprice;
+                            obj.status = 1;
+                        }
+                       
+                        dbConect.SaveChanges();
+                    }
+                }
+                return Json(new { success = true });
+            }
+            return Json(new { success = true });
+        }
+        public ActionResult CancleSale(int id)
+        {
+            TempData["id"] = id;
+            List<AddToCart> LGH = TakeAddToCart();
+            var sale = dbConect.Sales.Find(id);
+            var p= dbConect.Products.Find(sale.productid);
+            AddToCart gh = LGH.SingleOrDefault(n => n.iId == sale.productid);
+            if(sale.status==1)
+            {
+                if (p.IsSale)
+                {
+                    gh.dprice = p.PriceSale;
+                }
+                else
+                {
+                    gh.dprice = p.Price;
+                }
+                sale.status = 0;
+            }
+            dbConect.SaveChanges();
+            return Json(new { success = true });
         }
         public string UrlPayment(int TypePaymentVN, string orderCode,decimal total,DateTime date)
         {
