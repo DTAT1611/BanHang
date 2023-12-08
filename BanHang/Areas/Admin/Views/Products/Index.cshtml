@@ -208,18 +208,18 @@
                 }
             });
             $('body').on('change', '#SelectAll', function () {
-                debugger
+
                 var checkStatus = this.checked;
                 var checkbox = $(this).parents('.card-body').find('tr td input:checkbox');
                 checkbox.each(function () 
                 {
                     
                     this.checked = checkStatus;
-                    if (this.checked) {
-                        checkbox.attr('selected', 'checked');
-                    } else {
-                        checkbox.attr('selected', '');
-                    }
+                    //if (this.checked) {
+                    //    checkbox.attr('selected', 'checked');
+                    //} else {
+                    //    checkbox.attr('selected', '');
+                    //}
                 });
             });
             $('body').on('click', '.btnDelete', function () {
