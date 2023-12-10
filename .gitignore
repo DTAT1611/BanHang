@@ -363,7 +363,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/BanHang.sln
-/BanHang/Web.config
-/BanHang/Web.Debug.config
-/BanHang/Web.Release.config

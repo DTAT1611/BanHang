@@ -1,0 +1,7 @@
+﻿@model BanHang.Models.EF.Sale
+<div class="form-group">
+
+    @Html.DropDownListFor(x => x.productid, ViewBag.product as SelectList, new { @class = "form-control", id = "productsale" })
+
+</div>
+

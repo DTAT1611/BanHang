@@ -53,13 +53,12 @@
                         <th class="text-center">STT</th>
 
 
-                        <th class="text-center">Ngày tạo</th>
+                        <th class="text-center">Ngày tạo</th> 
                         <th class="text-center">Ngày chỉnh sửa</th>
                         <th class="text-center">Tỉ lệ giảm giá</th>
-                        <th class="text-center">Sản phẩm</th>
+                        <th class="text-center">ID sản phẩm</th>
                         <th class="text-center">ID người được giảm giá</th>
-
-
+                        <th class="text-center">tình trạng</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -77,7 +76,19 @@
                                 <td class="text-center">@item.percent%</td>
                                 <td class="text-center">@item.productid</td>
                                 <td class="text-center"> @item.userid </td>
-
+                                <td class="text-center">
+                                    @if (item.status == 0)
+                                    {
+                                        <span>chưa sử dụng</span>
+                                    }
+                                    else if (item.status == 2)
+                                    {
+                                        <span> sử dụng</span>
+                                    }
+                                    else { 
+                                        <span> đã sử dụng</span>
+                                    }
+                                </td>
                                 <td>
 
                                     <a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.id">Cập nhật</a>
@@ -128,9 +139,11 @@
                 <input type="hidden" id="txtSaleId" value="0" />
                 <div class="form-group">
                     <label>chủ phiếu giảm giá</label>
-                    @Html.Action("UserSale","Sale")
+                    @Html.Action("UserSale", "Sale")
+                    <label>sản phẩm giảm giá</label>
+                    @Html.Action("ProductSale","Sale")
                     <label>phần trăm giảm giá</label>
-                    <input type="text"value=""id="txtpercent" class="placeholder" />
+                    <input type="text" value="" id="txtpercent" class="placeholder" />
 
                 </div>
             </div>
@@ -158,10 +171,11 @@
                 var id = $('#txtSaleId').val();
                 var tt = $('#txtpercent').val();
                 var u = $('#usersale').val();
+                var p = $('#productsale').val();
                 $.ajax({
                     url: '/admin/sale/UpdateTT',
                     type: 'POST',
-                    data: { id: id, percent: tt, userid: u },
+                    data: { id: id, percent: tt, userid: u ,productid: p},
                     success: function (res) {
                         if (res.Success) {
                             location.reload();

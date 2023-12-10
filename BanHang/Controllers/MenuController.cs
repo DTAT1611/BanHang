@@ -1,4 +1,6 @@
 ﻿using BanHang.Models;
+using BanHang.Models.EF;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +29,13 @@ namespace BanHang.Controllers
         }
         public ActionResult MenuArrivals()
         {
-            var items = dbConect.ProductCategories.ToList();
+            var currentuser = User.Identity.GetUserId();
+            var SaleItems = dbConect.Sales.Where(x => x.userid == currentuser).ToList();
+            List<Product> items = new List<Product>();
+            foreach(var item in SaleItems)
+            {
+                items.Add(dbConect.Products.Where(x => x.Id == item.productid).FirstOrDefault());
+            }
             return PartialView("_MenuArrivals", items);
         }
         public ActionResult BestSeller()

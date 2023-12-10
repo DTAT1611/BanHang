@@ -1,0 +1,36 @@
+﻿@model BanHang.Models.EF.Sale
+@using Microsoft.AspNet.Identity
+
+@if (Model != null )
+{
+   
+        <a href="javascript:void(0);" class="btn btn-success btnApDung" data-id="@Model.userid">áp dụng phiếu giảm giá </a>
+        <div class="modal fade" id="modal-s">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Cập nhật trạng thái</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="txtSId" value="0" />
+                        <div class="form-group">
+                            @Html.Action("CTSales", "AddToCart")
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                        <a href="javascript:void(0);" class="btn btn-primary" id="btnLuu">Áp dụng</a>
+                    </div>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+    
+    
+}
+
