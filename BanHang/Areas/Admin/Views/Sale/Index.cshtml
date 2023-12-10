@@ -56,7 +56,9 @@
                         <th class="text-center">Ngày tạo</th>
                         <th class="text-center">Ngày chỉnh sửa</th>
                         <th class="text-center">Tỉ lệ giảm giá</th>
+                        <th class="text-center">Sản phẩm</th>
                         <th class="text-center">ID người được giảm giá</th>
+
 
                     </tr>
                 </thead>
@@ -73,13 +75,14 @@
                                 <td class="text-center">@item.CreatedDate</td>
                                 <td class="text-center">@item.ModifierDate</td>
                                 <td class="text-center">@item.percent%</td>
+                                <td class="text-center">@item.productid</td>
                                 <td class="text-center"> @item.userid </td>
 
                                 <td>
 
                                     <a href="#" class="btn btn-sm btn-danger btnCapNhat" data-id="@item.id">Cập nhật</a>
                                     <a href="#" data-id="@item.id" class="btn btn-sm btn-danger btnDelete">Xóa</a>
-                                    
+
                                 </td>
 
                             </tr>

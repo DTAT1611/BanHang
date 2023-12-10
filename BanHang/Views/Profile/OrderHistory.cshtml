@@ -5,6 +5,7 @@
     {
         foreach (var item in Model)
         {
+            
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -33,7 +34,6 @@
                             }
                         </td>
                         <td class="text-center">@item.TotalAmount đ</td>
-
                         @Html.Action("Orderd", "Profile", new { id = item.Id })
                         @*<td><a href="javascript:void(0);" class="btn btn-sm btn-danger btnCapNhat" onclick="UpdateTT(@item.Id)">Cập nhật</a></td>*@
 
