@@ -12,9 +12,9 @@
                                     strImge = img.Image;
                                 }
 
-                                <div class="owl-item product_slider_item">
+                                <div class="owl-item product_slider_item" >
                                     <div class="product-item @ViewBag.ProductCategoryAlias">
-                                        <div class="product discount product_filter">
+                                        <div class="product discount product_filter" style="border: 5px solid rgb(233, 233, 233); padding-right:10px;">
                                             <div class="product_image" style="height:300px">
                                                 <img src="@strImge" alt="@item.Title">
                                             </div>
@@ -24,7 +24,7 @@
                                                 <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>sale</span></div>
                                             }
                                             @* <div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-$20</span></div>*@
-                                            <div class="product_info">
+                                            <div class="product_info" style="bottom:150px">
                                                 <h6 class="product_name"><a href="/chi-tiet/@item.Alias-p@(item.Id)">@item.Title</a></h6>
                                                 @if (item.PriceSale > 0)
                                                 {
@@ -37,7 +37,7 @@
                                                 }
                                             </div>
                                         </div>
-                                        <div class="red_button add_to_cart_button"><a href="#" class="btnAddToCart" data-id="@item.Id">add to cart</a></div>
+                                        <div class="red_button add_to_cart_button"><a href="/chi-tiet/@item.Alias-p@(item.Id)" class="btnAddToCart" data-id="@item.Id">add to cart</a></div>
                                     </div>
                                 </div>
 

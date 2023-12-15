@@ -38,17 +38,16 @@
                         <div class="div_right">
                             <h4 style="margin-left: 10px; opacity: 0.7;">@(item.ApplicationUsers.UserName):</h4>
                             <div data-currentcommentid="@item.Id" style="display:block;" id="current">
-                                <h4 style="margin-left: 10px; color: #000011; ">@item.comms</h4>
+                                <h4 style="margin-left: 10px; color: #000011; font-size: 21px; ">@item.comms</h4>
                             </div>
                         </div>
                         <div id="edit">
-                            <h4><input style="display: none; margin-left: 10px; width: auto; max-width: 200px" type="text" data-commentid="@item.Id" id="textedit" value="@item.comms" /></h4>
+                            <h4><input style="border: 1px solid #ccc; border-radius: 23px; font-size: 20px; display: none; margin-left: 60px; width: auto; max-width: 200px " type="text" data-commentid="@item.Id" id="textedit" value="@item.comms" /></h4>
                         </div>
                         @if (item.ApplicationUsers.Id == User.Identity.GetUserId())
                         {
-                            @*<button onclick="openedit(@item.Id);" class="btn btn-primary">chỉnh sửa</button>*@
+                           
                             <a href="javascript:void(0);" onclick="openedit(@item.Id);" class="btnclick"> Chỉnh sửa</a>
-                            @*<input type="button" value="Save" id="btnclick" class="btnclick" onclick="EditComment(@item.Id);" />*@
                             <a href="javascript:void(0);" style="margin-left: 5px" class="btnclick" onclick="EditComment(@item.Id);"> Save</a>
                             <a href="javascript:void(0);" style="color:red" data-id="@item.Id" class="btn btn-sm btnDelete">Xóa</a>
                         }
