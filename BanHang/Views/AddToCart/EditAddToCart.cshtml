@@ -50,7 +50,8 @@
 
                 <td>
                     <input type="submit" class="btn btn-success" style="width:97px;" value="Cập nhật" />
-                    <button class="btn btn-danger delete"  onclick="location.href='@Url.Action("DeleteAddToCart", new { ip = item.iId })'">Delete</button>
+                    @Html.ActionLink("Delete", "DeleteAddToCart", new { ip = item.iId,@class="btn btn-danger" +
+                   "" })
                 </td>
 
             }

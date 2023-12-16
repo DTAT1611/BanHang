@@ -4,6 +4,8 @@
     .cmt {
         word-break: break-all;
         display: inline;
+        width:auto;
+        max-width:300px;
     }
 
     .div_left {
@@ -16,6 +18,8 @@
         max-width: 200px;
         margin-left: 55px;
         margin-top: -50px;
+        width:auto;
+        max-width:250px;
     }
 </style>
 <h3>Bình luận</h3>
@@ -38,7 +42,7 @@
                         <div class="div_right">
                             <h4 style="margin-left: 10px; opacity: 0.7;">@(item.ApplicationUsers.UserName):</h4>
                             <div data-currentcommentid="@item.Id" style="display:block;" id="current">
-                                <h4 style="margin-left: 10px; color: #000011; font-size: 21px; ">@item.comms</h4>
+                                <h4 style="margin-left: 10px; color: #000011; font-size: 21px;width:auto;max-width:300px; ">@item.comms</h4>
                             </div>
                         </div>
                         <div id="edit">
