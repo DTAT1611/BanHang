@@ -17,7 +17,8 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort>44325</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -47,7 +48,7 @@
   <ItemGroup>
     <Reference Include="CKFinder, Version=2.4.0.2631, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Content\ckfinder\bin\Release\CKFinder.dll</HintPath>
+      <HintPath>..\..\..\BanHang\BanHang\Content\ckfinder\bin\Release\CKFinder.dll</HintPath>
     </Reference>
     <Reference Include="DocumentFormat.OpenXml, Version=3.0.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>..\packages\DocumentFormat.OpenXml.3.0.0\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
@@ -267,6 +268,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202312110808134_fix.cs" />
+    <Compile Include="Migrations\202312110808134_fix.designer.cs">
+      <DependentUpon>202312110808134_fix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\baseviewmodel.cs" />
@@ -450,17 +455,21 @@
     <Content Include="Content\assets\dist\js\pages\dashboard.js" />
     <Content Include="Content\assets\dist\js\pages\dashboard2.js" />
     <Content Include="Content\assets\dist\js\pages\dashboard3.js" />
+    <Content Include="Content\assets\images\410483620_3171758616453238_749546245912983269_n.png" />
     <Content Include="Content\assets\images\banner_1.jpg" />
     <Content Include="Content\assets\images\banner_2.jpg" />
     <Content Include="Content\assets\images\banner_3.jpg" />
     <Content Include="Content\assets\images\blog_1.jpg" />
     <Content Include="Content\assets\images\blog_2.jpg" />
     <Content Include="Content\assets\images\blog_3.jpg" />
+    <Content Include="Content\assets\images\CO.jpg" />
     <Content Include="Content\assets\images\deal_ofthe_week.png" />
     <Content Include="Content\assets\images\desc_1.jpg" />
     <Content Include="Content\assets\images\desc_2.jpg" />
     <Content Include="Content\assets\images\desc_3.jpg" />
+    <Content Include="Content\assets\images\download %281%29.jpg" />
     <Content Include="Content\assets\images\map_marker.png" />
+    <Content Include="Content\assets\images\ok.jpg" />
     <Content Include="Content\assets\images\product_1.png" />
     <Content Include="Content\assets\images\product_10.png" />
     <Content Include="Content\assets\images\product_2.png" />
@@ -477,7 +486,10 @@
     <Content Include="Content\assets\images\single_2_thumb.jpg" />
     <Content Include="Content\assets\images\single_3.jpg" />
     <Content Include="Content\assets\images\single_3_thumb.jpg" />
+    <Content Include="Content\assets\images\sli.jpg" />
+    <Content Include="Content\assets\images\slider.jpg" />
     <Content Include="Content\assets\images\slider_1.jpg" />
+    <Content Include="Content\assets\images\x1.jpg" />
     <Content Include="Content\assets\js\categories_custom.js" />
     <Content Include="Content\assets\js\contact_custom.js" />
     <Content Include="Content\assets\js\custom.js" />
@@ -4572,6 +4584,11 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202312110808134_fix.resx">
+      <DependentUpon>202312110808134_fix.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

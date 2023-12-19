@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<BanHang.Models.EF.Order>
 <section>
-    <h4>lịch sử hóa đơn</h4>
+    <h4 style="text-align:center;">lịch sử hóa đơn</h4>
     @if (Model != null && Model.Any())
     {
         foreach (var item in Model)
         {
+            
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -33,7 +34,6 @@
                             }
                         </td>
                         <td class="text-center">@item.TotalAmount đ</td>
-
                         @Html.Action("Orderd", "Profile", new { id = item.Id })
                         @*<td><a href="javascript:void(0);" class="btn btn-sm btn-danger btnCapNhat" onclick="UpdateTT(@item.Id)">Cập nhật</a></td>*@
 

@@ -15,15 +15,15 @@ namespace BanHang.Controllers
         private ApplicationDbContext dbConect = new ApplicationDbContext();
         public ActionResult Index(int? id)
         {
-            var items = dbConect.Products.Where(x => x.IsActive).ToList();
+            var items = dbConect.Products.Where(x => x.IsActive && x.IsHome).ToList();
             if (id > 0)
             {
-                items = items.Where(x => x.ProductCategoryId == id).ToList();
+                items = items.Where(x => x.ProductCategoryId == id && x.IsActive && x.IsHome).ToList();
             }
             if (id != null)
             {
                 ViewBag.ProductCategoryAlias = dbConect.ProductCategories.Find(id).Alias;
-                items = dbConect.Products.Where(x => x.IsActive && x.ProductCategoryId == id).ToList();
+                items = dbConect.Products.Where(x => x.IsActive && x.IsHome && x.ProductCategoryId == id).ToList();
             }
             var cate = dbConect.ProductCategories.Find(id);
             if (cate != null)

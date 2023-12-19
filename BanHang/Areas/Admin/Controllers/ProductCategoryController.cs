@@ -66,16 +66,11 @@ namespace BanHang.Areas.Admin.Controllers
             var category = dbConect.ProductCategories.Find(id);
             if (category != null)
             {
-                // Tìm và lấy tất cả các sản phẩm thuộc danh mục này
                 var productsToDelete = dbConect.Products.Where(p => p.ProductCategoryId == id).ToList();
 
-                // Xóa từng sản phẩm
                 foreach (var product in productsToDelete)
                 {
-                    // Tìm và lấy tất cả bình luận thuộc sản phẩm
                     var commentsToDelete = dbConect.Comments.Where(c => c.Product.Id == product.Id).ToList();
-
-                    // Xóa từng bình luận
                     foreach (var comment in commentsToDelete)
                     {
                         dbConect.Comments.Remove(comment);

@@ -34,7 +34,11 @@ namespace BanHang.Controllers
             List<Product> items = new List<Product>();
             foreach(var item in SaleItems)
             {
-                items.Add(dbConect.Products.Where(x => x.Id == item.productid).FirstOrDefault());
+                if (item.productid > 0)
+                {
+                    items.Add(dbConect.Products.Where(x => x.Id == item.productid).FirstOrDefault());
+                }
+               
             }
             return PartialView("_MenuArrivals", items);
         }

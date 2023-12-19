@@ -196,13 +196,39 @@ namespace BanHang.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(string id)
         {
-            var item = dbConect.Users.Find(id);
-            if (item != null)
+            var user = dbConect.Users.Find(id);
+
+            if (user != null)
             {
-                dbConect.Users.Remove(item);
+                if (user.Role == "Shipper")
+                {
+                    var shipUser = dbConect.Ships.Where(f => f.userid == user.Id).ToList();
+                    foreach(var ship in shipUser)
+                        {
+                        dbConect.Ships.Remove(ship);
+                    }
+                }
+                var userSale = dbConect.Sales.Where(e => e.userid == user.Id).ToList();
+                foreach (var item in userSale)
+                {
+                    dbConect.Sales.Remove(item);
+                }
+                var userOrder = dbConect.Orders.Where(d => d.ApplicationUsers.Id == id).ToList();
+                foreach(var order in userOrder)
+                {
+                    dbConect.Orders.Remove(order);
+                }
+                var userComments = dbConect.Comments.Where(c => c.ApplicationUsers.Id == id).ToList();
+                foreach (var comment in userComments)
+                {
+                    dbConect.Comments.Remove(comment);
+                }
+                dbConect.Users.Remove(user);
                 dbConect.SaveChanges();
+
                 return Json(new { success = true });
             }
+
             return Json(new { success = false });
         }
         

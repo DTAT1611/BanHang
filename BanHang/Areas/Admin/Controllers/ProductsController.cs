@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BanHang.Areas.Admin.ViewModels;
+using Microsoft.Ajax.Utilities;
 
 namespace BanHang.Areas.Admin.Controllers
 {
@@ -108,10 +109,16 @@ namespace BanHang.Areas.Admin.Controllers
             var product = dbConect.Products.Find(id);
             if (product != null)
             {
-                // Tìm và lấy tất cả các bình luận thuộc sản phẩm
+                var proOders = dbConect.OrderDetails.Where(e=>e.ProductId==id).ToList();
+                foreach(var x in proOders)
+                {
+                    dbConect.OrderDetails.Remove(x);
+                }
+                var salesPro =dbConect.Sales.Where(d=>d.productid==id).ToList();
+                foreach(var item in salesPro){
+                    dbConect.Sales.Remove(item);
+                }
                 var commentsToDelete = dbConect.Comments.Where(c => c.Product.Id == id).ToList();
-
-                // Xóa từng bình luận
                 foreach (var comment in commentsToDelete)
                 {
                     dbConect.Comments.Remove(comment);
