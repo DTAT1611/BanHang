@@ -1,16 +1,25 @@
 ﻿@model IEnumerable<BanHang.Models.EF.Ship>
+
 <div>
-    @if (Model != null && Model.Any()) {
-        foreach(var item in Model) { 
-            <h4>ID đơn giao hàng: @item.Id</h4>
-            @Html.Action("Order", "Profile",new {id= item.Id})
-            if(item.StatusShip == 1) { 
-                <h4><span>Tình trạng hàng: chưa giao</span></h4>
-                <a href="javascript:void(0);" class="btn btn-success" onclick="Shipped(@item.Id)">Cập nhật</a>
-            }
-            else{
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <div class="d-inline">
+                <h4>ID đơn giao hàng: @item.Id</h4>
+                @if (item.StatusShip == 1)
+                {
+                    
+                        <h4><span>Tình trạng hàng: chưa giao</span></h4>
+                        <a style=" margin-left: 360px; margin-top: -82px;" href="javascript:void(0);" class="btn btn-success" onclick="Shipped(@item.Id)">Cập nhật</a>
+                    
+                }
+                else
+                {
                 <h4><span>Tình trạng hàng: đã giao</span></h4>
-            }
+                }
+                @Html.Action("Order", "Profile", new { id = item.Id })
+            </div>
         }
     }
 </div>

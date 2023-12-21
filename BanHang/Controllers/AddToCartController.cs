@@ -72,7 +72,7 @@ namespace BanHang.Controllers
             catch (Exception ex)
             {
 
-                return -1;
+                return -1; 
             }
 
             return -1;
@@ -652,7 +652,7 @@ namespace BanHang.Controllers
                 }
                 dbConect.SaveChanges();
                 LGH.RemoveAll(n => n.iId == gh.iId);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("EditAddToCart", "AddToCart");
 
             }
             if (LGH.Count == 0)

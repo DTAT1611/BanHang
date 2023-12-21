@@ -15,25 +15,30 @@
 
 @if (Model != null)
 {
-    <div class="container single_product_container">
+    <div class="container single_product_container" style="margin-top:120px">
         <div class="row">
             <div class="col">
 
                 <!-- Breadcrumbs -->
 
-                <div class="breadcrumbs d-flex flex-row align-items-center">
+                @*<div class="breadcrumbs d-flex flex-row align-items-center">
                     <ul>
                         <li><a href="index.html">Home</a></li>
                         <li><a href="categories.html"><i class="fa fa-angle-right" aria-hidden="true"></i>Men's</a></li>
                         <li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Single Product</a></li>
                     </ul>
-                </div>
+                </div>*@
 
             </div>
         </div>
 
         <div class="row">
             <div class="col-lg-5">
+                <div class="product_details_title">
+                    <h2 >@Model.Title</h2>
+                   
+
+                </div>
                 @if (Model.ProductImage != null && Model.ProductImage.Any())
                 {
                     <div class="single_product_pics">
@@ -43,7 +48,7 @@
                                     <ul>
                                         @foreach (var item in Model.ProductImage)
                                         {
-                                            <li><img src="@item.Image" alt="" data-image="@item.Image"></li>
+                                            <li><img style="height:250px;width:400px" src="@item.Image" alt="" data-image="@item.Image"></li>
                                         }
 
 
@@ -59,27 +64,23 @@
                     </div>
                 }
             </div>
-            <div class="col-lg-3">
-
-            </div>
-            <div class="col-lg-5">
+            <div class="col-lg-5" style="margin-top:150px">
                 <div class="product_details">
-                    <div class="product_details_title">
-                        <h2>Tên Sản Phẩm: @Model.Title</h2>
-                        <h3>CODE-SP: @Model.ProductCode</h3>
-
+                    <h3>CODE-SP: @Model.ProductCode</h3>
+                    <div style="font-size:20px">
+                        <div>Danh Mục: @ViewBag.DanhMuc</div>
+                        @if (Model.IsSale == true)
+                        {
+                            <div>Giá: @Model.PriceSale</div>
+                        }
+                        else
+                        {
+                            <div>Giá: @Model.Price</div>
+                        }
+                        <div>Mổ tả:@Model.Detail</div>
+                        <div>số lượng:@Model.Quantity</div>
                     </div>
-                    <div>Danh Mục: @ViewBag.DanhMuc</div>
-                    @if (Model.IsSale == true)
-                    {
-                        <div>Giá: @Model.PriceSale</div>
-                    }
-                    else
-                    {
-                        <div>Giá: @Model.Price</div>
-                    }
-                    <div>Mổ tả:@Model.Detail</div>
-                    <div>số lượng:@Model.Quantity</div>
+
                     <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
 
 

@@ -1,52 +1,67 @@
 ﻿@model IEnumerable<BanHang.Models.EF.Order>
+    <style>
+        .second {
+            position: relative;
+            margin: 20px; /* Adjust margin as needed */
+            padding: 20px; /* Adjust padding as needed */
+            background-color: #fff; /* Adjust background color as needed */
+            border-radius: 10px; /* Adjust border radius as needed */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Adjust the blur effect as needed */
+        }
+        table {
+            width: 100%;
+            /* Add any other table styles as needed */
+        }
+    </style>
 <section>
     @if (Model != null && Model.Any())
     {
         foreach (var item in Model)
         {
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th class="text-center">mã hóa đơn</th>
-                        <th class="text-center">tên khách hàng</th>
-                        <th class="text-center">địa chỉ</th>
-                        <th class="text-center">hình thức thanh toán</th>
-                        <th class="text-center">tình trạng thanh toán</th>
-                        <th class="text-center">tổng tiền</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-center">@item.Code</td>
-                        <td class="text-center">@item.CustomerName</td>
-                        <td class="text-center">@item.Address</td>
-                        <td class="text-center">@(item.TypePayment==1?"COD":"Chuyển khoản")</td>
-                        <td class="text-center">
+            <div class="second">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">mã hóa đơn</th>
+                            <th class="text-center">tên khách hàng</th>
+                            <th class="text-center">địa chỉ</th>
+                            <th class="text-center">hình thức thanh toán</th>
+                            <th class="text-center">tình trạng thanh toán</th>
+                            <th class="text-center">tổng tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center">@item.Code</td>
+                            <td class="text-center">@item.CustomerName</td>
+                            <td class="text-center">@item.Address</td>
+                            <td class="text-center">@(item.TypePayment==1?"COD":"Chuyển khoản")</td>
+                            <td class="text-center">
+                                @if (item.Status == 1)
+                                {
+                                    <span>chưa thanh toán</span>
+                                }
+                                else
+                                {
+                                    <span>đã thanh toán</span>
+                                }
+                            </td>
+                            <td class="text-center">@item.TotalAmount đ</td>
+                            @Html.Action("Orderd", "Profile", new { id = item.Id })
                             @if (item.Status == 1)
                             {
-                                <span>chưa thanh toán</span>
+
+                                <td><a  style="margin-left:1000px" href="javascript:void(0);" class="btn btn-sm btn-danger btnCapNhat" onclick="UpdateTT(@item.Id)">Cập nhật</a></td>
                             }
                             else
                             {
-                                <span>đã thanh toán</span>
+                                <td><a href="javascript:void(0);" class="btn btn-sm btn-danger btnCapNhat" onclick="Cancle(@item.Id)" >Hủy</a></td>
                             }
-                        </td>
-                        <td class="text-center">@item.TotalAmount đ</td>
-                        @Html.Action("Orderd", "Profile", new { id = item.Id })
-                        @if (item.Status == 1)
-                        {
 
-                            <td><a href="javascript:void(0);" class="btn btn-sm btn-danger btnCapNhat" onclick="UpdateTT(@item.Id)">Cập nhật</a></td>
-                        }
-                        else
-                        {
-                            <td><a href="javascript:void(0);" class="btn btn-sm btn-danger btnCapNhat" onclick="Cancle(@item.Id)">Hủy</a></td>
-                        }
-
-                    </tr>
-                </tbody>
-            </table>
-            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         }
     }
 </section>
